@@ -39,7 +39,7 @@ export default function Hero() {
             <SplitText text="Rahul Sangral" delay={0.3} stagger={0.04} />
           </h1>
           <motion.p className="hero-statement" {...up(1)}>
-            I build <em>production software</em> end to end — from the database schema to the pixel.
+            I build production software end to end — from the database schema to the pixel.
           </motion.p>
           <motion.p className="hero-role" {...up(2)}>
             <Typewriter phrases={['Full-Stack Engineer', 'AI Developer', 'Founding Engineer']} speed={70} pause={2600} />

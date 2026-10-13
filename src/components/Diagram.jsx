@@ -117,8 +117,8 @@ export default function Diagram({ id, title, hero = false }) {
           <g key={n.id} className="node" style={{ animationDelay: `${(n.c * 0.4 + n.r * 0.2).toFixed(2)}s` }}>
             <rect x={x} y={y} width={NW} height={NH} rx="10" fill="rgba(20,20,26,.96)" stroke="rgba(255,255,255,.14)" />
             <rect x={x} y={y} width="4" height={NH} rx="2" fill={col} />
-            <text x={x + 16} y={y + 24} fill="#fff" fontSize="13.5" fontWeight="600" fontFamily="Inter Variable, Inter, system-ui, sans-serif">{n.label}</text>
-            <text x={x + 16} y={y + 42} fill="rgba(255,255,255,.55)" fontSize="11" fontFamily="ui-monospace, Menlo, monospace">{n.sub}</text>
+            <text x={x + 16} y={y + 24} fill="#fff" fontSize="13.5" fontWeight="600" fontFamily="Geist Variable, Inter, system-ui, sans-serif">{n.label}</text>
+            <text x={x + 16} y={y + 42} fill="rgba(255,255,255,.55)" fontSize="11" fontFamily="Geist Mono Variable, ui-monospace, Menlo, monospace">{n.sub}</text>
           </g>
         )
       })}
