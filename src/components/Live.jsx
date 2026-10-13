@@ -45,8 +45,8 @@ export function SplitText({ text, delay = 0, stagger = 0.045, className = '' }) 
             return (
               <motion.span
                 key={i}
-                initial={{ opacity: 0, y: '0.6em', rotateX: -60, filter: 'blur(6px)' }}
-                animate={{ opacity: 1, y: 0, rotateX: 0, filter: 'blur(0px)' }}
+                initial={{ opacity: 0, y: '0.6em', rotateX: -60 }}
+                animate={{ opacity: 1, y: 0, rotateX: 0 }}
                 transition={{ delay: delay + i * stagger, duration: 0.7, ease: [0.2, 0.8, 0.2, 1] }}
               >
                 {ch}

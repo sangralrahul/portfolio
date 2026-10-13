@@ -4,6 +4,7 @@ import Nav from './components/Nav.jsx'
 import Hero from './components/Hero.jsx'
 import { About, Credentials, Experience, Profiles, Projects, Skills, Stats } from './components/Sections.jsx'
 import ProjectModal from './components/ProjectModal.jsx'
+import LiveProfiles from './components/LiveProfiles.jsx'
 import Contact, { Footer } from './components/Contact.jsx'
 import { BackToTop, ScrollProgress } from './components/Scroll.jsx'
 import { CursorGlow } from './components/Live.jsx'
@@ -23,8 +24,8 @@ export default function App() {
         <Experience />
         <Projects onOpen={setProject} />
         <Skills />
+        <LiveProfiles />
         <Credentials />
-        <Profiles />
         <Contact />
       </main>
       <Footer />

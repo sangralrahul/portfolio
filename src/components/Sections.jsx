@@ -235,7 +235,7 @@ export function Credentials() {
   return (
     <section className="section" id="certifications">
       <div className="container">
-        <SectionHead num="05" kicker="Credentials" title="Certifications & education." lede="Every certificate links to its verification page." />
+        <SectionHead num="06" kicker="Credentials" title="Certifications & education." lede="Every certificate links to its verification page." />
         <div className="cert-grid">
           {certifications.map((c, i) => (
             <Reveal key={c.id} as="a" delay={(i % 3) * 0.06} className="cert glass" href={c.url} target="_blank" rel="noreferrer">

@@ -19,7 +19,7 @@ export default function Contact() {
       <div className="container">
         <Reveal className="cta-banner" y={30}>
           <div className="cta-copy">
-            <span className="kicker">06 — Contact</span>
+            <span className="kicker">07 — Contact</span>
             <h2><Words text="Let's build something that ships." /></h2>
             <p>Hiring for an SDE-1 / New Grad role, or need a product built end to end? I usually reply within 24 hours.</p>
           </div>
