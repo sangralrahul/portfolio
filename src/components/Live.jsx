@@ -81,7 +81,7 @@ export function Tilt({ children, max = 10, className = '', style = {}, ...rest }
   const gy = useMotionValue(50)
   const srx = useSpring(rx, { stiffness: 220, damping: 20 })
   const sry = useSpring(ry, { stiffness: 220, damping: 20 })
-  const shine = useTransform([gx, gy], ([a, b]) => `radial-gradient(circle at ${a}% ${b}%, rgba(255,255,255,.22), transparent 55%)`)
+  const shine = useTransform([gx, gy], ([a, b]) => `radial-gradient(circle at ${a}% ${b}%, rgba(255,255,255,.08), transparent 55%)`)
 
   const move = (e) => {
     if (touch()) return

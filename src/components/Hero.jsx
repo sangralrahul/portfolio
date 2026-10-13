@@ -26,7 +26,7 @@ export default function Hero() {
   return (
     <section className="hero" id="home">
       <div className="hero-bg">
-        <div className="hero-rays" />
+        
       </div>
 
       <div className="container hero-inner">
@@ -40,7 +40,7 @@ export default function Hero() {
             <SplitText text="Sangral" delay={0.55} stagger={0.05} className="accent" />
           </h1>
           <motion.p className="hero-role" {...up(2)}>
-            <Typewriter phrases={['Full-Stack Engineer', 'AI Developer', 'Founding Engineer @ Aethex', 'Founder @ Zyphix']} />
+            <Typewriter phrases={['Full-Stack Engineer', 'AI Developer', 'Founding Engineer']} speed={70} pause={2600} />
           </motion.p>
           <motion.p className="hero-lede" {...up(3)}>
             {profile.tagline}
@@ -66,7 +66,7 @@ export default function Hero() {
         </motion.div>
 
         <motion.div className="hero-visual" style={{ y: cardY }} initial={{ opacity: 0, x: 40, scale: 0.96 }} animate={{ opacity: 1, x: 0, scale: 1 }} transition={{ delay: 0.5, duration: 1, ease: [0.2, 0.8, 0.2, 1] }}>
-          <Tilt max={7} className="photo-tilt">
+          <Tilt max={3} className="photo-tilt">
             <div className="photo-card">
               {hasPhoto ? (
                 <img src={profile.photo} alt="Rahul Sangral" />
@@ -84,9 +84,6 @@ export default function Hero() {
           </motion.div>
           <motion.div className="float-chip float-chip--b" animate={{ y: [0, 10, 0] }} transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}>
             <Icon name="pin" size={16} /> {profile.location}
-          </motion.div>
-          <motion.div className="float-chip float-chip--c" animate={{ y: [0, -8, 0] }} transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 2 }}>
-            <Icon name="spark" size={16} /> AI · RAG · Claude API
           </motion.div>
         </motion.div>
       </div>
