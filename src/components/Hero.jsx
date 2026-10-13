@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import Icon from './Icons.jsx'
 import { profile } from '../data.js'
+import { SplitText, Typewriter } from './Live.jsx'
 
 function NetworkCanvas() {
   const ref = useRef(null)
@@ -130,9 +131,11 @@ export default function Hero({ onMore, onReplay, viewer }) {
           <span className="hero-series-r">R</span>
           <span>S E R I E S</span>
         </motion.div>
-        <motion.h1 className="hero-title" {...stagger(1)}>
-          Rahul<br />Sangral
-        </motion.h1>
+        <h1 className="hero-title">
+          <SplitText text="Rahul" delay={0.35} />
+          <br />
+          <SplitText text="Sangral" delay={0.6} />
+        </h1>
         <motion.div className="hero-top10" {...stagger(2)}>
           <span className="top10-badge">
             <small>TOP</small>
@@ -144,7 +147,7 @@ export default function Hero({ onMore, onReplay, viewer }) {
           <span className="match">98% Match</span>
           <span>2026</span>
           <span className="pill">SDE-1</span>
-          <span>{profile.role}</span>
+          <Typewriter phrases={['Full-Stack Engineer', 'AI Developer', 'Founding Engineer', 'SaaS Builder', 'Data Engineer']} />
           <span className="pill">HD</span>
         </motion.div>
         <motion.p className="hero-desc" {...stagger(4)}>
@@ -164,7 +167,7 @@ export default function Hero({ onMore, onReplay, viewer }) {
         <button className="round-btn" onClick={onReplay} aria-label="Replay intro" title="Replay intro">
           <Icon name="volumeOn" size={18} />
         </button>
-        <span className="hero-rating">Available Now</span>
+        <span className="hero-rating"><i className="pulse" /> Available Now</span>
       </div>
       <motion.div className="hero-scroll-cue" style={{ opacity: contentOpacity }} aria-hidden="true">
         <span />

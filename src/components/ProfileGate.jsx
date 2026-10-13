@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { useState } from 'react'
 import Icon from './Icons.jsx'
 import { viewers } from '../data.js'
+import { Particles } from './Live.jsx'
 
 export function Avatar({ viewer, size = 'lg' }) {
   const [h1, h2] = viewer.hue
@@ -31,6 +32,7 @@ export default function ProfileGate({ onPick }) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, scale: 1.08, transition: { duration: 0.45 } }}
     >
+      <Particles count={48} />
       <div className="gate-logo">RAHUL SANGRAL</div>
       <motion.h1
         className="gate-title"

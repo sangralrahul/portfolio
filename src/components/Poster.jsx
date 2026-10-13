@@ -77,6 +77,7 @@ export default function Poster({ id, hue = [0, 20], title, kicker, badge = true,
     <div className={`poster ${tall ? 'poster--tall' : ''} ${big ? 'poster--big' : ''}`} style={style}>
       <Pattern seed={seed} h1={h1} h2={h2} />
       <div className="poster-noise" />
+      <div className="poster-sheen" />
       <div className="poster-shade" />
       {badge && <span className="poster-badge">R</span>}
       {(title || kicker) && (

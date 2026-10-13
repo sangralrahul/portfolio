@@ -8,6 +8,7 @@ import Modal from './components/Modal.jsx'
 import Contact, { Footer } from './components/Contact.jsx'
 import { CardFace, HoverPreview, Row, metaFor } from './components/Cards.jsx'
 import { BackToTop, Marquee, ScrollProgress, Spotlight } from './components/Scroll.jsx'
+import { CursorGlow, LiveStatus } from './components/Live.jsx'
 import { certifications, education, experience, projects, skills, socials, viewers } from './data.js'
 
 const ROWS = {
@@ -119,6 +120,8 @@ export default function App() {
       {stage === 'browse' && (
         <div className="app">
           <ScrollProgress />
+          <CursorGlow />
+          <LiveStatus />
           <Navbar
             viewer={viewer}
             onSwitch={(v) => { setViewer(v); window.scrollTo({ top: 0, behavior: 'smooth' }) }}

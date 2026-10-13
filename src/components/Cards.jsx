@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import Icon from './Icons.jsx'
 import Poster from './Poster.jsx'
+import { Tilt } from './Live.jsx'
 
 // Normalises any item into the fields the hover card + modal need.
 export function metaFor(item, kind) {
@@ -200,7 +201,9 @@ export function Row({ row, onOpen, onHover, onLeave, index }) {
               onClick={() => onOpen(item, row.kind)}
               onKeyDown={(e) => e.key === 'Enter' && onOpen(item, row.kind)}
             >
-              <CardFace item={{ ...item, _rank: i + 1 }} kind={row.kind} />
+              <Tilt max={row.kind === 'top10' ? 6 : 9}>
+                <CardFace item={{ ...item, _rank: i + 1 }} kind={row.kind} />
+              </Tilt>
             </motion.div>
           ))}
         </div>
