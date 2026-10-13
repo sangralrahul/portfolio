@@ -16,37 +16,49 @@ export default function Contact() {
 
   return (
     <section className="section contact" id="contact">
+      <div className="container">
+        <Reveal className="cta-banner" y={30}>
+          <div className="cta-copy">
+            <span className="kicker">06 — Contact</span>
+            <h2><Words text="Let's build something that ships." /></h2>
+            <p>Hiring for an SDE-1 / New Grad role, or need a product built end to end? I usually reply within 24 hours.</p>
+          </div>
+          <div className="cta-actions">
+            <a className="btn btn--primary" href={`mailto:${profile.email}`}><Icon name="mail" size={18} /> Email me</a>
+            <a className="btn btn--ghost" href={profile.resume} target="_blank" rel="noreferrer"><Icon name="download" size={18} /> Resume</a>
+          </div>
+        </Reveal>
+      </div>
       <div className="container contact-grid">
         <div>
           <Reveal className="section-head" y={24}>
-            <span className="kicker">Contact</span>
-            <h2><Words text="Let's build something that ships." /></h2>
-            <p>Hiring for an SDE-1 / New Grad role, or need a product built end to end? I usually reply within 24 hours.</p>
+            <span className="kicker">Direct lines</span>
+            <h2><Words text="Reach me anywhere." /></h2>
           </Reveal>
           <div className="contact-list">
-            <Reveal as="a" delay={0.05} href={`mailto:${profile.email}`} className="contact-row">
+            <Reveal as="a" delay={0.05} href={`mailto:${profile.email}`} className="contact-row glass">
               <span className="fact-icon"><Icon name="mail" size={18} /></span>
               <div><small>Email</small><strong>{profile.email}</strong></div>
               <Icon name="arrow" size={16} className="contact-arrow" />
             </Reveal>
-            <Reveal as="a" delay={0.1} href={`tel:${profile.phone.replace(/\s/g, '')}`} className="contact-row">
+            <Reveal as="a" delay={0.1} href={`tel:${profile.phone.replace(/\s/g, '')}`} className="contact-row glass">
               <span className="fact-icon"><Icon name="phone" size={18} /></span>
               <div><small>Phone</small><strong>{profile.phone}</strong></div>
               <Icon name="arrow" size={16} className="contact-arrow" />
             </Reveal>
-            <Reveal as="a" delay={0.15} href={socials[1].url} target="_blank" rel="noreferrer" className="contact-row">
+            <Reveal as="a" delay={0.15} href={socials[1].url} target="_blank" rel="noreferrer" className="contact-row glass">
               <span className="fact-icon"><Icon name="linkedin" size={18} /></span>
               <div><small>LinkedIn</small><strong>linkedin.com/in/rahul-sangral</strong></div>
               <Icon name="arrow" size={16} className="contact-arrow" />
             </Reveal>
-            <Reveal as="a" delay={0.2} href={socials[0].url} target="_blank" rel="noreferrer" className="contact-row">
+            <Reveal as="a" delay={0.2} href={socials[0].url} target="_blank" rel="noreferrer" className="contact-row glass">
               <span className="fact-icon"><Icon name="github" size={18} /></span>
               <div><small>GitHub</small><strong>github.com/sangralrahul</strong></div>
               <Icon name="arrow" size={16} className="contact-arrow" />
             </Reveal>
           </div>
         </div>
-        <Reveal as="form" delay={0.15} className="contact-form" onSubmit={submit}>
+        <Reveal as="form" delay={0.15} className="contact-form glass" onSubmit={submit}>
           <label className="field">
             <input required placeholder=" " value={form.name} onChange={set('name')} />
             <span>Your name</span>

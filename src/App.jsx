@@ -5,7 +5,7 @@ import Hero from './components/Hero.jsx'
 import { About, Credentials, Experience, Profiles, Projects, Skills, Stats } from './components/Sections.jsx'
 import ProjectModal from './components/ProjectModal.jsx'
 import Contact, { Footer } from './components/Contact.jsx'
-import { BackToTop, Marquee, ScrollProgress } from './components/Scroll.jsx'
+import { BackToTop, ScrollProgress } from './components/Scroll.jsx'
 import { CursorGlow } from './components/Live.jsx'
 import Background from './components/Background.jsx'
 
@@ -19,8 +19,6 @@ export default function App() {
       <Nav />
       <main>
         <Hero />
-        <Stats />
-        <Marquee />
         <About />
         <Experience />
         <Projects onOpen={setProject} />
