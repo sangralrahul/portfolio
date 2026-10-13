@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import Icon from './Icons.jsx'
 import { SplitText, Typewriter, Tilt } from './Live.jsx'
+import Diagram from './Diagram.jsx'
 import { profile, socials } from '../data.js'
 import { scrollToSection } from './Nav.jsx'
 
@@ -72,15 +73,18 @@ export default function Hero() {
               {hasPhoto ? (
                 <img src={profile.photo} alt="Rahul Sangral" />
               ) : (
-                <div className="photo-placeholder">
-                  <span>RS</span>
+                <div className="photo-system">
+                  <div className="shot-bar"><span /><span /><span /><em>aethex · system map</em></div>
+                  <Diagram id="aethex" title="Aethex" hero />
                 </div>
               )}
               <div className="photo-ring" />
-              <div className="photo-caption">
-                <small>Currently</small>
-                <strong>Founding Engineer · Aethex</strong>
-              </div>
+              {hasPhoto && (
+                <div className="photo-caption">
+                  <small>Currently</small>
+                  <strong>Founding Engineer · Aethex</strong>
+                </div>
+              )}
             </div>
           </Tilt>
         </motion.div>

@@ -35,19 +35,26 @@ export function Typewriter({ phrases, speed = 55, pause = 1700, className = '' }
 
 /** Splits text into letters that animate in one by one. */
 export function SplitText({ text, delay = 0, stagger = 0.045, className = '' }) {
-  const letters = [...text]
+  let k = 0
   return (
     <span className={`split ${className}`} aria-label={text}>
-      {letters.map((ch, i) => (
-        <motion.span
-          key={i}
-          aria-hidden="true"
-          initial={{ opacity: 0, y: '0.6em', rotateX: -60, filter: 'blur(6px)' }}
-          animate={{ opacity: 1, y: 0, rotateX: 0, filter: 'blur(0px)' }}
-          transition={{ delay: delay + i * stagger, duration: 0.7, ease: [0.2, 0.8, 0.2, 1] }}
-        >
-          {ch === ' ' ? ' ' : ch}
-        </motion.span>
+      {text.split(' ').map((word, wi) => (
+        <span key={wi} className="split-word" aria-hidden="true">
+          {[...word].map((ch) => {
+            const i = k++
+            return (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, y: '0.6em', rotateX: -60, filter: 'blur(6px)' }}
+                animate={{ opacity: 1, y: 0, rotateX: 0, filter: 'blur(0px)' }}
+                transition={{ delay: delay + i * stagger, duration: 0.7, ease: [0.2, 0.8, 0.2, 1] }}
+              >
+                {ch}
+              </motion.span>
+            )
+          })}
+          {wi < text.split(' ').length - 1 && ' '}
+        </span>
       ))}
     </span>
   )

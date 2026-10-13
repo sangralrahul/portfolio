@@ -1,29 +1,26 @@
 import { useState } from 'react'
-import Poster from './Poster.jsx'
+import Diagram from './Diagram.jsx'
 
 /**
- * Real screenshot of the project, shown inside a browser frame.
- * Resolution order:
- *   1. /projects/<id>.png  (drop your own screenshot in public/projects/)
- *   2. live screenshot of the project URL via thum.io (only for projects with a public URL)
- *   3. generated artwork fallback
+ * Project visual inside a browser frame.
+ *   1. /projects/<id>.png — drop a real screenshot in public/projects/ and it is used automatically
+ *   2. otherwise an animated architecture diagram of the system
  */
 export default function ProjectImage({ project, big = false }) {
   const live = project.links?.find((l) => /^https?:\/\/(?!github|huggingface)/.test(l.url))?.url
-  const sources = [`/projects/${project.id}.png`, live ? `https://image.thum.io/get/width/1400/crop/900/noanimate/${live}` : null].filter(Boolean)
-  const [idx, setIdx] = useState(0)
-  const src = sources[idx]
+  const [shot, setShot] = useState(true)
+  const label = shot ? (live ? live.replace(/^https?:\/\//, '').replace(/\/$/, '') : project.title) : `${project.title.toLowerCase().replace(/\s+/g, '-')} · architecture`
   return (
     <div className={`shot ${big ? 'shot--big' : ''}`}>
       <div className="shot-bar">
         <span /><span /><span />
-        <em>{live ? live.replace(/^https?:\/\//, '').replace(/\/$/, '') : project.title.toLowerCase().replace(/\s+/g, '-')}</em>
+        <em>{label}</em>
       </div>
       <div className="shot-body">
-        {src ? (
-          <img src={src} alt={`${project.title} screenshot`} loading="lazy" onError={() => setIdx((i) => i + 1)} />
+        {shot ? (
+          <img src={`/projects/${project.id}.png`} alt={`${project.title} screenshot`} loading="lazy" onError={() => setShot(false)} />
         ) : (
-          <Poster id={project.id} hue={project.hue} badge={false} big />
+          <Diagram id={project.id} title={project.title} />
         )}
       </div>
     </div>
