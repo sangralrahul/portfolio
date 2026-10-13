@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Icon from './Icons.jsx'
 import { Reveal } from './Scroll.jsx'
+import { FloatShapes, ScrollWord, Words } from './Deco.jsx'
 import { profile, socials } from '../data.js'
 
 export default function Contact() {
@@ -15,11 +16,13 @@ export default function Contact() {
 
   return (
     <section className="section contact" id="contact">
+      <ScrollWord word="CONTACT" dir={1} />
+      <FloatShapes variant="d" />
       <div className="container contact-grid">
         <div>
           <Reveal className="section-head" y={24}>
-            <span className="kicker">Contact</span>
-            <h2>Let's build something that ships.</h2>
+            <span className="kicker kicker--dot">Contact</span>
+            <h2><Words text="Let's build something that ships." /></h2>
             <p>Hiring for an SDE-1 / New Grad role, or need a product built end to end? I usually reply within 24 hours.</p>
           </Reveal>
           <div className="contact-list">
@@ -45,7 +48,7 @@ export default function Contact() {
             </Reveal>
           </div>
         </div>
-        <Reveal as="form" delay={0.15} className="contact-form" onSubmit={submit}>
+        <Reveal as="form" delay={0.15} className="contact-form glow-border" onSubmit={submit}>
           <label className="field">
             <input required placeholder=" " value={form.name} onChange={set('name')} />
             <span>Your name</span>

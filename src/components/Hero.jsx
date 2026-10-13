@@ -1,48 +1,9 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Icon from './Icons.jsx'
 import { SplitText, Typewriter, Tilt } from './Live.jsx'
 import { profile, socials } from '../data.js'
 import { scrollToSection } from './Nav.jsx'
-
-function NetworkCanvas() {
-  const ref = useRef(null)
-  useEffect(() => {
-    const canvas = ref.current
-    const ctx = canvas.getContext('2d')
-    let w, h, raf
-    const dpr = Math.min(window.devicePixelRatio || 1, 2)
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    let pts = []
-    const resize = () => {
-      w = canvas.clientWidth
-      h = canvas.clientHeight
-      canvas.width = w * dpr
-      canvas.height = h * dpr
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-      const n = Math.round(Math.min(70, (w * h) / 22000))
-      pts = Array.from({ length: n }).map(() => ({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - 0.5) * 0.2, vy: (Math.random() - 0.5) * 0.2, r: Math.random() * 1.4 + 0.3 }))
-    }
-    const tick = () => {
-      ctx.clearRect(0, 0, w, h)
-      for (const p of pts) {
-        p.x += p.vx; p.y += p.vy
-        if (p.x < 0 || p.x > w) p.vx *= -1
-        if (p.y < 0 || p.y > h) p.vy *= -1
-      }
-      for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) {
-        const a = pts[i], b = pts[j], d = Math.hypot(a.x - b.x, a.y - b.y)
-        if (d < 140) { ctx.strokeStyle = `rgba(255,255,255,${(1 - d / 140) * 0.09})`; ctx.lineWidth = 0.6; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke() }
-      }
-      for (const p of pts) { ctx.fillStyle = 'rgba(255,255,255,.5)'; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill() }
-      if (!reduce) raf = requestAnimationFrame(tick)
-    }
-    resize(); tick()
-    window.addEventListener('resize', resize)
-    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', resize) }
-  }, [])
-  return <canvas ref={ref} className="hero-canvas" />
-}
 
 export default function Hero() {
   const [hasPhoto, setHasPhoto] = useState(false)
@@ -65,11 +26,7 @@ export default function Hero() {
   return (
     <section className="hero" id="home">
       <div className="hero-bg">
-        <div className="hero-grid" />
-        <NetworkCanvas />
-        <div className="glow glow--red" />
-        <div className="glow glow--blue" />
-        <div className="hero-fade" />
+        <div className="hero-rays" />
       </div>
 
       <div className="container hero-inner">

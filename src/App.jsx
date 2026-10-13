@@ -7,11 +7,13 @@ import ProjectModal from './components/ProjectModal.jsx'
 import Contact, { Footer } from './components/Contact.jsx'
 import { BackToTop, Marquee, ScrollProgress } from './components/Scroll.jsx'
 import { CursorGlow } from './components/Live.jsx'
+import Background from './components/Background.jsx'
 
 export default function App() {
   const [project, setProject] = useState(null)
   return (
     <div className="app">
+      <Background />
       <ScrollProgress />
       <CursorGlow />
       <Nav />

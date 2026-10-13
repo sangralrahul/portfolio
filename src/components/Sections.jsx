@@ -4,13 +4,14 @@ import Icon from './Icons.jsx'
 import Poster from './Poster.jsx'
 import { CountUp, Reveal } from './Scroll.jsx'
 import { Tilt } from './Live.jsx'
+import { FloatShapes, MiniBars, Orbits, ScrollWord, Words } from './Deco.jsx'
 import { certifications, education, experience, profile, projects, skills, socials } from '../data.js'
 
 export function SectionHead({ kicker, title, lede, align = 'left' }) {
   return (
     <Reveal className={`section-head section-head--${align}`} y={24}>
-      <span className="kicker">{kicker}</span>
-      <h2>{title}</h2>
+      <span className="kicker kicker--dot">{kicker}</span>
+      <h2><Words text={title} /></h2>
       {lede && <p>{lede}</p>}
       <motion.span className="rule" initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ duration: 0.9, delay: 0.2, ease: [0.2, 0.8, 0.2, 1] }} />
     </Reveal>
@@ -30,6 +31,7 @@ export function Stats() {
       <div className="container stats-grid">
         {items.map((s, i) => (
           <Reveal key={s.label} delay={i * 0.1} className="stat">
+            <MiniBars seed={i} />
             <b><CountUp to={s.value} suffix={s.suffix} /></b>
             <span>{s.label}</span>
           </Reveal>
@@ -50,6 +52,8 @@ export function About() {
   ]
   return (
     <section className="section" id="about">
+      <Orbits className="orbits--about" />
+      <FloatShapes variant="a" />
       <div className="container about-grid">
         <div>
           <SectionHead kicker="About" title="Engineer who owns the whole stack." />
@@ -90,16 +94,18 @@ export function Experience() {
   const line = useSpring(scrollYProgress, { stiffness: 80, damping: 24 })
   return (
     <section className="section" id="experience">
+      <ScrollWord word="EXPERIENCE" dir={1} />
+      <FloatShapes variant="b" />
       <div className="container">
         <SectionHead kicker="Experience" title="Where I've built things." lede="From freelance delivery to owning production at a startup." />
         <div className="timeline" ref={ref}>
           <div className="timeline-track"><motion.span style={{ scaleY: line }} /></div>
           {experience.map((e, i) => (
             <Reveal key={e.id} delay={0.05} className="tl-item">
-              <span className="tl-dot" />
+              <span className={`tl-dot ${i === 0 ? "tl-dot--live" : ""}`} />
               <div className="tl-date">{e.period}</div>
               <Tilt max={3} className="tl-card-tilt">
-                <div className="tl-card">
+                <div className={`tl-card ${i === 0 ? "glow-border" : ""}`}>
                   <div className="tl-head">
                     <div>
                       <h3>{e.title}</h3>
@@ -129,10 +135,11 @@ export function Projects({ onOpen }) {
   const artY = useTransform(scrollYProgress, [0, 1], ['-8%', '8%'])
   return (
     <section className="section" id="projects">
+      <ScrollWord word="PROJECTS" dir={-1} />
       <div className="container">
         <SectionHead kicker="Selected work" title="Projects that shipped." lede="Production systems, AI tooling and data products — built end to end." />
 
-        <Reveal className="featured" y={40}>
+        <Reveal className="featured glow-border" y={40}>
           <div className="featured-art" ref={ref} onClick={() => onOpen(featured)}>
             <motion.div style={{ y: artY }} className="featured-art-inner">
               <Poster id={featured.id} hue={featured.hue} badge={false} big />
@@ -144,7 +151,7 @@ export function Projects({ onOpen }) {
             </div>
           </div>
           <div className="featured-body">
-            <span className="badge">Featured · Production</span>
+            <span className="badge badge--live">Live in production</span>
             <h3>{featured.title}</h3>
             <p>{featured.description}</p>
             <ul className="chips">{featured.tech.map((t) => <li key={t}>{t}</li>)}</ul>
@@ -189,13 +196,15 @@ export function Projects({ onOpen }) {
 export function Skills() {
   return (
     <section className="section section--alt" id="skills">
+      <ScrollWord word="STACK" dir={1} />
+      <FloatShapes variant="c" />
       <div className="container">
         <SectionHead kicker="Capabilities" title="Tools I reach for." lede="A pragmatic stack for shipping web products and AI features." />
         <div className="skill-grid">
           {skills.map((g, i) => (
             <Reveal key={g.id} delay={(i % 3) * 0.08} className="skill-group">
               <div className="skill-head">
-                <span className="skill-swatch" style={{ background: `linear-gradient(135deg, hsl(${g.hue[0]} 80% 55%), hsl(${g.hue[1]} 80% 40%))` }} />
+                <span className="skill-swatch swatch-pulse" style={{ background: `linear-gradient(135deg, hsl(${g.hue[0]} 80% 55%), hsl(${g.hue[1]} 80% 40%))` }} />
                 <h3>{g.title}</h3>
                 <small>{g.items.length}</small>
               </div>
@@ -218,12 +227,14 @@ export function Skills() {
 export function Credentials() {
   return (
     <section className="section" id="certifications">
+      <ScrollWord word="CREDENTIALS" dir={-1} />
+      <Orbits className="orbits--cert" />
       <div className="container">
         <SectionHead kicker="Credentials" title="Certifications & education." />
         <div className="cert-grid">
           {certifications.map((c, i) => (
             <Reveal key={c.id} delay={(i % 4) * 0.06} className="cert">
-              <span className="cert-icon" style={{ color: `hsl(${c.hue[0]} 85% 62%)` }}><Icon name="award" size={20} /></span>
+              <span className="cert-icon icon-shimmer" style={{ color: `hsl(${c.hue[0]} 85% 62%)` }}><Icon name="award" size={20} /></span>
               <div>
                 <strong>{c.title}</strong>
                 <small>{c.org}{c.year ? ` · ${c.year}` : ''}</small>
