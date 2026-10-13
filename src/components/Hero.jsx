@@ -42,7 +42,9 @@ export default function Hero() {
           <h1 className="hero-title">
             <SplitText text="Rahul" delay={0.3} stagger={0.05} />
             <br />
-            <SplitText text="Sangral" delay={0.5} stagger={0.05} className="grad" />
+            <motion.span className="grad surname" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.55, duration: 0.9, ease: [0.2, 0.8, 0.2, 1] }}>
+              Sangral
+            </motion.span>
           </h1>
           <motion.p className="hero-role" {...up(2)}>
             <Typewriter phrases={['Full-Stack Engineer', 'AI Developer', 'Founding Engineer @ Aethex', 'Founder @ Zyphix']} speed={60} pause={2200} />

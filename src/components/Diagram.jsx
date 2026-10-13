@@ -61,7 +61,7 @@ export const diagrams = {
 }
 
 const tones = {
-  blue: '#5b8cff', green: '#3ddc84', amber: '#f5b342', red: '#ff4d57', muted: '#9a9aa3',
+  blue: '#ffffff', green: '#d9d9d9', amber: '#b3b3b3', red: '#8c8c8c', muted: '#6b6b6b',
 }
 
 const W = 960, H = 480, NW = 176, NH = 58
