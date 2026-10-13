@@ -13,7 +13,8 @@ A clean, dark, animation-rich portfolio built with **React + Vite + Framer Motio
 Everything lives in [`src/data.js`](src/data.js). Case-study text is in `src/components/ProjectModal.jsx`.
 
 **Add your photo:** put a portrait at `public/profile.jpg` (4:5 works best) — it appears in the hero automatically.
-**Resume:** put `resume.pdf` in `public/` and set `resume: '/resume.pdf'` in `src/data.js`.
+**Resume:** `public/resume.pdf` (replace to update).
+**Logos **Resume:** put `resume.pdf` in `public/` and set `resume: '/resume.pdf'` in `src/data.js`. certificates:** `public/logos/`, `public/certs/`; links live in `src/data.js`.
 
 ## Run locally
 ```bash

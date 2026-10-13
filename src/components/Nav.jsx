@@ -50,7 +50,7 @@ export default function Nav() {
         transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
       >
         <button className="nav-brand" onClick={() => go('home')} aria-label="Home">
-          <span className="monogram">RS</span>
+          <img className="brand-logo" src={profile.logo} alt="" />
           <span className="nav-name">Rahul Sangral</span>
         </button>
         <nav className="nav-links">

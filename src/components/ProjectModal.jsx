@@ -85,7 +85,10 @@ export default function ProjectModal({ project, onClose, onOpen }) {
           <div className="modal-banner-fade" />
           <div className="modal-banner-copy">
             <span className="kicker">{project.kicker}</span>
-            <h2>{project.title}</h2>
+            <div className="title-row">
+              {project.logo && <span className="logo-tile" style={{ width: 56, height: 56 }}><img src={project.logo} alt="" /></span>}
+              <h2>{project.title}</h2>
+            </div>
           </div>
         </div>
         <div className="modal-body">

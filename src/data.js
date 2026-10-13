@@ -12,7 +12,8 @@ export const profile = {
   phone: '+91 96823 94363',
   // Drop your photo at /public/profile.jpg — it is used automatically.
   photo: '/profile.jpg',
-  resume: 'https://rahulsangral.me/assets/Rahul_Sangral_Resume-CGtWhv3-.pdf',
+  resume: '/resume.pdf',
+  logo: '/logos/rahul.webp',
   languages: ['English', 'Hindi', 'Dogri'],
   stats: [
     { value: '3+', label: 'Years building' },
@@ -23,19 +24,20 @@ export const profile = {
 }
 
 export const socials = [
-  { id: 'github', name: 'GitHub', handle: 'sangralrahul', url: 'https://github.com/sangralrahul', hue: [220, 260] },
-  { id: 'linkedin', name: 'LinkedIn', handle: 'rahul-sangral', url: 'https://www.linkedin.com/in/rahul-sangral/', hue: [205, 225] },
-  { id: 'leetcode', name: 'LeetCode', handle: 'rahulsangral', url: 'https://leetcode.com/u/rahulsangral/', hue: [32, 48] },
-  { id: 'codeforces', name: 'Codeforces', handle: 'rahulsangral', url: 'https://codeforces.com/profile/rahulsangral', hue: [210, 0] },
-  { id: 'gfg', name: 'GeeksforGeeks', handle: 'rahulsangral', url: 'https://www.geeksforgeeks.org/user/rahulsangral/', hue: [140, 160] },
-  { id: 'hackerrank', name: 'HackerRank', handle: 'rahulsangral', url: 'https://www.hackerrank.com/rahulsangral', hue: [130, 170] },
-  { id: 'huggingface', name: 'Hugging Face', handle: 'sangralrahul', url: 'https://huggingface.co/sangralrahul', hue: [45, 25] },
-  { id: 'codedex', name: 'Codédex', handle: '@rahulsangral', url: 'https://www.codedex.io/@rahulsangral', hue: [270, 300] },
+  { id: 'github', logo: '/logos/github.webp', name: 'GitHub', handle: 'sangralrahul', url: 'https://github.com/sangralrahul', hue: [220, 260] },
+  { id: 'linkedin', logo: '/logos/linkedin.webp', name: 'LinkedIn', handle: 'rahul-sangral', url: 'https://www.linkedin.com/in/rahul-sangral/', hue: [205, 225] },
+  { id: 'leetcode', logo: '/logos/leetcode.webp', name: 'LeetCode', handle: 'rahulsangral', url: 'https://leetcode.com/u/rahulsangral/', hue: [32, 48] },
+  { id: 'codeforces', logo: '/logos/codeforces.webp', name: 'Codeforces', handle: 'rahulsangral', url: 'https://codeforces.com/profile/rahulsangral', hue: [210, 0] },
+  { id: 'gfg', logo: '/logos/geeksforgeeks.webp', name: 'GeeksforGeeks', handle: 'rahulsangral', url: 'https://www.geeksforgeeks.org/user/rahulsangral/', hue: [140, 160] },
+  { id: 'hackerrank', logo: '/logos/hackerrank.webp', name: 'HackerRank', handle: 'rahulsangral', url: 'https://www.hackerrank.com/rahulsangral', hue: [130, 170] },
+  { id: 'huggingface', logo: '/logos/huggingface.webp', name: 'Hugging Face', handle: 'sangralrahul', url: 'https://huggingface.co/sangralrahul', hue: [45, 25] },
+  { id: 'codedex', logo: '/logos/codedex.webp', name: 'Codédex', handle: '@rahulsangral', url: 'https://www.codedex.io/@rahulsangral', hue: [270, 300] },
 ]
 
 export const projects = [
   {
     id: 'aethex',
+    logo: '/logos/aethex.webp',
     title: 'Aethex',
     kicker: 'Founding Engineer · SaaS Platform',
     year: '2025',
@@ -50,6 +52,7 @@ export const projects = [
   },
   {
     id: 'zyphix',
+    logo: '/logos/zyphix.webp',
     title: 'Zyphix',
     kicker: 'Founder & Engineer · Full-Stack Product',
     year: '2025',
@@ -64,6 +67,7 @@ export const projects = [
   },
   {
     id: 'sqlfixenv',
+    logo: '/logos/huggingface.webp',
     title: 'SQLFixEnv v2.0',
     kicker: 'Meta × Hugging Face · PyTorch OpenEnv Hackathon',
     year: '2025',
@@ -112,6 +116,7 @@ export const projects = [
 export const experience = [
   {
     id: 'clavix',
+    logo: '/logos/aethex.webp',
     title: 'Founding Software Engineer',
     org: 'Clavix Technologies (Aethex)',
     period: 'Nov 2025 – Present',
@@ -147,6 +152,7 @@ export const experience = [
   },
   {
     id: 'jpmc',
+    logo: '/logos/jpmorgan.webp',
     title: 'Software Engineering Virtual Experience',
     org: 'JPMorgan Chase & Deloitte Australia (Forage)',
     period: 'Feb 2026',
@@ -173,22 +179,24 @@ export const skills = [
 ]
 
 export const certifications = [
-  { id: 'oracle', title: 'Agentic AI Certified Foundations Associate', org: 'Oracle', year: '2026', hue: [5, 20] },
-  { id: 'mckinsey', title: 'McKinsey Forward Program', org: 'McKinsey & Company', year: '2026', hue: [220, 240] },
-  { id: 'claude-api', title: 'Building with the Claude API', org: 'Anthropic', year: '2026', hue: [20, 35] },
-  { id: 'bedrock', title: 'Claude in Amazon Bedrock', org: 'Anthropic', year: '2026', hue: [30, 45] },
-  { id: 'vertex', title: 'Claude with Vertex AI', org: 'Anthropic', year: '2026', hue: [15, 40] },
-  { id: 'gda', title: 'Advanced Data Analytics', org: 'Google · Coursera', year: '', hue: [140, 210] },
-  { id: 'msaiml', title: 'AI & ML Engineering', org: 'Microsoft · Coursera', year: '', hue: [195, 215] },
-  { id: 'msalgo', title: 'AI & ML Algorithms and Techniques', org: 'Microsoft · Coursera', year: '', hue: [200, 230] },
-  { id: 'msexcel', title: 'Preparing Data for Analysis with Excel', org: 'Microsoft · Coursera', year: '', hue: [140, 160] },
-  { id: 'cisco', title: 'Introduction to Data Science', org: 'Cisco', year: '2026', hue: [190, 205] },
-  { id: 'jpmc-cert', title: 'Software Engineering Virtual Experience', org: 'JPMorgan Chase · Forage', year: '2026', hue: [210, 200] },
+  { id: 'oracle', title: 'Agentic AI Certified Foundations Associate', org: 'Oracle', year: '2026', logo: '/logos/oracle.webp', url: '/certs/oracle-agentic-ai.pdf', hue: [5, 20] },
+  { id: 'mckinsey', title: 'McKinsey Forward Program', org: 'McKinsey & Company', year: '2026', logo: '/logos/mckinsey.webp', url: 'https://www.credly.com/badges/dda78901-d85d-4aeb-866e-14d54c3c4d14', hue: [220, 240] },
+  { id: 'claude-api', title: 'Building with the Claude API', org: 'Anthropic', year: '2026', logo: '/logos/anthropic.webp', url: 'https://verify.skilljar.com/c/i3h2m4rcgjsm', hue: [20, 35] },
+  { id: 'bedrock', title: 'Claude in Amazon Bedrock', org: 'Anthropic', year: '2026', logo: '/logos/anthropic.webp', url: 'https://verify.skilljar.com/c/7r6sf98nkkzv', hue: [30, 45] },
+  { id: 'vertex', title: 'Claude with Vertex AI', org: 'Anthropic', year: '2026', logo: '/logos/anthropic.webp', url: 'https://verify.skilljar.com/c/7bbqpvc8vzxu', hue: [15, 40] },
+  { id: 'gda', title: 'Google Advanced Data Analytics', org: 'Google · Coursera', year: '', logo: '/logos/google.webp', url: 'https://www.coursera.org/account/accomplishments/professional-cert/certificate/LF56ZWGJU6ZS', hue: [140, 210] },
+  { id: 'msaiml', title: 'AI & ML Engineering', org: 'Microsoft · Coursera', year: '', logo: '/logos/microsoft.webp', url: 'https://www.coursera.org/account/accomplishments/professional-cert/certificate/DUA346BJ4G77', hue: [195, 215] },
+  { id: 'msalgo', title: 'AI & ML Algorithms and Techniques', org: 'Microsoft · Coursera', year: '', logo: '/logos/microsoft.webp', url: 'https://www.coursera.org/account/accomplishments/verify/WHVYD6WKFM9L', hue: [200, 230] },
+  { id: 'msexcel', title: 'Preparing Data for Analysis with Excel', org: 'Microsoft · Coursera', year: '', logo: '/logos/microsoft.webp', url: 'https://www.coursera.org/account/accomplishments/verify/7KYKYMY4CZWV', hue: [140, 160] },
+  { id: 'cisco', title: 'Introduction to Data Science', org: 'Cisco', year: '2026', logo: '/logos/cisco.webp', url: 'https://www.credly.com/badges/86541c80-8bd8-4db6-8104-043ae00d2927/linked_in_profile', hue: [190, 205] },
+  { id: 'jpmc-cert', title: 'Software Engineering Virtual Experience', org: 'JPMorgan Chase · Forage', year: '2026', logo: '/logos/jpmorgan.webp', url: 'https://www.theforage.com/completion-certificates/Sj7temL583QAYpHXD/E6McHJDKsQYh79moz_Sj7temL583QAYpHXD_695c295addcaac68970acde1_1769701372156_completion_certificate.pdf', hue: [210, 200] },
 ]
+
 
 export const education = [
   {
     id: 'uu',
+    logo: '/logos/uttaranchal.webp',
     title: 'Bachelor of Computer Applications',
     org: 'Uttaranchal University',
     period: '2023 – 2026',
@@ -198,6 +206,7 @@ export const education = [
   },
   {
     id: 'mvis',
+    logo: '/logos/mvis.webp',
     title: 'Higher Secondary (Science)',
     org: 'MV International School',
     period: '',

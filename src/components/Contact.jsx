@@ -74,7 +74,7 @@ export function Footer() {
     <footer className="footer">
       <div className="container footer-inner">
         <div className="footer-brand">
-          <span className="monogram">RS</span>
+          <img className="brand-logo" src={profile.logo} alt="" />
           <div>
             <strong>Rahul Sangral</strong>
             <small>{profile.role}</small>
@@ -82,7 +82,7 @@ export function Footer() {
         </div>
         <ul className="footer-links">
           {socials.map((s) => (
-            <li key={s.id}><a href={s.url} target="_blank" rel="noreferrer">{s.name}</a></li>
+            <li key={s.id}><a href={s.url} target="_blank" rel="noreferrer"><img src={s.logo} alt="" className="footer-logo" />{s.name}</a></li>
           ))}
         </ul>
         <p className="footer-copy">© {new Date().getFullYear()} Rahul Sangral · {profile.location} · Built with React & Framer Motion</p>

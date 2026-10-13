@@ -59,9 +59,9 @@ export default function Hero() {
             </button>
           </motion.div>
           <motion.div className="hero-socials" {...up(5)}>
-            {socials.slice(0, 5).map((s) => (
-              <a key={s.id} href={s.url} target="_blank" rel="noreferrer">
-                {s.name}
+            {socials.map((s) => (
+              <a key={s.id} href={s.url} target="_blank" rel="noreferrer" title={s.name} aria-label={s.name} className="hero-social">
+                <img src={s.logo} alt="" loading="lazy" />
               </a>
             ))}
           </motion.div>

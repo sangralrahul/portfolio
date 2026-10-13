@@ -7,6 +7,14 @@ import { Tilt } from './Live.jsx'
 import { Words } from './Deco.jsx'
 import { certifications, education, experience, profile, projects, skills, socials } from '../data.js'
 
+export function Logo({ src, alt, size = 40, className = '' }) {
+  return (
+    <span className={`logo-tile ${className}`} style={{ width: size, height: size }}>
+      <img src={src} alt={alt} loading="lazy" />
+    </span>
+  )
+}
+
 export function SectionHead({ num, kicker, title, lede, align = 'left' }) {
   return (
     <Reveal className={`section-head section-head--${align}`} y={24}>
@@ -109,7 +117,8 @@ export function Experience() {
               <Tilt max={2} className="tl-card-tilt">
                 <div className="tl-card">
                   <div className="tl-head">
-                    <div>
+                    {e.logo && <Logo src={e.logo} alt={e.org} size={44} />}
+                    <div className="tl-head-text">
                       <h3>{e.title}</h3>
                       <p className="tl-org">{e.org} · {e.place}</p>
                     </div>
@@ -148,7 +157,10 @@ export function Projects({ onOpen }) {
           </div>
           <div className="featured-body">
             <span className="badge badge--live">Live in production</span>
-            <h3>{featured.title}</h3>
+            <div className="title-row">
+              {featured.logo && <Logo src={featured.logo} alt={featured.title} size={44} />}
+              <h3>{featured.title}</h3>
+            </div>
             <p>{featured.description}</p>
             <ul className="chips">{featured.tech.map((t) => <li key={t}>{t}</li>)}</ul>
             <div className="featured-actions">
@@ -174,7 +186,10 @@ export function Projects({ onOpen }) {
                   </div>
                   <div className="project-body">
                     <span className="kicker">{p.kicker}</span>
-                    <h3>{p.title} <Icon name="arrow" size={18} className="project-arrow" /></h3>
+                    <div className="title-row">
+                      {p.logo && <Logo src={p.logo} alt={p.title} size={34} />}
+                      <h3>{p.title} <Icon name="arrow" size={18} className="project-arrow" /></h3>
+                    </div>
                     <p>{p.description}</p>
                     <ul className="chips chips--sm">{p.tech.slice(0, 4).map((t) => <li key={t}>{t}</li>)}</ul>
                   </div>
@@ -225,19 +240,20 @@ export function Credentials() {
         <SectionHead num="05" kicker="Credentials" title="Certifications & education." />
         <div className="cert-grid">
           {certifications.map((c, i) => (
-            <Reveal key={c.id} delay={(i % 4) * 0.06} className="cert">
-              <span className="cert-icon" style={{ color: `hsl(${c.hue[0]} 85% 62%)` }}><Icon name="award" size={20} /></span>
-              <div>
+            <Reveal key={c.id} as="a" delay={(i % 4) * 0.06} className="cert" href={c.url} target="_blank" rel="noreferrer">
+              <Logo src={c.logo} alt={c.org} size={48} />
+              <div className="cert-text">
                 <strong>{c.title}</strong>
                 <small>{c.org}{c.year ? ` · ${c.year}` : ''}</small>
               </div>
+              <span className="cert-verify">Verify <Icon name="external" size={13} /></span>
             </Reveal>
           ))}
         </div>
         <div className="edu-grid" id="education">
           {education.map((e, i) => (
             <Reveal key={e.id} delay={i * 0.1} className="edu">
-              <span className="fact-icon"><Icon name="cap" size={20} /></span>
+              <Logo src={e.logo} alt={e.org} size={52} />
               <div>
                 <strong>{e.title}</strong>
                 <p>{e.org} · {e.place}</p>
@@ -260,8 +276,9 @@ export function Profiles() {
           <span className="kicker">Find me on</span>
           <div>
             {socials.map((s) => (
-              <a key={s.id} href={s.url} target="_blank" rel="noreferrer">
-                {s.name} <Icon name="external" size={12} />
+              <a key={s.id} href={s.url} target="_blank" rel="noreferrer" className="profile-link">
+                <Logo src={s.logo} alt={s.name} size={28} />
+                {s.name}
               </a>
             ))}
           </div>
