@@ -1,18 +1,19 @@
-# Rahul Sangral — Portfolio (streaming edition)
+# Rahul Sangral — Portfolio
 
-A cinematic, streaming-app–style portfolio built with **React + Vite + Framer Motion**.
+A clean, dark, animation-rich portfolio built with **React + Vite + Framer Motion**.
 
-- "Who's watching?" profile picker — each profile (Recruiter, Developer, Founder, Explorer) reorders the rows
-- Original animated **R** intro with a synthesized Web Audio sting (no audio files)
-- Billboard hero with live network canvas, scrolling code and drifting glows
-- Rows: Top 10 Projects, Continue Watching (experience), Tech Stack, Certifications, Education, Coding Profiles
-- Hover preview cards, detail modals with "Episodes" / "More Like This", My List, live search
-- Fully responsive, keyboard accessible, respects `prefers-reduced-motion`
+- Hero with letter-by-letter name reveal, typewriter role, parallax and a photo card
+- Animated stat counters, tech ticker, about + quick facts
+- Scroll-drawn experience timeline
+- Featured project + project grid with case-study modals
+- Skills, certifications, education, coding profiles, contact form (mailto)
+- 3D tilt cards, cursor glow, scroll progress — all respecting `prefers-reduced-motion`
 
 ## Edit content
-All content lives in [`src/data.js`](src/data.js).
+Everything lives in [`src/data.js`](src/data.js). Case-study text is in `src/components/ProjectModal.jsx`.
 
-**Add your photo:** drop a portrait at `public/profile.jpg` — it appears in the hero and About modal automatically.
+**Add your photo:** put a portrait at `public/profile.jpg` (4:5 works best) — it appears in the hero automatically.
+**Resume:** put `resume.pdf` in `public/` and set `resume: '/resume.pdf'` in `src/data.js`.
 
 ## Run locally
 ```bash
@@ -21,4 +22,4 @@ npm run dev
 ```
 
 ## Deploy
-Push to GitHub and import the repo on Vercel (framework preset: Vite). `vercel.json` is included.
+Push to GitHub, import the repo on Vercel (framework: Vite). `vercel.json` is included.

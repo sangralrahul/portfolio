@@ -1,114 +1,91 @@
-import { motion } from 'framer-motion'
 import { useState } from 'react'
 import Icon from './Icons.jsx'
 import { Reveal } from './Scroll.jsx'
 import { profile, socials } from '../data.js'
 
-const faqs = [
-  { q: 'What roles is Rahul looking for?', a: 'SDE-1 / New Grad 2026 roles — full-stack, backend or AI engineering — plus freelance projects. Available immediately, remote or on-site.' },
-  { q: 'What does Rahul build best?', a: 'Production web products end to end: React + TypeScript frontends, FastAPI/REST backends, PostgreSQL/Firestore data layers, auth, payments, CI/CD, and AI features like RAG pipelines and LLM tooling.' },
-  { q: 'Has Rahul shipped real products?', a: 'Yes. He is the founding (and sole) engineer at Aethex, a live SaaS with subscriptions, role-based access and analytics — and the founder-engineer behind Zyphix.' },
-  { q: 'How fast does Rahul reply?', a: 'Usually within 24 hours. Email is fastest.' },
-]
-
 export default function Contact() {
-  const [email, setEmail] = useState('')
-  const [open, setOpen] = useState(null)
-
+  const [form, setForm] = useState({ name: '', email: '', message: '' })
+  const set = (k) => (e) => setForm({ ...form, [k]: e.target.value })
   const submit = (e) => {
     e.preventDefault()
-    const body = `Hi Rahul,%0D%0A%0D%0AI saw your portfolio and would like to talk.%0D%0A%0D%0A— ${encodeURIComponent(email)}`
-    window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent("Let's work together")}&body=${body}`
+    const subject = encodeURIComponent(`Portfolio enquiry from ${form.name || 'a visitor'}`)
+    const body = encodeURIComponent(`${form.message}\n\n— ${form.name}\n${form.email}`)
+    window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`
   }
 
   return (
-    <section className="contact" id="contact">
-      <div className="contact-hero">
-        <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
-          Unlimited ideas, shipped products, and more.
-        </motion.h2>
-        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
-          Ready to build? Enter your email to start the conversation.
-        </motion.p>
-        <motion.form className="contact-form" onSubmit={submit} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }}>
-          <label className="float-input">
-            <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder=" " />
+    <section className="section contact" id="contact">
+      <div className="container contact-grid">
+        <div>
+          <Reveal className="section-head" y={24}>
+            <span className="kicker">Contact</span>
+            <h2>Let's build something that ships.</h2>
+            <p>Hiring for an SDE-1 / New Grad role, or need a product built end to end? I usually reply within 24 hours.</p>
+          </Reveal>
+          <div className="contact-list">
+            <Reveal as="a" delay={0.05} href={`mailto:${profile.email}`} className="contact-row">
+              <span className="fact-icon"><Icon name="mail" size={18} /></span>
+              <div><small>Email</small><strong>{profile.email}</strong></div>
+              <Icon name="arrow" size={16} className="contact-arrow" />
+            </Reveal>
+            <Reveal as="a" delay={0.1} href={`tel:${profile.phone.replace(/\s/g, '')}`} className="contact-row">
+              <span className="fact-icon"><Icon name="phone" size={18} /></span>
+              <div><small>Phone</small><strong>{profile.phone}</strong></div>
+              <Icon name="arrow" size={16} className="contact-arrow" />
+            </Reveal>
+            <Reveal as="a" delay={0.15} href={socials[1].url} target="_blank" rel="noreferrer" className="contact-row">
+              <span className="fact-icon"><Icon name="linkedin" size={18} /></span>
+              <div><small>LinkedIn</small><strong>linkedin.com/in/rahul-sangral</strong></div>
+              <Icon name="arrow" size={16} className="contact-arrow" />
+            </Reveal>
+            <Reveal as="a" delay={0.2} href={socials[0].url} target="_blank" rel="noreferrer" className="contact-row">
+              <span className="fact-icon"><Icon name="github" size={18} /></span>
+              <div><small>GitHub</small><strong>github.com/sangralrahul</strong></div>
+              <Icon name="arrow" size={16} className="contact-arrow" />
+            </Reveal>
+          </div>
+        </div>
+        <Reveal as="form" delay={0.15} className="contact-form" onSubmit={submit}>
+          <label className="field">
+            <input required placeholder=" " value={form.name} onChange={set('name')} />
+            <span>Your name</span>
+          </label>
+          <label className="field">
+            <input required type="email" placeholder=" " value={form.email} onChange={set('email')} />
             <span>Email address</span>
           </label>
-          <button className="btn btn--red" type="submit">
-            Get Started <Icon name="right" size={22} />
+          <label className="field">
+            <textarea required rows={5} placeholder=" " value={form.message} onChange={set('message')} />
+            <span>What are you building?</span>
+          </label>
+          <button className="btn btn--primary btn--full" type="submit">
+            Send message <Icon name="arrow" size={18} />
           </button>
-        </motion.form>
-
-        <div className="contact-cards">
-          <Reveal as="a" delay={0} href={`mailto:${profile.email}`} className="contact-card">
-            <Icon name="mail" size={22} />
-            <span>Email</span>
-            <b>{profile.email}</b>
-          </Reveal>
-          <Reveal as="a" delay={0.1} href={`tel:${profile.phone.replace(/\s/g, '')}`} className="contact-card">
-            <Icon name="phone" size={22} />
-            <span>Phone</span>
-            <b>{profile.phone}</b>
-          </Reveal>
-          <Reveal delay={0.2} className="contact-card">
-            <Icon name="pin" size={22} />
-            <span>Location</span>
-            <b>{profile.location}</b>
-          </Reveal>
-          <Reveal as="a" delay={0.3} href={socials[1].url} target="_blank" rel="noreferrer" className="contact-card">
-            <Icon name="linkedin" size={22} />
-            <span>LinkedIn</span>
-            <b>rahul-sangral</b>
-          </Reveal>
-        </div>
-      </div>
-
-      <div className="faq">
-        <h2>Frequently Asked Questions</h2>
-        {faqs.map((f, i) => (
-          <Reveal key={f.q} delay={i * 0.08} y={24} className={`faq-item ${open === i ? 'is-open' : ''}`}>
-            <button onClick={() => setOpen(open === i ? null : i)}>
-              {f.q}
-              <Icon name="plus" size={30} strokeWidth={1.5} />
-            </button>
-            <div className="faq-a">
-              <p>{f.a}</p>
-            </div>
-          </Reveal>
-        ))}
+          <small className="form-note">Opens your email client — nothing is stored.</small>
+        </Reveal>
       </div>
     </section>
   )
 }
 
 export function Footer() {
-  const cols = [
-    socials.slice(0, 2),
-    socials.slice(2, 4),
-    socials.slice(4, 6),
-    socials.slice(6, 8),
-  ]
   return (
     <footer className="footer">
-      <div className="footer-social">
-        <a href={socials[0].url} target="_blank" rel="noreferrer" aria-label="GitHub"><Icon name="github" size={24} /></a>
-        <a href={socials[1].url} target="_blank" rel="noreferrer" aria-label="LinkedIn"><Icon name="linkedin" size={24} /></a>
-        <a href={`mailto:${profile.email}`} aria-label="Email"><Icon name="mail" size={24} /></a>
+      <div className="container footer-inner">
+        <div className="footer-brand">
+          <span className="monogram">RS</span>
+          <div>
+            <strong>Rahul Sangral</strong>
+            <small>{profile.role}</small>
+          </div>
+        </div>
+        <ul className="footer-links">
+          {socials.map((s) => (
+            <li key={s.id}><a href={s.url} target="_blank" rel="noreferrer">{s.name}</a></li>
+          ))}
+        </ul>
+        <p className="footer-copy">© {new Date().getFullYear()} Rahul Sangral · {profile.location} · Built with React & Framer Motion</p>
       </div>
-      <div className="footer-grid">
-        {cols.map((c, i) => (
-          <ul key={i}>
-            {c.map((s) => (
-              <li key={s.id}>
-                <a href={s.url} target="_blank" rel="noreferrer">{s.name}</a>
-              </li>
-            ))}
-          </ul>
-        ))}
-      </div>
-      <a className="footer-code" href={profile.resume} target="_blank" rel="noreferrer">Download Resume</a>
-      <p>© {new Date().getFullYear()} Rahul Sangral · Jammu, India · English · हिन्दी · डोगरी</p>
     </footer>
   )
 }
