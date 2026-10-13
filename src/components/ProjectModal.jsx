@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { useEffect } from 'react'
 import Icon from './Icons.jsx'
 import Poster from './Poster.jsx'
+import ProjectImage from './ProjectImage.jsx'
 import { profile, projects } from '../data.js'
 
 const details = {
@@ -80,7 +81,7 @@ export default function ProjectModal({ project, onClose, onOpen }) {
       >
         <button className="modal-close" onClick={onClose} aria-label="Close"><Icon name="close" size={20} /></button>
         <div className="modal-banner">
-          <Poster id={project.id} hue={project.hue} badge={false} big />
+          <ProjectImage project={project} big />
           <div className="modal-banner-fade" />
           <div className="modal-banner-copy">
             <span className="kicker">{project.kicker}</span>

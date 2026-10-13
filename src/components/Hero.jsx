@@ -35,10 +35,11 @@ export default function Hero() {
             <span className="pulse" /> Available for SDE-1 / New Grad 2026 · Remote or on-site
           </motion.div>
           <h1 className="hero-title">
-            <SplitText text="Rahul" delay={0.3} stagger={0.05} />
-            <br />
-            <SplitText text="Sangral" delay={0.55} stagger={0.05} className="accent" />
+            <SplitText text="Rahul Sangral" delay={0.3} stagger={0.04} />
           </h1>
+          <motion.p className="hero-statement" {...up(1)}>
+            I build <em>production software</em> end to end — from the database schema to the pixel.
+          </motion.p>
           <motion.p className="hero-role" {...up(2)}>
             <Typewriter phrases={['Full-Stack Engineer', 'AI Developer', 'Founding Engineer']} speed={70} pause={2600} />
           </motion.p>
@@ -73,18 +74,15 @@ export default function Hero() {
               ) : (
                 <div className="photo-placeholder">
                   <span>RS</span>
-                  <small>Add public/profile.jpg</small>
                 </div>
               )}
               <div className="photo-ring" />
+              <div className="photo-caption">
+                <small>Currently</small>
+                <strong>Founding Engineer · Aethex</strong>
+              </div>
             </div>
           </Tilt>
-          <motion.div className="float-chip float-chip--a" animate={{ y: [0, -10, 0] }} transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}>
-            <Icon name="rocket" size={16} /> Founding Engineer · Aethex
-          </motion.div>
-          <motion.div className="float-chip float-chip--b" animate={{ y: [0, 10, 0] }} transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}>
-            <Icon name="pin" size={16} /> {profile.location}
-          </motion.div>
         </motion.div>
       </div>
 

@@ -1,16 +1,16 @@
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import Icon from './Icons.jsx'
-import Poster from './Poster.jsx'
+import ProjectImage from './ProjectImage.jsx'
 import { CountUp, Reveal } from './Scroll.jsx'
 import { Tilt } from './Live.jsx'
 import { Words } from './Deco.jsx'
 import { certifications, education, experience, profile, projects, skills, socials } from '../data.js'
 
-export function SectionHead({ kicker, title, lede, align = 'left' }) {
+export function SectionHead({ num, kicker, title, lede, align = 'left' }) {
   return (
     <Reveal className={`section-head section-head--${align}`} y={24}>
-      <span className="kicker">{kicker}</span>
+      <span className="kicker">{num && <b>{num}</b>}{kicker}</span>
       <h2><Words text={title} /></h2>
       {lede && <p>{lede}</p>}
       <motion.span className="rule" initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ duration: 0.9, delay: 0.2, ease: [0.2, 0.8, 0.2, 1] }} />
@@ -53,7 +53,7 @@ export function About() {
     <section className="section" id="about">
       <div className="container about-grid">
         <div>
-          <SectionHead kicker="About" title="Engineer who owns the whole stack." />
+          <SectionHead num="01" kicker="About" title="Engineer who owns the whole stack." />
           <Reveal delay={0.1}>
             <p className="prose">
               I'm a full-stack engineer and AI developer graduating in 2026. As the sole engineer at an early-stage SaaS company I design APIs, model data, build the React frontend, wire up auth and payments, and ship through CI/CD — the entire path from idea to production.
@@ -62,11 +62,18 @@ export function About() {
               My work leans on strong CS fundamentals and a product mindset: the AI tooling I've built cut manual analysis time by ~60% and reduced repetitive reporting by ~40%. I care about clean systems, measurable outcomes and shipping.
             </p>
           </Reveal>
-          <Reveal delay={0.2} className="about-tags">
-            {['React', 'TypeScript', 'FastAPI', 'PostgreSQL', 'Firebase', 'AWS', 'Claude API', 'RAG'].map((t) => (
-              <span key={t}>{t}</span>
+          <div className="highlights">
+            {[
+              { t: 'End-to-end ownership', d: 'API design, data modelling, frontend, auth, payments and CI/CD — shipped alone, in production.' },
+              { t: 'AI that moves numbers', d: 'LLM tooling that cut manual analysis ~60% and reporting requests ~40%.' },
+              { t: 'Fundamentals first', d: 'DSA, DBMS, OS, networks and system design behind every product decision.' },
+            ].map((h, i) => (
+              <Reveal key={h.t} delay={0.15 + i * 0.08} className="highlight">
+                <strong>{h.t}</strong>
+                <p>{h.d}</p>
+              </Reveal>
             ))}
-          </Reveal>
+          </div>
         </div>
         <Reveal delay={0.15} className="facts">
           {facts.map((f, i) => (
@@ -92,7 +99,7 @@ export function Experience() {
   return (
     <section className="section" id="experience">
       <div className="container">
-        <SectionHead kicker="Experience" title="Where I've built things." lede="From freelance delivery to owning production at a startup." />
+        <SectionHead num="02" kicker="Experience" title="Where I've built things." lede="From freelance delivery to owning production at a startup." />
         <div className="timeline" ref={ref}>
           <div className="timeline-track"><motion.span style={{ scaleY: line }} /></div>
           {experience.map((e, i) => (
@@ -127,22 +134,17 @@ export function Projects({ onOpen }) {
   const [featured, ...rest] = projects
   const ref = useRef(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
-  const artY = useTransform(scrollYProgress, [0, 1], ['-8%', '8%'])
+  const artY = useTransform(scrollYProgress, [0, 1], ['-4%', '4%'])
   return (
     <section className="section" id="projects">
       <div className="container">
-        <SectionHead kicker="Selected work" title="Projects that shipped." lede="Production systems, AI tooling and data products — built end to end." />
+        <SectionHead num="03" kicker="Selected work" title="Projects that shipped." lede="Production systems, AI tooling and data products — built end to end." />
 
         <Reveal className="featured" y={40}>
           <div className="featured-art" ref={ref} onClick={() => onOpen(featured)}>
             <motion.div style={{ y: artY }} className="featured-art-inner">
-              <Poster id={featured.id} hue={featured.hue} badge={false} big />
+              <ProjectImage project={featured} big />
             </motion.div>
-            <div className="featured-art-shade" />
-            <div className="featured-art-copy">
-              <span className="kicker">{featured.kicker}</span>
-              <strong>{featured.title}</strong>
-            </div>
           </div>
           <div className="featured-body">
             <span className="badge badge--live">Live in production</span>
@@ -168,7 +170,7 @@ export function Projects({ onOpen }) {
               <Tilt max={3} className="project-tilt">
                 <article className="project" onClick={() => onOpen(p)} role="button" tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && onOpen(p)}>
                   <div className="project-art">
-                    <Poster id={p.id} hue={p.hue} badge={false} />
+                    <ProjectImage project={p} />
                   </div>
                   <div className="project-body">
                     <span className="kicker">{p.kicker}</span>
@@ -191,7 +193,7 @@ export function Skills() {
   return (
     <section className="section section--alt" id="skills">
       <div className="container">
-        <SectionHead kicker="Capabilities" title="Tools I reach for." lede="A pragmatic stack for shipping web products and AI features." />
+        <SectionHead num="04" kicker="Capabilities" title="Tools I reach for." lede="A pragmatic stack for shipping web products and AI features." />
         <div className="skill-grid">
           {skills.map((g, i) => (
             <Reveal key={g.id} delay={(i % 3) * 0.08} className="skill-group">
@@ -220,7 +222,7 @@ export function Credentials() {
   return (
     <section className="section" id="certifications">
       <div className="container">
-        <SectionHead kicker="Credentials" title="Certifications & education." />
+        <SectionHead num="05" kicker="Credentials" title="Certifications & education." />
         <div className="cert-grid">
           {certifications.map((c, i) => (
             <Reveal key={c.id} delay={(i % 4) * 0.06} className="cert">
