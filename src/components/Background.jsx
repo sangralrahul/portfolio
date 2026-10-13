@@ -30,23 +30,29 @@ function FlowField() {
     const canvas = ref.current
     const ctx = canvas.getContext('2d', { alpha: true })
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
+    const dpr = 0.75 // render below native res: trails hide the softness, cost drops ~4x
     let w, h, raf, t = 0, parts = [], mx = -1e4, my = -1e4, visible = true
     const SCALE = 0.0016
     const resize = () => {
       w = canvas.clientWidth; h = canvas.clientHeight
       canvas.width = w * dpr; canvas.height = h * dpr
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-      const n = Math.round(Math.min(520, (w * h) / 3200))
+      const n = Math.round(Math.min(300, (w * h) / 5200))
       parts = Array.from({ length: n }).map(() => spawn())
       ctx.fillStyle = 'rgba(0,0,0,1)'; ctx.fillRect(0, 0, w, h)
     }
     const spawn = () => ({ x: Math.random() * w, y: Math.random() * h, life: 80 + Math.random() * 220, age: 0, s: 0.6 + Math.random() * 1.4, a: 0.25 + Math.random() * 0.55 })
+    let frame = 0, slow = 0, lastT = performance.now(), quality = 1
     const tick = () => {
-      if (!visible) { raf = requestAnimationFrame(tick); return }
-      t += 0.0035
+      raf = requestAnimationFrame(tick)
+      if (!visible) return
+      if (++frame % 2) return // 30fps — trails make it look continuous
+      // adaptive quality: if the main thread is struggling, shed load
+      const now = performance.now(), dt = now - lastT; lastT = now
+      if (dt > 70) { if (++slow > 20) { slow = 0; if (quality > 0.5) { quality = 0.5; parts.length = Math.floor(parts.length / 2) } else { cancelAnimationFrame(raf); return } } } else if (slow > 0) slow--
+      t += 0.007
       // fade previous frame → trails
-      ctx.fillStyle = 'rgba(0,0,0,0.07)'
+      ctx.fillStyle = 'rgba(0,0,0,0.12)'
       ctx.fillRect(0, 0, w, h)
       ctx.lineCap = 'round'
       for (const p of parts) {
@@ -64,7 +70,6 @@ function FlowField() {
         p.x = nx; p.y = ny; p.age++
         if (p.age > p.life || p.x < -10 || p.x > w + 10 || p.y < -10 || p.y > h + 10) Object.assign(p, spawn())
       }
-      raf = requestAnimationFrame(tick)
     }
     const onMove = (e) => { mx = e.clientX; my = e.clientY }
     const onVis = () => { visible = !document.hidden }
@@ -89,8 +94,10 @@ function Ribbons() {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     let raf, t = 0
     const W = 1600, H = 900
+    let frame = 0
     const draw = () => {
-      t += 0.004
+      if (++frame % 2) { raf = requestAnimationFrame(draw); return } // 30fps is plenty for ribbons
+      t += 0.008
       paths.forEach((p, i) => {
         const amp = 60 + i * 26, base = 300 + i * 95, k = 0.0045 + i * 0.0007, ph = t * (1 + i * 0.25)
         let d = `M -50 ${base}`

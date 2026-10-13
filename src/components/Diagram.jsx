@@ -92,9 +92,6 @@ export default function Diagram({ id, title, hero = false }) {
         <pattern id={`grid-${uid}`} width="24" height="24" patternUnits="userSpaceOnUse">
           <path d="M24 0H0V24" fill="none" stroke="rgba(255,255,255,.05)" strokeWidth="1" />
         </pattern>
-        <filter id={`glow-${uid}`} x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="3" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
-        </filter>
       </defs>
       <rect width={W} height={H} fill={`url(#grid-${uid})`} />
       {d.edges.map((e, i) => {
@@ -104,7 +101,7 @@ export default function Diagram({ id, title, hero = false }) {
           <g key={i}>
             <path d={p} fill="none" stroke="rgba(255,255,255,.14)" strokeWidth="1.5" />
             <path d={p} fill="none" stroke={col} strokeWidth="1.5" strokeDasharray="6 14" opacity=".55" className="edge-flow" style={{ animationDelay: `${-i * 0.7}s` }} />
-            <circle r="3.5" fill={col} filter={`url(#glow-${uid})`}>
+            <circle r="3.5" fill={col}>
               <animateMotion dur={`${2.6 + (i % 3) * 0.6}s`} repeatCount="indefinite" path={p} begin={`${-i * 0.9}s`} />
             </circle>
           </g>

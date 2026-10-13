@@ -1070,3 +1070,28 @@ body { background: #000; }
 @media (max-width: 760px) { .bg-flow { opacity: .4; } .bg-ribbons { opacity: .25; } }
 @media (prefers-reduced-motion: reduce) { .bg-ribbons { display: none; } }
 .logo-tile--ghost { background: rgba(255,255,255,.08) !important; color: #fff; box-shadow: none; border: 1px solid var(--line); }
+
+/* ═══════════════════════════════════════════════════════════════
+   PERFORMANCE — no per-card backdrop blur, no blend modes,
+   skip rendering offscreen sections
+   ═══════════════════════════════════════════════════════════════ */
+.glass { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; background: linear-gradient(160deg, #141414, #0b0b0b) !important; }
+.glass::after { display: none; }
+.bg-flow, .bg-ribbons, .blob, .cursor-glow { mix-blend-mode: normal; }
+.bg { transform: translateZ(0); contain: strict; }
+.bg-flow { opacity: .5; }
+.blob { filter: blur(70px); will-change: transform; }
+.hero-bg::before { display: none; }
+.nav--solid { backdrop-filter: blur(10px); }
+.float-chip.glass, .contact-form.glass, .nav-sheet { background: #111 !important; }
+.section { content-visibility: auto; contain-intrinsic-size: auto 900px; }
+.footer { content-visibility: auto; contain-intrinsic-size: auto 300px; }
+.tilt { will-change: auto; }
+.card, .hero-bg, .hero-content { will-change: auto; }
+.diagram .node { animation: none; }
+.logo-tile { box-shadow: none; }
+.shot { box-shadow: 0 12px 30px rgba(0,0,0,.4); }
+.glass { box-shadow: 0 1px 0 rgba(255,255,255,.07) inset, 0 12px 30px rgba(0,0,0,.4); }
+.project:hover, .cert:hover { box-shadow: 0 16px 40px rgba(0,0,0,.5); }
+.cta-banner { background: linear-gradient(120deg, #1c1c1c, #101010 50%, #171717); box-shadow: none; }
+.cta-banner::before { display: none; }
