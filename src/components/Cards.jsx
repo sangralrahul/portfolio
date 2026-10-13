@@ -158,12 +158,17 @@ export function Row({ row, onOpen, onHover, onLeave, index }) {
       transition={{ duration: 0.7, delay: Math.min(index, 2) * 0.06, ease: [0.2, 0.8, 0.2, 1] }}
     >
       <div className="row-head">
-        <h2>
+        <motion.h2
+          initial={{ opacity: 0, x: -24 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: '-5% 0px' }}
+          transition={{ duration: 0.6, ease: [0.2, 0.8, 0.2, 1] }}
+        >
           {row.title}
           <span className="row-explore">
             Explore All <Icon name="right" size={14} />
           </span>
-        </h2>
+        </motion.h2>
         {pages > 1 && (
           <div className="row-pages">
             {Array.from({ length: pages }).map((_, i) => (
@@ -180,9 +185,13 @@ export function Row({ row, onOpen, onHover, onLeave, index }) {
         )}
         <div className="row-track" ref={trackRef}>
           {row.items.map((item, i) => (
-            <div
+            <motion.div
               key={item.id}
               className="card"
+              initial={{ opacity: 0, y: 28, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: '-5% 0px' }}
+              transition={{ duration: 0.6, delay: Math.min(i, 6) * 0.07, ease: [0.2, 0.8, 0.2, 1] }}
               tabIndex={0}
               role="button"
               aria-label={metaFor(item, row.kind).title}
@@ -192,7 +201,7 @@ export function Row({ row, onOpen, onHover, onLeave, index }) {
               onKeyDown={(e) => e.key === 'Enter' && onOpen(item, row.kind)}
             >
               <CardFace item={{ ...item, _rank: i + 1 }} kind={row.kind} />
-            </div>
+            </motion.div>
           ))}
         </div>
         {page < pages - 1 && (

@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import Icon from './Icons.jsx'
+import { Reveal } from './Scroll.jsx'
 import { profile, socials } from '../data.js'
 
 const faqs = [
@@ -40,33 +41,33 @@ export default function Contact() {
         </motion.form>
 
         <div className="contact-cards">
-          <a href={`mailto:${profile.email}`} className="contact-card">
+          <Reveal as="a" delay={0} href={`mailto:${profile.email}`} className="contact-card">
             <Icon name="mail" size={22} />
             <span>Email</span>
             <b>{profile.email}</b>
-          </a>
-          <a href={`tel:${profile.phone.replace(/\s/g, '')}`} className="contact-card">
+          </Reveal>
+          <Reveal as="a" delay={0.1} href={`tel:${profile.phone.replace(/\s/g, '')}`} className="contact-card">
             <Icon name="phone" size={22} />
             <span>Phone</span>
             <b>{profile.phone}</b>
-          </a>
-          <div className="contact-card">
+          </Reveal>
+          <Reveal delay={0.2} className="contact-card">
             <Icon name="pin" size={22} />
             <span>Location</span>
             <b>{profile.location}</b>
-          </div>
-          <a href={socials[1].url} target="_blank" rel="noreferrer" className="contact-card">
+          </Reveal>
+          <Reveal as="a" delay={0.3} href={socials[1].url} target="_blank" rel="noreferrer" className="contact-card">
             <Icon name="linkedin" size={22} />
             <span>LinkedIn</span>
             <b>rahul-sangral</b>
-          </a>
+          </Reveal>
         </div>
       </div>
 
       <div className="faq">
         <h2>Frequently Asked Questions</h2>
         {faqs.map((f, i) => (
-          <div key={f.q} className={`faq-item ${open === i ? 'is-open' : ''}`}>
+          <Reveal key={f.q} delay={i * 0.08} y={24} className={`faq-item ${open === i ? 'is-open' : ''}`}>
             <button onClick={() => setOpen(open === i ? null : i)}>
               {f.q}
               <Icon name="plus" size={30} strokeWidth={1.5} />
@@ -74,7 +75,7 @@ export default function Contact() {
             <div className="faq-a">
               <p>{f.a}</p>
             </div>
-          </div>
+          </Reveal>
         ))}
       </div>
     </section>

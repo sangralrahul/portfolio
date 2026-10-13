@@ -1,5 +1,5 @@
 import { AnimatePresence } from 'framer-motion'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import ProfileGate from './components/ProfileGate.jsx'
 import Intro from './components/Intro.jsx'
 import Navbar from './components/Navbar.jsx'
@@ -7,6 +7,7 @@ import Hero from './components/Hero.jsx'
 import Modal from './components/Modal.jsx'
 import Contact, { Footer } from './components/Contact.jsx'
 import { CardFace, HoverPreview, Row, metaFor } from './components/Cards.jsx'
+import { BackToTop, Marquee, ScrollProgress, Spotlight } from './components/Scroll.jsx'
 import { certifications, education, experience, projects, skills, socials, viewers } from './data.js'
 
 const ROWS = {
@@ -117,6 +118,7 @@ export default function App() {
 
       {stage === 'browse' && (
         <div className="app">
+          <ScrollProgress />
           <Navbar
             viewer={viewer}
             onSwitch={(v) => { setViewer(v); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
@@ -140,20 +142,31 @@ export default function App() {
             </main>
           ) : (
             <>
-              <Hero onMore={() => setModal({ item: null, kind: 'about' })} onReplay={() => setStage('intro')} />
+              <Hero viewer={viewer} onMore={() => setModal({ item: null, kind: 'about' })} onReplay={() => setStage('intro')} />
               <main className="rows">
-                {rows.map((row, i) =>
-                  row.kind === 'mixed' ? (
-                    <MixedRow key={row.id} row={row} index={i} onOpen={openModal} />
-                  ) : (
-                    <Row key={row.id + viewer.id} row={row} index={i} onOpen={openModal} onHover={onHover} onLeave={onLeave} />
-                  ),
-                )}
+                {rows.map((row, i) => {
+                  const el =
+                    row.kind === 'mixed' ? (
+                      <MixedRow key={row.id} row={row} index={i} onOpen={openModal} />
+                    ) : (
+                      <Row key={row.id + viewer.id} row={row} index={i} onOpen={openModal} onHover={onHover} onLeave={onLeave} />
+                    )
+                  if (i === 1)
+                    return (
+                      <Fragment key={row.id + '-wrap'}>
+                        {el}
+                        <Marquee />
+                        <Spotlight onOpen={() => openModal(projects[0], 'project')} />
+                      </Fragment>
+                    )
+                  return el
+                })}
               </main>
               <Contact />
             </>
           )}
           <Footer />
+          <BackToTop />
 
           <HoverPreview state={hover} onOpen={openModal} onClose={() => onLeave(true)} onKeep={keepHover} myList={myList} toggleList={toggleList} />
           <AnimatePresence>

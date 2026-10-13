@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import Icon from './Icons.jsx'
 import { profile } from '../data.js'
@@ -81,8 +81,13 @@ const codeLines = [
   'git push origin main  # → Vercel ✓ deployed',
 ]
 
-export default function Hero({ onMore, onReplay }) {
+export default function Hero({ onMore, onReplay, viewer }) {
   const [hasPhoto, setHasPhoto] = useState(false)
+  const { scrollY } = useScroll()
+  const contentY = useTransform(scrollY, [0, 600], [0, 140])
+  const contentOpacity = useTransform(scrollY, [0, 420], [1, 0])
+  const bgY = useTransform(scrollY, [0, 800], [0, 160])
+  const bgScale = useTransform(scrollY, [0, 800], [1, 1.12])
   useEffect(() => {
     const img = new Image()
     img.onload = () => setHasPhoto(true)
@@ -97,7 +102,7 @@ export default function Hero({ onMore, onReplay }) {
 
   return (
     <section className="hero" id="home">
-      <div className="hero-bg">
+      <motion.div className="hero-bg" style={{ y: bgY, scale: bgScale }}>
         <div className="hero-glow hero-glow--a" />
         <div className="hero-glow hero-glow--b" />
         <div className="hero-glow hero-glow--c" />
@@ -118,9 +123,9 @@ export default function Hero({ onMore, onReplay }) {
         )}
         <div className="hero-vignette" />
         <div className="hero-fade" />
-      </div>
+      </motion.div>
 
-      <div className="hero-content">
+      <motion.div className="hero-content" style={{ y: contentY, opacity: contentOpacity }}>
         <motion.div className="hero-series" {...stagger(0)}>
           <span className="hero-series-r">R</span>
           <span>S E R I E S</span>
@@ -143,7 +148,7 @@ export default function Hero({ onMore, onReplay }) {
           <span className="pill">HD</span>
         </motion.div>
         <motion.p className="hero-desc" {...stagger(4)}>
-          {profile.tagline}
+          {viewer?.tagline || profile.tagline}
         </motion.p>
         <motion.div className="hero-actions" {...stagger(5)}>
           <a className="btn btn--play" href={profile.resume} target="_blank" rel="noreferrer">
@@ -153,7 +158,7 @@ export default function Hero({ onMore, onReplay }) {
             <Icon name="info" size={24} /> More Info
           </button>
         </motion.div>
-      </div>
+      </motion.div>
 
       <div className="hero-side">
         <button className="round-btn" onClick={onReplay} aria-label="Replay intro" title="Replay intro">
@@ -161,6 +166,10 @@ export default function Hero({ onMore, onReplay }) {
         </button>
         <span className="hero-rating">Available Now</span>
       </div>
+      <motion.div className="hero-scroll-cue" style={{ opacity: contentOpacity }} aria-hidden="true">
+        <span />
+        Scroll
+      </motion.div>
     </section>
   )
 }

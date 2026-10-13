@@ -209,12 +209,33 @@ export const education = [
 
 // "Who's watching?" profiles — each one reorders the rows on the browse page.
 export const viewers = [
-  { id: 'recruiter', name: 'Recruiter', hue: [0, 20], icon: 'briefcase',
+  { id: 'recruiter', name: 'Recruiter', hue: [0, 20], icon: 'briefcase', tagline: 'Founding engineer who ships production SaaS end to end — React, FastAPI, PostgreSQL and AI tooling. Graduating 2026, available immediately for SDE-1 / New Grad roles, remote or on-site.',
     rows: ['experience', 'top10', 'skills', 'certifications', 'education', 'profiles'] },
-  { id: 'developer', name: 'Developer', hue: [205, 235], icon: 'code',
+  { id: 'developer', name: 'Developer', hue: [205, 235], icon: 'code', tagline: 'Full-stack and AI engineer. Typed React frontends, FastAPI services, SQL schemas, RAG pipelines and CI/CD — built solo, shipped to real users.',
     rows: ['top10', 'skills', 'profiles', 'experience', 'certifications', 'education'] },
-  { id: 'founder', name: 'Founder', hue: [265, 295], icon: 'rocket',
+  { id: 'founder', name: 'Founder', hue: [265, 295], icon: 'rocket', tagline: 'Zero-to-one builder. Sole engineer behind a live SaaS with auth, subscriptions and analytics — and founder of Zyphix. I turn an idea into a deployed product.',
     rows: ['top10', 'experience', 'skills', 'certifications', 'profiles', 'education'] },
-  { id: 'explorer', name: 'Explorer', hue: [140, 170], icon: 'compass',
-    rows: ['profiles', 'top10', 'certifications', 'skills', 'experience', 'education'] },
+  { id: 'investor', name: 'Investor', hue: [42, 28], icon: 'chart', tagline: 'Technical founder with shipped products and measurable outcomes: 60% faster analysis, 40% fewer manual reports, two live platforms. Capital-efficient by necessity — one engineer, production scale.',
+    rows: ['top10', 'experience', 'certifications', 'skills', 'profiles', 'education'] },
+]
+
+// Spotlight — the featured title on the browse page.
+export const spotlight = {
+  id: 'aethex',
+  eyebrow: 'Featured Original',
+  title: 'Aethex',
+  summary:
+    'One engineer, one production SaaS. Aethex ships a React + TypeScript frontend, a FastAPI backend, PostgreSQL and Firestore data layers, Firebase Auth with role-based access, Razorpay subscriptions, GA4 analytics and CI/CD on Vercel and Railway.',
+  highlights: [
+    { value: 1, suffix: '', label: 'Engineer on the team' },
+    { value: 6, suffix: '+', label: 'Integrated services' },
+    { value: 100, suffix: '%', label: 'Built end to end' },
+    { value: 24, suffix: 'h', label: 'Typical reply time' },
+  ],
+  url: 'https://aethex.in/',
+}
+
+export const marquee = [
+  'React', 'TypeScript', 'Python', 'FastAPI', 'PostgreSQL', 'Firebase', 'AWS', 'Google Cloud', 'Azure', 'Docker',
+  'Claude API', 'RAG', 'Pandas', 'Tableau', 'Razorpay', 'Vercel', 'Railway', 'CI/CD', 'SQL', 'Tailwind',
 ]
