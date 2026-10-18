@@ -1,5 +1,5 @@
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import Icon from './Icons.jsx'
 import { profile } from '../data.js'
 
@@ -26,16 +26,24 @@ export default function Nav() {
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState('home')
 
+  const ticking = useRef(false)
   useMotionValueEvent(scrollY, 'change', (y) => {
-    const prev = scrollY.getPrevious() ?? 0
-    setHidden(y > prev && y > 160 && !open)
-    setSolid(y > 24)
-    let cur = 'home'
-    for (const l of links) {
-      const el = document.getElementById(l.id)
-      if (el && el.getBoundingClientRect().top - 120 <= 0) cur = l.id
-    }
-    setActive(cur)
+    if (ticking.current) return
+    ticking.current = true
+    requestAnimationFrame(() => {
+      ticking.current = false
+      const prev = scrollY.getPrevious() ?? 0
+      const h = y > prev && y > 160 && !open
+      setHidden((v) => (v === h ? v : h))
+      const s = y > 24
+      setSolid((v) => (v === s ? v : s))
+      let cur = 'home'
+      for (const l of links) {
+        const el = document.getElementById(l.id)
+        if (el && el.offsetTop - 140 <= y) cur = l.id
+      }
+      setActive((v) => (v === cur ? v : cur))
+    })
   })
 
   const go = (id) => {

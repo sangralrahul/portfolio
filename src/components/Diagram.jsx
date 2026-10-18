@@ -75,13 +75,22 @@ export default function Diagram({ id, title, hero = false }) {
   useEffect(() => {
     const svg = ref.current
     if (!svg) return
-    svg.pauseAnimations()
-    const io = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { svg.unpauseAnimations(); svg.classList.remove('is-paused') } else { svg.pauseAnimations(); svg.classList.add('is-paused') }
-    }, { rootMargin: '100px' })
+    let inView = false, hover = false, scrollT = 0
+    const apply = () => {
+      const run = inView && (hero || hover) && performance.now() - scrollT > 160
+      if (run) { svg.unpauseAnimations(); svg.classList.remove('is-paused') } else { svg.pauseAnimations(); svg.classList.add('is-paused') }
+    }
+    svg.pauseAnimations(); svg.classList.add('is-paused')
+    const io = new IntersectionObserver(([e]) => { inView = e.isIntersecting; apply() }, { rootMargin: '60px' })
     io.observe(svg)
-    return () => io.disconnect()
-  }, [])
+    const card = svg.closest('.project, .featured, .photo-card') || svg
+    const on = () => { hover = true; apply() }, off = () => { hover = false; apply() }
+    card.addEventListener('pointerenter', on); card.addEventListener('pointerleave', off)
+    let timer
+    const onScroll = () => { scrollT = performance.now(); apply(); clearTimeout(timer); timer = setTimeout(apply, 200) }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => { io.disconnect(); card.removeEventListener('pointerenter', on); card.removeEventListener('pointerleave', off); window.removeEventListener('scroll', onScroll); clearTimeout(timer) }
+  }, [hero])
   if (!d) return null
   const pos = Object.fromEntries(d.nodes.map((n) => [n.id, { x: colX(n.c), y: rowY(n.r) }]))
   const path = ([a, b]) => {

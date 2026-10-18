@@ -43,9 +43,13 @@ function FlowField() {
     }
     const spawn = () => ({ x: Math.random() * w, y: Math.random() * h, life: 80 + Math.random() * 220, age: 0, s: 0.6 + Math.random() * 1.4, a: 0.25 + Math.random() * 0.55 })
     let frame = 0, slow = 0, lastT = performance.now(), quality = 1
+    let scrolling = 0
+    const onScroll = () => { scrolling = performance.now() }
+    window.addEventListener('scroll', onScroll, { passive: true })
     const tick = () => {
       raf = requestAnimationFrame(tick)
       if (!visible) return
+      if (performance.now() - scrolling < 160) return // never compete with scrolling
       if (++frame % 2) return // 30fps — trails make it look continuous
       // adaptive quality: if the main thread is struggling, shed load
       const now = performance.now(), dt = now - lastT; lastT = now
@@ -80,58 +84,18 @@ function FlowField() {
     window.addEventListener('resize', resize)
     window.addEventListener('pointermove', onMove, { passive: true })
     document.addEventListener('visibilitychange', onVis)
-    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', resize); window.removeEventListener('pointermove', onMove); document.removeEventListener('visibilitychange', onVis) }
+    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', resize); window.removeEventListener('pointermove', onMove); window.removeEventListener('scroll', onScroll); document.removeEventListener('visibilitychange', onVis) }
   }, [])
   return <canvas ref={ref} className="bg-flow" />
 }
 
 /* ── Wave ribbons: layered sine ribbons drifting slowly (SVG, cheap) ── */
-function Ribbons() {
-  const ref = useRef(null)
-  useEffect(() => {
-    const svg = ref.current
-    const paths = [...svg.querySelectorAll('path')]
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    let raf, t = 0
-    const W = 1600, H = 900
-    let frame = 0
-    const draw = () => {
-      if (++frame % 2) { raf = requestAnimationFrame(draw); return } // 30fps is plenty for ribbons
-      t += 0.008
-      paths.forEach((p, i) => {
-        const amp = 60 + i * 26, base = 300 + i * 95, k = 0.0045 + i * 0.0007, ph = t * (1 + i * 0.25)
-        let d = `M -50 ${base}`
-        for (let x = 0; x <= W + 50; x += 40) {
-          const y = base + Math.sin(x * k + ph) * amp + Math.sin(x * k * 2.3 - ph * 1.7) * amp * 0.35
-          d += ` L ${x} ${y.toFixed(1)}`
-        }
-        p.setAttribute('d', d)
-      })
-      if (!reduce) raf = requestAnimationFrame(draw)
-    }
-    draw()
-    return () => cancelAnimationFrame(raf)
-  }, [])
-  return (
-    <svg ref={ref} className="bg-ribbons" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-hidden="true">
-      <defs>
-        <linearGradient id="rib" x1="0" x2="1">
-          <stop offset="0" stopColor="#fff" stopOpacity="0" />
-          <stop offset=".5" stopColor="#fff" stopOpacity=".55" />
-          <stop offset="1" stopColor="#fff" stopOpacity="0" />
-        </linearGradient>
-      </defs>
-      {[0, 1, 2, 3, 4].map((i) => <path key={i} fill="none" stroke="url(#rib)" strokeWidth={1.2 - i * 0.15} opacity={0.5 - i * 0.08} />)}
-    </svg>
-  )
-}
 
 const lite = typeof navigator !== 'undefined' && ((navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4 || navigator.connection?.saveData || window.matchMedia('(prefers-reduced-motion: reduce)').matches)
 
 export default function Background() {
   const { scrollYProgress } = useScroll()
   const gridY = useTransform(scrollYProgress, [0, 1], ['0%', '-20%'])
-  const ribY = useTransform(scrollYProgress, [0, 1], ['0%', '-35%'])
   const blobA = useTransform(scrollYProgress, [0, 1], ['0vh', '60vh'])
   const blobB = useTransform(scrollYProgress, [0, 1], ['0vh', '-40vh'])
   return (
@@ -142,7 +106,6 @@ export default function Background() {
         <motion.span className="blob blob--b" style={{ y: blobB }} />
       </div>
       {!lite && <FlowField />}
-      {!lite && <motion.div className="bg-ribbons-wrap" style={{ y: ribY }}><Ribbons /></motion.div>}
       <div className="bg-spot" />
       <div className="bg-vignette" />
       <div className="bg-noise" />

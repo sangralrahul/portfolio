@@ -1121,3 +1121,7 @@ body { background: #000; }
 .tilt-shine { display: none; }
 .nav--solid { backdrop-filter: none; background: rgba(0,0,0,.92); }
 @media (max-width: 760px) { .bg-flow, .bg-ribbons { display: none; } }
+.diagram.is-paused .edge-flow, .diagram.is-paused circle { animation-play-state: paused; }
+.bg-ribbons, .bg-ribbons-wrap { display: none; }
+.hero-orb { animation: none; }
+.blob { animation-duration: 60s; }
