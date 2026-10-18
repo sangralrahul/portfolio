@@ -30,14 +30,14 @@ function FlowField() {
     const canvas = ref.current
     const ctx = canvas.getContext('2d', { alpha: true })
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const dpr = 0.75 // render below native res: trails hide the softness, cost drops ~4x
+    const dpr = 0.6 // render well below native res: trails hide the softness
     let w, h, raf, t = 0, parts = [], mx = -1e4, my = -1e4, visible = true
     const SCALE = 0.0016
     const resize = () => {
       w = canvas.clientWidth; h = canvas.clientHeight
       canvas.width = w * dpr; canvas.height = h * dpr
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-      const n = Math.round(Math.min(300, (w * h) / 5200))
+      const n = Math.round(Math.min(220, (w * h) / 7000))
       parts = Array.from({ length: n }).map(() => spawn())
       ctx.fillStyle = 'rgba(0,0,0,1)'; ctx.fillRect(0, 0, w, h)
     }
@@ -126,6 +126,8 @@ function Ribbons() {
   )
 }
 
+const lite = typeof navigator !== 'undefined' && ((navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4 || navigator.connection?.saveData || window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+
 export default function Background() {
   const { scrollYProgress } = useScroll()
   const gridY = useTransform(scrollYProgress, [0, 1], ['0%', '-20%'])
@@ -139,8 +141,8 @@ export default function Background() {
         <motion.span className="blob blob--a" style={{ y: blobA }} />
         <motion.span className="blob blob--b" style={{ y: blobB }} />
       </div>
-      <FlowField />
-      <motion.div className="bg-ribbons-wrap" style={{ y: ribY }}><Ribbons /></motion.div>
+      {!lite && <FlowField />}
+      {!lite && <motion.div className="bg-ribbons-wrap" style={{ y: ribY }}><Ribbons /></motion.div>}
       <div className="bg-spot" />
       <div className="bg-vignette" />
       <div className="bg-noise" />

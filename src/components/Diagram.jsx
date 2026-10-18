@@ -1,4 +1,4 @@
-import { useId } from 'react'
+import { useEffect, useId, useRef } from 'react'
 
 /*
  * Animated architecture diagrams — honest visuals for each project.
@@ -71,6 +71,17 @@ const rowY = (r) => 60 + r * ((H - 120 - NH) / 2)
 export default function Diagram({ id, title, hero = false }) {
   const d = diagrams[id]
   const uid = useId().replace(/:/g, '')
+  const ref = useRef(null)
+  useEffect(() => {
+    const svg = ref.current
+    if (!svg) return
+    svg.pauseAnimations()
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { svg.unpauseAnimations(); svg.classList.remove('is-paused') } else { svg.pauseAnimations(); svg.classList.add('is-paused') }
+    }, { rootMargin: '100px' })
+    io.observe(svg)
+    return () => io.disconnect()
+  }, [])
   if (!d) return null
   const pos = Object.fromEntries(d.nodes.map((n) => [n.id, { x: colX(n.c), y: rowY(n.r) }]))
   const path = ([a, b]) => {
@@ -87,7 +98,7 @@ export default function Diagram({ id, title, hero = false }) {
     return `M${x1} ${y1} C ${cx} ${y1}, ${cx} ${y2}, ${x2} ${y2}`
   }
   return (
-    <svg className={`diagram ${hero ? 'diagram--hero' : ''}`} viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${title} architecture`}>
+    <svg ref={ref} className={`diagram ${hero ? 'diagram--hero' : ''}`} viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${title} architecture`}>
       <defs>
         <pattern id={`grid-${uid}`} width="24" height="24" patternUnits="userSpaceOnUse">
           <path d="M24 0H0V24" fill="none" stroke="rgba(255,255,255,.05)" strokeWidth="1" />

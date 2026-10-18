@@ -1095,3 +1095,29 @@ body { background: #000; }
 .project:hover, .cert:hover { box-shadow: 0 16px 40px rgba(0,0,0,.5); }
 .cta-banner { background: linear-gradient(120deg, #1c1c1c, #101010 50%, #171717); box-shadow: none; }
 .cta-banner::before { display: none; }
+
+/* ═══════════════════════════════════════════════════════════════
+   PERFORMANCE II — no content-visibility (scroll-up rebuild stalls),
+   no blur filters, no continuous repaint animations
+   ═══════════════════════════════════════════════════════════════ */
+.section, .footer { content-visibility: visible; contain-intrinsic-size: none; }
+.blob { filter: none; opacity: .5; }
+.blob--a { background: radial-gradient(circle, rgba(255,255,255,.14) 0%, rgba(255,255,255,.05) 30%, transparent 62%); }
+.blob--b { background: radial-gradient(circle, rgba(255,255,255,.1) 0%, rgba(255,255,255,.04) 30%, transparent 62%); }
+.hero-orb { filter: none; }
+.hero-orb--a { background: radial-gradient(circle, rgba(255,255,255,.16) 0%, rgba(255,255,255,.05) 35%, transparent 62%); }
+.hero-orb--b { background: radial-gradient(circle, rgba(255,255,255,.1) 0%, transparent 62%); }
+.glow-border::before { animation: none; background: conic-gradient(from 120deg, transparent 0 55%, rgba(255,255,255,.7) 75%, transparent 100%); }
+.hero-beam { animation: none; }
+.bg-grid { animation: none; }
+.bg-noise { display: none; }
+.grad-text, .hero-title .grad, .hero-title .grad span, .float-chip b, .live-stat b { animation: none; background-size: 100% 100%; }
+.diagram.is-paused .edge-flow { animation-play-state: paused; }
+.edge-flow { animation-duration: 2s; }
+.poster-pattern { animation: none; }
+.cursor-glow { display: none; }
+.bg-spot { display: none; }
+.hero-canvas { display: none; }
+.tilt-shine { display: none; }
+.nav--solid { backdrop-filter: none; background: rgba(0,0,0,.92); }
+@media (max-width: 760px) { .bg-flow, .bg-ribbons { display: none; } }
