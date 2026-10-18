@@ -79,45 +79,12 @@ export function CursorGlow() {
   return <motion.div className="cursor-glow" style={{ x: sx, y: sy }} aria-hidden="true" />
 }
 
-/** Wraps children in a 3D tilt + light-sweep that follows the mouse. */
-export function Tilt({ children, max = 10, className = '', style = {}, ...rest }) {
-  const ref = useRef(null)
-  const rx = useMotionValue(0)
-  const ry = useMotionValue(0)
-  const gx = useMotionValue(50)
-  const gy = useMotionValue(50)
-  const srx = useSpring(rx, { stiffness: 220, damping: 20 })
-  const sry = useSpring(ry, { stiffness: 220, damping: 20 })
-  const shine = useTransform([gx, gy], ([a, b]) => `radial-gradient(circle at ${a}% ${b}%, rgba(255,255,255,.08), transparent 55%)`)
-
-  const move = (e) => {
-    if (touch()) return
-    const r = ref.current.getBoundingClientRect()
-    const px = (e.clientX - r.left) / r.width
-    const py = (e.clientY - r.top) / r.height
-    ry.set((px - 0.5) * max * 2)
-    rx.set((0.5 - py) * max * 2)
-    gx.set(px * 100)
-    gy.set(py * 100)
-  }
-  const leave = () => {
-    rx.set(0)
-    ry.set(0)
-    gx.set(50)
-    gy.set(50)
-  }
+/** Tilt is now a plain wrapper: per-card spring physics cost more than they gave. */
+export function Tilt({ children, className = '', style = {}, max, ...rest }) {
   return (
-    <motion.div
-      ref={ref}
-      className={`tilt ${className}`}
-      style={{ rotateX: srx, rotateY: sry, transformStyle: 'preserve-3d', ...style }}
-      onPointerMove={move}
-      onPointerLeave={leave}
-      {...rest}
-    >
+    <div className={`tilt ${className}`} style={style} {...rest}>
       {children}
-      <motion.span className="tilt-shine" style={{ background: shine }} aria-hidden="true" />
-    </motion.div>
+    </div>
   )
 }
 

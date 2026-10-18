@@ -1125,3 +1125,7 @@ body { background: #000; }
 .bg-ribbons, .bg-ribbons-wrap { display: none; }
 .hero-orb { animation: none; }
 .blob { animation-duration: 60s; }
+
+/* keep the flow-field background; only structural perf tweaks remain */
+.tilt { transform: none !important; }
+.bg-flow { opacity: .55; }
