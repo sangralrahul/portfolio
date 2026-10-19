@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
+import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
 
 /*
  * "The Build" — an original scroll-driven Three.js world.
@@ -25,7 +26,7 @@ export default function World({ onReady }) {
       return
     }
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, small ? 1 : 1.5))
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1))
     renderer.setSize(window.innerWidth, window.innerHeight)
     renderer.setClearColor(0x000000, 1)
     mount.appendChild(renderer.domElement)
@@ -42,57 +43,48 @@ export default function World({ onReady }) {
     grid.position.set(0, -3, END / 2)
     scene.add(grid)
 
-    /* ── portal gates (one per chapter) ──────────────────────── */
-    const gates = new THREE.Group()
-    const lineMat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.55, fog: true })
-    const accentMat = new THREE.LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.9, fog: true })
-    const solidMat = new THREE.MeshBasicMaterial({ color: 0x050505, fog: true })
-    const frame = (w, h, t, mat) => {
-      const g = new THREE.Group()
-      const bars = [
-        [w, t, t, 0, h / 2], [w, t, t, 0, -h / 2],
-        [t, h, t, -w / 2, 0], [t, h, t, w / 2, 0],
-      ]
-      for (const [bw, bh, bd, x, y] of bars) {
-        const geo = new THREE.BoxGeometry(bw, bh, bd)
-        const m = new THREE.Mesh(geo, solidMat)
-        m.position.set(x, y, 0)
-        const e = new THREE.LineSegments(new THREE.EdgesGeometry(geo), mat)
-        e.position.copy(m.position)
-        g.add(m, e)
-      }
-      return g
+    /* ── static geometry is merged into a handful of draw calls ── */
+    const solids = [], edges = [], edgesDim = [], accentEdges = []
+    const box = (w, h, d, x, y, z, ry, rz, solidList, edgeList) => {
+      const g = new THREE.BoxGeometry(w, h, d)
+      const m = new THREE.Matrix4().compose(new THREE.Vector3(x, y, z), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, ry, rz)), new THREE.Vector3(1, 1, 1))
+      if (solidList) solidList.push(g.clone().applyMatrix4(m))
+      edgeList.push(new THREE.EdgesGeometry(g).applyMatrix4(m))
+      g.dispose()
     }
-    const spinners = []
+    const frameBars = (w, h, t) => [[w, t, t, 0, h / 2], [w, t, t, 0, -h / 2], [t, h, t, -w / 2, 0], [t, h, t, w / 2, 0]]
+    const spinnerSolids = [], spinnerEdges = []
     for (let i = 0; i < GATES; i++) {
       const z = -i * GATE_GAP - 6
-      const outer = frame(13, 9, 0.35, i === 0 ? accentMat : lineMat)
-      outer.position.set(0, 1.5, z)
-      gates.add(outer)
-      const inner = frame(6, 6, 0.12, lineMat)
-      inner.position.set(0, 1.5, z - 1.2)
-      inner.rotation.z = Math.PI / 4
-      gates.add(inner)
-      spinners.push(inner)
+      for (const [bw, bh, bd, x, y] of frameBars(13, 9, 0.35)) box(bw, bh, bd, x, 1.5 + y, z, 0, 0, solids, i === 0 ? accentEdges : edges)
+      // inner spinner: built around its own origin so it can rotate as one object
+      const ss = [], se = []
+      for (const [bw, bh, bd, x, y] of frameBars(6, 6, 0.12)) box(bw, bh, bd, x, y, 0, 0, 0, ss, se)
+      spinnerSolids.push(mergeGeometries(ss)); spinnerEdges.push(mergeGeometries(se))
     }
-    scene.add(gates)
-
-    /* ── monoliths lining the path ───────────────────────────── */
-    const monos = new THREE.Group()
     const rnd = (a, b) => a + Math.random() * (b - a)
-    const monoEdge = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.18, fog: true })
     for (let i = 0; i < 70; i++) {
       const h = rnd(3, 22), w = rnd(0.8, 3.5), d = rnd(0.8, 3.5)
-      const geo = new THREE.BoxGeometry(w, h, d)
-      const m = new THREE.Mesh(geo, solidMat)
       const side = Math.random() < 0.5 ? -1 : 1
-      m.position.set(side * rnd(11, 40), -3 + h / 2, rnd(END - 20, 20))
-      m.rotation.y = rnd(-0.4, 0.4)
-      const e = new THREE.LineSegments(new THREE.EdgesGeometry(geo), monoEdge)
-      e.position.copy(m.position); e.rotation.copy(m.rotation)
-      monos.add(m, e)
+      box(w, h, d, side * rnd(11, 40), -3 + h / 2, rnd(END - 20, 20), rnd(-0.4, 0.4), 0, solids, edgesDim)
     }
-    scene.add(monos)
+    const lineMat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.55, fog: true })
+    const accentMat = new THREE.LineBasicMaterial({ color: ACCENT, transparent: true, opacity: 0.9, fog: true })
+    const monoEdge = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.18, fog: true })
+    const solidMat = new THREE.MeshBasicMaterial({ color: 0x050505, fog: true })
+    scene.add(new THREE.Mesh(mergeGeometries(solids), solidMat))
+    scene.add(new THREE.LineSegments(mergeGeometries(edges), lineMat))
+    scene.add(new THREE.LineSegments(mergeGeometries(accentEdges), accentMat))
+    scene.add(new THREE.LineSegments(mergeGeometries(edgesDim), monoEdge))
+    ;[...solids, ...edges, ...accentEdges, ...edgesDim].forEach((g) => g.dispose())
+    const spinners = []
+    for (let i = 0; i < GATES; i++) {
+      const g = new THREE.Group()
+      g.add(new THREE.Mesh(spinnerSolids[i], solidMat), new THREE.LineSegments(spinnerEdges[i], lineMat))
+      g.position.set(0, 1.5, -i * GATE_GAP - 6 - 1.2)
+      g.rotation.z = Math.PI / 4
+      scene.add(g); spinners.push(g)
+    }
 
     /* ── drifting dust (shader points) ───────────────────────── */
     const N = small ? 1600 : 3500
@@ -155,16 +147,20 @@ export default function World({ onReady }) {
 
     /* ── state: scroll + mouse ───────────────────────────────── */
     let target = 0, current = 0, mx = 0, my = 0, cmx = 0, cmy = 0
-    const readScroll = () => {
-      const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight)
-      target = Math.min(1, Math.max(0, window.scrollY / max))
-    }
+    // page height is cached (re-measured on resize / content change) so the scroll handler never forces layout
+    let max = 1
+    const measure = () => { max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight) }
+    let lastScroll = 0
+    const readScroll = () => { lastScroll = performance.now(); target = Math.min(1, Math.max(0, window.scrollY / max)) }
+    measure()
+    const ro = new ResizeObserver(() => { measure(); readScroll() })
+    ro.observe(document.body)
     const onMove = (e) => { mx = e.clientX / window.innerWidth - 0.5; my = e.clientY / window.innerHeight - 0.5 }
     const onResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight
       camera.updateProjectionMatrix()
       renderer.setSize(window.innerWidth, window.innerHeight)
-      readScroll()
+      measure(); readScroll()
     }
     readScroll()
     window.addEventListener('scroll', readScroll, { passive: true })
@@ -179,7 +175,7 @@ export default function World({ onReady }) {
 
     const frameTick = () => {
       const t = (performance.now() - t0) / 1000
-      current += (target - current) * 0.06
+      current += (target - current) * 0.2
       cmx += (mx - cmx) * 0.05; cmy += (my - cmy) * 0.05
       const z = 10 + (END - 10) * current
       camera.position.set(cmx * 3, 2.2 - cmy * 1.5 + Math.sin(t * 0.4) * 0.15, z)
@@ -190,9 +186,12 @@ export default function World({ onReady }) {
       halo.lookAt(camera.position)
       renderer.render(scene, camera)
     }
+    let n = 0
     const loop = () => {
       if (!visible) return
-      frameTick()
+      // while the page is actively scrolling, draw every other frame so the browser has GPU headroom to paint content
+      const scrolling = performance.now() - lastScroll < 200
+      if (!scrolling || ++n % 2 === 0) frameTick()
       if (!reduce) raf = requestAnimationFrame(loop)
     }
     loop()
@@ -200,6 +199,7 @@ export default function World({ onReady }) {
 
     return () => {
       cancelAnimationFrame(raf)
+      ro.disconnect()
       window.removeEventListener('scroll', readScroll)
       window.removeEventListener('pointermove', onMove)
       window.removeEventListener('resize', onResize)

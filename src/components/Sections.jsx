@@ -1,4 +1,4 @@
-import { motion, useScroll, useSpring, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useRef } from 'react'
 import Icon from './Icons.jsx'
 import ProjectImage from './ProjectImage.jsx'
@@ -102,14 +102,12 @@ export function About() {
 /* ── Experience timeline ────────────────────────────────────── */
 export function Experience() {
   const ref = useRef(null)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 70%', 'end 60%'] })
-  const line = useSpring(scrollYProgress, { stiffness: 80, damping: 24 })
   return (
     <section className="section section--glow" id="experience">
       <div className="container">
         <SectionHead num="02" kicker="Experience" title="Where I've built things." lede="From freelance delivery to owning production at a startup." />
         <div className="timeline" ref={ref}>
-          <div className="timeline-track"><motion.span style={{ scaleY: line }} /></div>
+          <div className="timeline-track"><span style={{ transform: 'none' }} /></div>
           {experience.map((e, i) => (
             <Reveal key={e.id} delay={0.05} className="tl-item">
               <span className={`tl-dot ${i === 0 ? 'tl-dot--live' : ''}`} />
@@ -140,8 +138,6 @@ export function Experience() {
 export function Projects({ onOpen }) {
   const [featured, ...rest] = projects
   const ref = useRef(null)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
-  const artY = useTransform(scrollYProgress, [0, 1], ['-4%', '4%'])
   return (
     <section className="section" id="projects">
       <div className="container">
@@ -149,7 +145,7 @@ export function Projects({ onOpen }) {
 
         <Reveal className="featured glass glow-border" y={40}>
           <div className="featured-art" ref={ref} onClick={() => onOpen(featured)}>
-            <motion.div style={{ y: artY }} className="featured-art-inner">
+            <motion.div className="featured-art-inner">
               <ProjectImage project={featured} big />
             </motion.div>
           </div>

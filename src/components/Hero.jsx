@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import Icon from './Icons.jsx'
 import { SplitText, Typewriter, Tilt } from './Live.jsx'
@@ -16,10 +16,6 @@ export default function Hero() {
     img.onload = () => setHasPhoto(true)
     img.src = profile.photo
   }, [])
-  const { scrollY } = useScroll()
-  const textY = useTransform(scrollY, [0, 600], [0, 90])
-  const textO = useTransform(scrollY, [0, 500], [1, 0])
-  const cardY = useTransform(scrollY, [0, 600], [0, 50])
   const up = (i) => ({
     initial: { opacity: 0, y: 24 },
     animate: { opacity: 1, y: 0 },
@@ -35,7 +31,7 @@ export default function Hero() {
       </div>
 
       <div className="container hero-inner">
-        <motion.div className="hero-text" style={{ y: textY, opacity: textO }}>
+        <motion.div className="hero-text">
           <motion.div className="eyebrow" {...up(0)}>
             <span className="pulse" /> Available for SDE-1 / New Grad 2026 · Remote or on-site
           </motion.div>
@@ -69,7 +65,7 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        <motion.div className="hero-visual" style={{ y: cardY }} initial={{ opacity: 0, x: 40, scale: 0.96 }} animate={{ opacity: 1, x: 0, scale: 1 }} transition={{ delay: 0.5, duration: 1, ease: [0.2, 0.8, 0.2, 1] }}>
+        <motion.div className="hero-visual" initial={{ opacity: 0, x: 40, scale: 0.96 }} animate={{ opacity: 1, x: 0, scale: 1 }} transition={{ delay: 0.5, duration: 1, ease: [0.2, 0.8, 0.2, 1] }}>
           <Tilt max={5} className="photo-tilt">
             <div className="photo-card glass">
               {hasPhoto ? (
