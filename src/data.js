@@ -25,7 +25,7 @@ export const profile = {
 
 export const socials = [
   { id: 'github', logo: '/logos/github.webp', name: 'GitHub', handle: 'sangralrahul', url: 'https://github.com/sangralrahul', hue: [220, 260] },
-  { id: 'linkedin', logo: '/logos/linkedin.webp', name: 'LinkedIn', handle: 'rahul-sangral', url: 'https://www.linkedin.com/in/rahul-sangral/', hue: [205, 225] },
+  { id: 'linkedin', logo: '/logos/linkedin.webp', name: 'LinkedIn', handle: 'rahulsangral', url: 'https://www.linkedin.com/in/rahulsangral/', hue: [205, 225] },
   { id: 'leetcode', logo: '/logos/leetcode.webp', name: 'LeetCode', handle: 'rahulsangral', url: 'https://leetcode.com/u/rahulsangral/', hue: [32, 48] },
   { id: 'codeforces', logo: '/logos/codeforces.webp', name: 'Codeforces', handle: 'rahulsangral', url: 'https://codeforces.com/profile/rahulsangral', hue: [210, 0] },
   { id: 'gfg', logo: '/logos/geeksforgeeks.webp', name: 'GeeksforGeeks', handle: 'rahulsangral', url: 'https://www.geeksforgeeks.org/user/rahulsangral/', hue: [140, 160] },
