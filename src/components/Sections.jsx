@@ -18,7 +18,7 @@ export function Logo({ src, alt, size = 40, className = '' }) {
 export function SectionHead({ num, kicker, title, lede, align = 'left' }) {
   return (
     <Reveal className={`section-head section-head--${align}`} y={24}>
-      <span className="kicker">{num && <b>{num}</b>}{kicker}</span>
+      <span className="kicker">{num && <b>Chapter {num}</b>}{kicker}</span>
       <h2><Words text={title} /></h2>
       {lede && <p>{lede}</p>}
     </Reveal>

@@ -1,5 +1,5 @@
 import { AnimatePresence } from 'framer-motion'
-import { useState } from 'react'
+import { Suspense, lazy, useCallback, useState } from 'react'
 import Nav from './components/Nav.jsx'
 import Hero from './components/Hero.jsx'
 import { About, Credentials, Experience, Profiles, Projects, Skills, Stats } from './components/Sections.jsx'
@@ -9,12 +9,23 @@ import Contact, { Footer } from './components/Contact.jsx'
 import { BackToTop, ScrollProgress } from './components/Scroll.jsx'
 import { CursorGlow } from './components/Live.jsx'
 import Background from './components/Background.jsx'
+import Loader from './components/Loader.jsx'
+const World = lazy(() => import('./components/World.jsx'))
 
 export default function App() {
   const [project, setProject] = useState(null)
+  const [ready, setReady] = useState(false)
+  const [webgl, setWebgl] = useState(true)
+  const onReady = useCallback((ok) => { setReady(true); if (!ok) setWebgl(false) }, [])
   return (
     <div className="app">
-      <Background />
+      <Loader ready={ready} />
+      {webgl ? (
+        <Suspense fallback={null}><World onReady={onReady} /></Suspense>
+      ) : (
+        <Background />
+      )}
+      <div className="world-overlay" aria-hidden="true" />
       <ScrollProgress />
       <CursorGlow />
       <Nav />

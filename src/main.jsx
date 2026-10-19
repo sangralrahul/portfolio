@@ -1,8 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
-import '@fontsource-variable/bricolage-grotesque'
-import '@fontsource-variable/manrope'
+import '@fontsource-variable/onest'
 import './styles.css'
 
 createRoot(document.getElementById('root')).render(
