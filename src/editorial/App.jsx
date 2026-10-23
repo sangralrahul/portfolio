@@ -138,6 +138,40 @@ function Chapter({ id, n, title, note, children }) {
   )
 }
 
+/** Product screenshot: 1600px + 3200px (2x) sources, so it stays sharp on 4K and retina screens. */
+function Shot({ shot, domain }) {
+  const src2x = shot.src.replace('.webp', '@2x.webp')
+  const img = (
+    <img
+      src={shot.src}
+      srcSet={`${shot.src} 1600w, ${src2x} 3200w`}
+      sizes="(max-width: 1000px) 100vw, 760px"
+      width={shot.w}
+      height={shot.h}
+      alt={shot.label}
+      loading="lazy"
+      decoding="async"
+    />
+  )
+  const open = () => {
+    const d = document.createElement('div')
+    d.className = 'lightbox'
+    d.innerHTML = `<img src="${src2x}" alt="" /><span>Click anywhere to close</span>`
+    const close = () => { d.remove(); document.removeEventListener('keydown', onKey) }
+    const onKey = (e) => e.key === 'Escape' && close()
+    d.onclick = close
+    document.addEventListener('keydown', onKey)
+    document.body.appendChild(d)
+  }
+  if (!shot.frame) return <button type="button" className="panel zoomable" onClick={open} aria-label={`Enlarge: ${shot.label}`}>{img}</button>
+  return (
+    <button type="button" className="device zoomable" onClick={open} aria-label={`Enlarge: ${shot.label}`}>
+      <div className="device-bar"><span /><span /><span /><em>{domain}</em></div>
+      <div className="device-img">{img}</div>
+    </button>
+  )
+}
+
 function Feature({ id, fig, flip }) {
   const p = by[id]
   const c = caseStudies[id]
@@ -145,10 +179,7 @@ function Feature({ id, fig, flip }) {
   return (
     <article className={`feature ${flip ? 'feature--flip' : ''}`}>
       <figure className="plate" data-reveal>
-        <div className="device">
-          <div className="device-bar"><span /><span /><span /><em>{p.domain}</em></div>
-          <div className="device-img"><img src={c.shots[i].src} alt={c.shots[i].label} loading="lazy" decoding="async" /></div>
-        </div>
+        <Shot shot={c.shots[i]} domain={p.domain} />
         <figcaption>
           <span>Fig. {fig}{c.shots.length > 1 ? String.fromCharCode(97 + i) : ''} — {c.shots[i].label}</span>
           {c.shots.length > 1 && (
@@ -199,10 +230,7 @@ function Work() {
       <Feature id="cadus-desktop" fig={3} />
       <article className="feature feature--small">
         <figure className="plate" data-reveal>
-          <div className="device">
-            <div className="device-bar"><span /><span /><span /><em>aethex.in</em></div>
-            <div className="device-img"><img src="/shots/aethex-web.webp" alt="aethex.in" loading="lazy" width="428" height="326" /></div>
-          </div>
+          <Shot shot={caseStudies.aethex.shots[0]} domain="aethex.in" />
           <figcaption><span>Fig. 4 — aethex.in</span></figcaption>
         </figure>
         <div className="story" data-reveal>

@@ -177,9 +177,9 @@ export const caseStudies = {
   'aethex-suite': {
     role: 'Founder · sole developer',
     shots: [
-      { src: '/shots/hc-wards.webp', label: 'AETHEX HC · Wards & beds' },
-      { src: '/shots/pc-cadus.webp', label: 'AETHEX PC · Cadus' },
-      { src: '/shots/mc-attendance.webp', label: 'AETHEX MC · Attendance' },
+      { src: '/shots/hc-wards.webp', label: 'AETHEX HC · Wards & beds', w: 1600, h: 792 },
+      { src: '/shots/pc-cadus.webp', label: 'AETHEX PC · Cadus', w: 1600, h: 792 },
+      { src: '/shots/mc-attendance.webp', label: 'AETHEX MC · Attendance', w: 1600, h: 792 },
     ],
     problem: "Hospitals, clinics and medical colleges in India often run on paper registers and separate tools that don't talk to each other — and doctors and students juggle yet more apps for references and study.",
     built: 'Three desktop apps on one aethex.in account with Google sign-in. HC runs a hospital from OPD to discharge — wards, nursing, lab, pharmacy, GST billing with UPI and insurance claims. MC runs a college — timetable, attendance with the 75% / 80% rule, CBME logbook, exams and fees. PC gives doctors Cadus, the offline library and My Clinic for their own practice.',
@@ -187,7 +187,7 @@ export const caseStudies = {
   },
   cadus: {
     role: 'Founder · sole developer',
-    shots: [{ src: '/shots/cadus-chat.webp', label: 'Cadus · cited answer with safety review' }],
+    shots: [{ src: '/shots/cadus-chat.webp', label: 'Cadus · cited answer with safety review', w: 1600, h: 753 }],
     stats: [
       { value: '2', label: 'AI models — Medius 3.1 & Magnus 3.6' },
       { value: 'Cited', label: 'sources on every answer' },
@@ -199,7 +199,7 @@ export const caseStudies = {
   },
   'cadus-desktop': {
     role: 'Founder · sole developer',
-    shots: [{ src: '/shots/cadus-desktop.webp', label: 'downloads.aethex.in' }],
+    shots: [{ src: '/shots/cadus-desktop.webp', label: 'downloads.aethex.in', w: 1600, h: 889, frame: true }],
     stats: [
       { value: 'v1.0.2', label: 'latest release' },
       { value: 'x64 + ARM64', label: 'Windows builds, plus Linux' },
@@ -211,7 +211,7 @@ export const caseStudies = {
   },
   aethex: {
     role: 'Sole developer',
-    shots: [{ src: '/shots/aethex-web.webp', label: 'aethex.in' }],
+    shots: [{ src: '/shots/aethex-web.webp', label: 'aethex.in', w: 1600, h: 781, frame: true }],
   },
 }
 
