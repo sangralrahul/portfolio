@@ -24,8 +24,26 @@ function Mark({ size = 36 }) {
   return <img src="/brand/r-mark.svg" alt="" width={size} height={size} className="mark" />
 }
 
+const MAILTO = `mailto:${profile.email}?subject=${encodeURIComponent('Hello Rahul — opportunity')}`
+
+/** Which section is on screen — highlights the matching nav link. */
+function useActiveSection() {
+  const [active, setActive] = useState('')
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      (es) => es.forEach((e) => e.isIntersecting && setActive(e.target.id)),
+      { rootMargin: '-45% 0px -50% 0px' },
+    )
+    NAV.forEach(([id]) => { const el = document.getElementById(id); if (el) io.observe(el) })
+    return () => io.disconnect()
+  }, [])
+  return active
+}
+
 function Masthead() {
   const [solid, setSolid] = useState(false)
+  const [open, setOpen] = useState(false)
+  const active = useActiveSection()
   const bar = useRef(null)
   useEffect(() => {
     let tick = false
@@ -43,15 +61,37 @@ function Masthead() {
     window.addEventListener('scroll', on, { passive: true })
     return () => window.removeEventListener('scroll', on)
   }, [])
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e) => e.key === 'Escape' && setOpen(false)
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [open])
+  const nav = (e, id) => { setOpen(false); go(id)(e) }
   return (
-    <header className={`mast ${solid ? 'mast--solid' : ''}`}>
+    <header className={`mast ${solid || open ? 'mast--solid' : ''}`}>
       <div className="wrap mast-row">
         <a href="#top" onClick={go('top')} className="brand"><Mark size={34} /><span>Rahul Sangral</span></a>
-        <nav className="mast-nav">{NAV.map(([id, l]) => <a key={id} href={`#${id}`} onClick={go(id)} className="u-link">{l}</a>)}</nav>
+        <nav className="mast-nav" aria-label="Sections">
+          {NAV.map(([id, l]) => <a key={id} href={`#${id}`} onClick={(e) => nav(e, id)} className={`u-link ${active === id ? 'is-on' : ''}`} aria-current={active === id ? 'true' : undefined}>{l}</a>)}
+        </nav>
         <div className="mast-end">
           <a className="u-link hide-sm" href={profile.resume} target="_blank" rel="noreferrer">Résumé</a>
-          <a className="btn btn--ink btn--sm" href={`mailto:${profile.email}`}>Hire me</a>
+          <a className="btn btn--ink btn--sm" href={MAILTO}>Hire me</a>
+          <button type="button" className="menu-btn" aria-label={open ? 'Close menu' : 'Open menu'} aria-expanded={open} onClick={() => setOpen((o) => !o)}>
+            <span /><span />
+          </button>
         </div>
+      </div>
+      <div className={`sheet ${open ? 'sheet--open' : ''}`} aria-hidden={!open}>
+        <nav className="wrap">
+          {NAV.map(([id, l], i) => (
+            <a key={id} href={`#${id}`} onClick={(e) => nav(e, id)} tabIndex={open ? 0 : -1}>
+              <span className="num">{String(i + 1).padStart(2, '0')}</span>{l}
+            </a>
+          ))}
+          <a href={profile.resume} target="_blank" rel="noreferrer" tabIndex={open ? 0 : -1}><span className="num">CV</span>Résumé (PDF)</a>
+        </nav>
       </div>
       <span className="progress" ref={bar} aria-hidden="true" />
     </header>
@@ -78,7 +118,7 @@ function Hero() {
             I design the APIs and data, build the web and desktop apps, and run the releases — React, TypeScript, FastAPI, PostgreSQL and AI.
           </p>
           <div className="actions" data-reveal>
-            <a className="btn btn--ink" href={`mailto:${profile.email}`}><Icon name="mail" size={15} /> Hire me</a>
+            <a className="btn btn--ink" href={MAILTO}><Icon name="mail" size={15} /> Hire me</a>
             <a className="btn btn--line" href={profile.resume} target="_blank" rel="noreferrer"><Icon name="download" size={15} /> Download CV</a>
             <a className="u-link see" href="#work" onClick={go('work')}>See case studies <Icon name="arrow" size={14} /></a>
           </div>
@@ -365,7 +405,7 @@ function Contact() {
         <span className="ch-n" data-reveal>№ 05</span>
         <h2 data-reveal>Let's build something <em>that ships.</em></h2>
         <div className="mail-row" data-reveal>
-          <a className="big-mail" href={`mailto:${profile.email}`}>{profile.email} <Icon name="arrow" size={28} /></a>
+          <a className="big-mail" href={MAILTO}>{profile.email} <Icon name="arrow" size={28} /></a>
           <CopyEmail />
         </div>
         <div className="contact-row" data-reveal>
