@@ -374,7 +374,6 @@ function Contact() {
             <a className="btn btn--ghost" href={social.linkedin.url} target="_blank" rel="noreferrer"><img src={social.linkedin.logo} alt="" width="16" height="16" /> LinkedIn</a>
           </div>
           <div className="cta-meta">
-            <a href={`tel:${profile.phone.replace(/\s/g, '')}`}><Icon name="phone" size={14} /> {profile.phone}</a>
             <span><Icon name="pin" size={14} /> {profile.location}</span>
             <span><Icon name="globe" size={14} /> {profile.languages.join(', ')}</span>
           </div>

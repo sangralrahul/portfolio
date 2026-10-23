@@ -308,7 +308,6 @@ function Contact() {
           <div className="hero-cta">
             <a className="btn btn--white" href={`mailto:${profile.email}`}><Icon name="mail" size={16} /> {profile.email}</a>
             <a className="btn btn--line" href={social.linkedin.url} target="_blank" rel="noreferrer"><img src={social.linkedin.logo} alt="" width="16" height="16" /> LinkedIn</a>
-            <a className="btn btn--line" href={`tel:${profile.phone.replace(/\s/g, '')}`}><Icon name="phone" size={16} /> {profile.phone}</a>
           </div>
         </div>
       </div>

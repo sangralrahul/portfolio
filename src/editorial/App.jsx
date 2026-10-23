@@ -105,7 +105,7 @@ function Hero() {
         <Mark size={64} />
         <div className="id-txt">
           <p className="id-name">Rahul Sangral</p>
-          <p className="id-role">Full-stack developer · Founder, AETHEX</p>
+          <p className="id-role">Full-stack developer · AI developer</p>
         </div>
         <span className="avail"><span className="dot" />Open to SDE roles &amp; freelance</span>
       </div>
@@ -149,7 +149,7 @@ const GLANCE = [
   { k: 'Focus', v: 'Full-stack + AI', d: 'healthcare products' },
   { k: 'Core stack', v: 'React · FastAPI', d: 'TypeScript, PostgreSQL, Python' },
   { k: 'Education', v: 'BCA', d: 'Uttaranchal University' },
-  { k: 'Based in', v: 'Jammu, India', d: 'remote or on-site' },
+  { k: 'Based in', v: 'Delhi, India', d: 'remote or on-site' },
 ]
 
 function Glance() {
@@ -411,7 +411,6 @@ function Contact() {
         <div className="contact-row" data-reveal>
           <a href={social.linkedin.url} target="_blank" rel="noreferrer">LinkedIn</a>
           <a href={social.github.url} target="_blank" rel="noreferrer">GitHub</a>
-          <a href={`tel:${profile.phone.replace(/\s/g, '')}`}>{profile.phone}</a>
           <a href={profile.resume} target="_blank" rel="noreferrer">Résumé (PDF)</a>
         </div>
       </div>

@@ -355,7 +355,6 @@ function Contact() {
       <div className="contact-actions">
         <a className="btn btn--light" href={`mailto:${profile.email}`}><Icon name="mail" size={15} /> {profile.email}</a>
         <a className="btn btn--ghost" href={social.linkedin.url} target="_blank" rel="noreferrer"><img src={social.linkedin.logo} alt="" width="15" height="15" /> LinkedIn</a>
-        <a className="btn btn--ghost" href={`tel:${profile.phone.replace(/\s/g, '')}`}><Icon name="phone" size={15} /> {profile.phone}</a>
       </div>
       <footer className="foot">
         <span>© {new Date().getFullYear()} Rahul Sangral · {profile.location}</span>

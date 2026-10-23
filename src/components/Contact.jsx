@@ -41,11 +41,6 @@ export default function Contact() {
               <div><small>Email</small><strong>{profile.email}</strong></div>
               <Icon name="arrow" size={16} className="contact-arrow" />
             </Reveal>
-            <Reveal as="a" delay={0.1} href={`tel:${profile.phone.replace(/\s/g, '')}`} className="contact-row glass">
-              <span className="fact-icon"><Icon name="phone" size={18} /></span>
-              <div><small>Phone</small><strong>{profile.phone}</strong></div>
-              <Icon name="arrow" size={16} className="contact-arrow" />
-            </Reveal>
             <Reveal as="a" delay={0.15} href={socials[1].url} target="_blank" rel="noreferrer" className="contact-row glass">
               <span className="fact-icon"><Icon name="linkedin" size={18} /></span>
               <div><small>LinkedIn</small><strong>linkedin.com/in/rahulsangral</strong></div>

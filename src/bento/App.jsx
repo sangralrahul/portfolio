@@ -350,9 +350,7 @@ function Contact() {
           </div>
         </Tile>
         <Tile className="t-phone">
-          <span className="tile-label">Phone</span>
-          <a href={`tel:${profile.phone.replace(/\s/g, '')}`} className="big-link">{profile.phone}</a>
-          <span className="tile-label" style={{ marginTop: 18 }}>Languages</span>
+          <span className="tile-label">Languages</span>
           <p>{profile.languages.join(' · ')}</p>
         </Tile>
       </div>

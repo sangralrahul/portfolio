@@ -268,7 +268,6 @@ function Contact() {
         <div className="contact-row" data-reveal>
           <a href={social.linkedin.url} target="_blank" rel="noreferrer">LinkedIn</a>
           <a href={social.github.url} target="_blank" rel="noreferrer">GitHub</a>
-          <a href={`tel:${profile.phone.replace(/\s/g, '')}`}>{profile.phone}</a>
           <a href={profile.resume} target="_blank" rel="noreferrer">Résumé (PDF)</a>
         </div>
       </div>

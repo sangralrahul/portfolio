@@ -7,9 +7,8 @@ export const profile = {
   role: 'Full-Stack Developer & AI Developer',
   tagline:
     'Founding developer shipping production SaaS end to end — React, FastAPI, PostgreSQL and AI tooling. Graduating 2026 and available now for SDE-1 / New Grad roles and freelance work.',
-  location: 'Jammu, India',
+  location: 'Delhi, India',
   email: 'hello@rahulsangral.me',
-  phone: '+91 96823 94363',
   // Drop your photo at /public/profile.jpg — it is used automatically.
   photo: '/profile.jpg',
   resume: '/resume.pdf',
