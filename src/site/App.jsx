@@ -1,3 +1,5 @@
+import '@fontsource-variable/inter'
+import '../site.css'
 import { useEffect, useState } from 'react'
 import Icon from '../components/Icons.jsx'
 import DotField from './DotField.jsx'
