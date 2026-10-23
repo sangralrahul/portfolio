@@ -7,7 +7,6 @@ import ProjectModal from './components/ProjectModal.jsx'
 import LiveProfiles from './components/LiveProfiles.jsx'
 import Contact, { Footer } from './components/Contact.jsx'
 import { BackToTop, ScrollProgress } from './components/Scroll.jsx'
-import { CursorGlow } from './components/Live.jsx'
 import Background from './components/Background.jsx'
 const World = lazy(() => import('./components/World.jsx'))
 
@@ -24,7 +23,6 @@ export default function App() {
       )}
       <div className="world-overlay" aria-hidden="true" />
       <ScrollProgress />
-      <CursorGlow />
       <Nav />
       <main>
         <Hero />

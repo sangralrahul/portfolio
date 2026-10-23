@@ -16,7 +16,7 @@ export default function ProjectImage({ project, big = false }) {
     io.observe(ref.current)
     return () => io.disconnect()
   }, [])
-  const label = shot ? (live ? live.replace(/^https?:\/\//, '').replace(/\/$/, '') : project.title) : `${project.title.toLowerCase().replace(/\s+/g, '-')} · architecture`
+  const label = shot ? (live ? live.replace(/^https?:\/\//, '').replace(/\/$/, '') : project.title) : `${project.domain || project.title.toLowerCase().replace(/\s+/g, '-')} · architecture`
   return (
     <div className={`shot ${big ? 'shot--big' : ''}`} ref={ref}>
       <div className="shot-bar">

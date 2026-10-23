@@ -87,7 +87,7 @@ export default function World({ onReady }) {
     }
 
     /* ── drifting dust (shader points) ───────────────────────── */
-    const N = small ? 1600 : 3500
+    const N = small ? 1200 : 2400
     const pos = new Float32Array(N * 3), seed = new Float32Array(N)
     for (let i = 0; i < N; i++) {
       pos[i * 3] = rnd(-45, 45); pos[i * 3 + 1] = rnd(-3, 26); pos[i * 3 + 2] = rnd(END - 30, 20)

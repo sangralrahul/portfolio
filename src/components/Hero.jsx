@@ -1,13 +1,13 @@
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import Icon from './Icons.jsx'
-import { SplitText, Typewriter, Tilt } from './Live.jsx'
-import Diagram from './Diagram.jsx'
-import { CountUp } from './Scroll.jsx'
-import { certifications, profile, socials } from '../data.js'
+import { SplitText } from './Live.jsx'
+import { certifications, profile, projects, socials } from '../data.js'
 import { scrollToSection } from './Nav.jsx'
 
 const issuers = [...new Map(certifications.map((c) => [c.logo, c.org.split(' ·')[0]])).entries()]
+
+const shipping = projects.filter((p) => p.domain)
 
 export default function Hero() {
   const [hasPhoto, setHasPhoto] = useState(false)
@@ -24,12 +24,6 @@ export default function Hero() {
 
   return (
     <section className="hero" id="home">
-      <div className="hero-bg">
-        <div className="hero-orb hero-orb--a" />
-        <div className="hero-orb hero-orb--b" />
-        <div className="hero-beam" />
-      </div>
-
       <div className="container hero-inner">
         <motion.div className="hero-text">
           <motion.div className="eyebrow" {...up(0)}>
@@ -43,10 +37,10 @@ export default function Hero() {
             </motion.span>
           </h1>
           <motion.p className="hero-role" {...up(2)}>
-            <Typewriter phrases={['Full-Stack Engineer', 'AI Developer', 'Founding Engineer @ Aethex', 'Founder @ Zyphix']} speed={60} pause={2200} />
+            Full-Stack Engineer <i>·</i> AI Developer <i>·</i> Founder, AETHEX
           </motion.p>
           <motion.p className="hero-lede" {...up(3)}>
-            I design, build and ship production software end to end — React and TypeScript on the front, FastAPI and PostgreSQL behind it, AI tooling on top. Sole engineer at a live SaaS; founder of my own.
+            I build and ship production software end to end. Right now that is AETHEX — a medical workspace for India's doctors, hospitals and medical colleges, with Cadus, a clinical AI, built into every app.
           </motion.p>
           <motion.div className="hero-actions" {...up(4)}>
             <button className="btn btn--primary" onClick={() => scrollToSection('projects')}>
@@ -65,30 +59,28 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        <motion.div className="hero-visual" initial={{ opacity: 0, x: 40, scale: 0.96 }} animate={{ opacity: 1, x: 0, scale: 1 }} transition={{ delay: 0.5, duration: 1, ease: [0.2, 0.8, 0.2, 1] }}>
-          <Tilt max={5} className="photo-tilt">
-            <div className="photo-card glass">
-              {hasPhoto ? (
-                <img src={profile.photo} alt="Rahul Sangral" className="photo-img" />
-              ) : (
-                <div className="photo-system">
-                  <div className="shot-bar"><span /><span /><span /><em>aethex · live system map</em></div>
-                  <Diagram id="aethex" title="Aethex" hero />
-                </div>
-              )}
-              <div className="photo-ring" />
+        <motion.aside className="hero-visual" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45, duration: 0.8, ease: [0.2, 0.8, 0.2, 1] }}>
+          {hasPhoto && <img src={profile.photo} alt="Rahul Sangral" className="hero-photo" />}
+          <div className="ship-card">
+            <div className="ship-head">
+              <span className="live-dot" /> Shipping now
+              <em>{shipping.length} products · live</em>
             </div>
-          </Tilt>
-          <motion.div className="float-chip float-chip--a glass" animate={{ y: [0, -8, 0] }} transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}>
-            <img src="/logos/aethex.webp" alt="" /> <div><small>Currently</small><strong>Founding Engineer · Aethex</strong></div>
-          </motion.div>
-          <motion.div className="float-chip float-chip--b glass" animate={{ y: [0, 8, 0] }} transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}>
-            <b><CountUp to={10} suffix="+" /></b> <div><small>Certifications</small><strong>Oracle · McKinsey · Google</strong></div>
-          </motion.div>
-          <motion.div className="float-chip float-chip--c glass" animate={{ y: [0, -6, 0] }} transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 2 }}>
-            <Icon name="pin" size={16} /> <div><small>Based in</small><strong>{profile.location}</strong></div>
-          </motion.div>
-        </motion.div>
+            <ul className="ship-list">
+              {shipping.map((p) => (
+                <li key={p.id}>
+                  <a href={p.links[0].url} target="_blank" rel="noreferrer">
+                    <img src={p.logo} alt="" className="ship-logo" />
+                    <span className="ship-name"><strong>{p.title}</strong><small>{p.domain}</small></span>
+                    <span className="ship-status">{p.status}</span>
+                    <Icon name="external" size={14} />
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <div className="ship-foot"><Icon name="pin" size={14} /> {profile.location} · open to SDE roles and freelance</div>
+          </div>
+        </motion.aside>
       </div>
 
       <div className="container logo-bar">

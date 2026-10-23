@@ -45,8 +45,7 @@ export function CountUp({ to, suffix = '', duration = 1.6, className = '' }) {
 /** Thin red progress bar pinned to the top of the viewport. */
 export function ScrollProgress() {
   const { scrollYProgress } = useScroll()
-  const scaleX = useSpring(scrollYProgress, { stiffness: 140, damping: 28, mass: 0.3 })
-  return <motion.div className="scroll-progress" style={{ scaleX }} />
+  return <motion.div className="scroll-progress" style={{ scaleX: scrollYProgress }} />
 }
 
 export function BackToTop() {

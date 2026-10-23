@@ -6,6 +6,39 @@ import { useEffect, useId, useRef } from 'react'
  * Each edge: [from, to]
  */
 export const diagrams = {
+  'aethex-suite': {
+    nodes: [
+      { id: 'in', label: 'aethex.in sign-in', sub: 'Google · email', c: 0, r: 1, tone: 'muted' },
+      { id: 'pc', label: 'AETHEX PC', sub: 'doctors · students', c: 1, r: 0, tone: 'blue' },
+      { id: 'hc', label: 'AETHEX HC', sub: 'hospitals · clinics', c: 1, r: 1, tone: 'green' },
+      { id: 'mc', label: 'AETHEX MC', sub: 'medical colleges', c: 1, r: 2, tone: 'amber' },
+      { id: 'cadus', label: 'Cadus', sub: 'clinical AI', c: 2, r: 0, tone: 'green' },
+      { id: 'lib', label: 'Offline library', sub: '15,515 articles', c: 2, r: 2, tone: 'blue' },
+      { id: 'hosp', label: 'OPD → discharge', sub: 'wards · lab · billing', c: 3, r: 1, tone: 'red' },
+    ],
+    edges: [['in', 'pc'], ['in', 'hc'], ['in', 'mc'], ['pc', 'cadus'], ['hc', 'cadus'], ['mc', 'lib'], ['pc', 'lib'], ['hc', 'hosp']],
+  },
+  cadus: {
+    nodes: [
+      { id: 'q', label: 'Clinical question', sub: 'doctor · student', c: 0, r: 1, tone: 'muted' },
+      { id: 'm', label: 'Cadus models', sub: 'Medius 3.1 · Magnus 3.6', c: 1, r: 1, tone: 'blue' },
+      { id: 'src', label: 'Sources', sub: 'on every answer', c: 2, r: 0, tone: 'green' },
+      { id: 'safe', label: 'Safety review', sub: 'doses · red flags', c: 2, r: 2, tone: 'amber' },
+      { id: 'out', label: 'Checked answer', sub: 'web · desktop', c: 3, r: 1, tone: 'green' },
+    ],
+    edges: [['q', 'm'], ['m', 'src'], ['m', 'safe'], ['src', 'out'], ['safe', 'out']],
+  },
+  'cadus-desktop': {
+    nodes: [
+      { id: 'key', label: 'Ctrl + Shift + Space', sub: 'from any app', c: 0, r: 0, tone: 'muted' },
+      { id: 'tray', label: 'Tray + reminders', sub: 'flashcards · ward jobs', c: 0, r: 2, tone: 'muted' },
+      { id: 'app', label: 'Cadus Desktop', sub: 'Windows x64 · ARM64 · Linux', c: 1, r: 1, tone: 'blue' },
+      { id: 'acct', label: 'aethex.in account', sub: 'same as the web', c: 2, r: 0, tone: 'green' },
+      { id: 'upd', label: 'Daily update check', sub: 'v1.0.2', c: 2, r: 2, tone: 'amber' },
+      { id: 'live', label: 'Live Cadus', sub: 'always current', c: 3, r: 1, tone: 'green' },
+    ],
+    edges: [['key', 'app'], ['tray', 'app'], ['app', 'acct'], ['app', 'upd'], ['acct', 'live']],
+  },
   aethex: {
     nodes: [
       { id: 'user', label: 'Users', sub: 'web · mobile', c: 0, r: 1, tone: 'muted' },

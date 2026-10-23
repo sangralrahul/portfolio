@@ -136,26 +136,33 @@ export function Experience() {
 
 /* ── Projects ───────────────────────────────────────────────── */
 export function Projects({ onOpen }) {
-  const [featured, ...rest] = projects
-  const ref = useRef(null)
+  const [featured, ...others] = projects
+  const family = others.filter((p) => p.domain)
+  const rest = others.filter((p) => !p.domain)
   return (
     <section className="section" id="projects">
       <div className="container">
-        <SectionHead num="03" kicker="Selected work" title="Projects that shipped." lede="Production systems, AI tooling and data products — built end to end." />
+        <SectionHead num="03" kicker="Selected work" title="Products I've shipped." lede="The AETHEX medical platform first — then the AI tooling and data work that led to it." />
 
-        <Reveal className="featured glass glow-border" y={40}>
-          <div className="featured-art" ref={ref} onClick={() => onOpen(featured)}>
-            <motion.div className="featured-art-inner">
-              <ProjectImage project={featured} big />
-            </motion.div>
+        <Reveal className="featured glass" y={30}>
+          <div className="featured-art" onClick={() => onOpen(featured)}>
+            <ProjectImage project={featured} big />
           </div>
           <div className="featured-body">
-            <span className="badge badge--live">Live in production</span>
+            <span className="badge badge--live">{featured.status}</span>
             <div className="title-row">
               {featured.logo && <Logo src={featured.logo} alt={featured.title} size={48} />}
-              <h3>{featured.title}</h3>
+              <div>
+                <h3>{featured.title}</h3>
+                <a className="domain" href={featured.links[0].url} target="_blank" rel="noreferrer">{featured.domain}</a>
+              </div>
             </div>
             <p>{featured.description}</p>
+            {featured.stats && (
+              <dl className="feat-stats">
+                {featured.stats.map((s) => <div key={s.label}><dt>{s.value}</dt><dd>{s.label}</dd></div>)}
+              </dl>
+            )}
             <ul className="chips">{featured.tech.map((t) => <li key={t}>{t}</li>)}</ul>
             <div className="featured-actions">
               {featured.links.map((l) => (
@@ -170,25 +177,42 @@ export function Projects({ onOpen }) {
           </div>
         </Reveal>
 
+        <div className="family">
+          {family.map((p, i) => (
+            <Reveal key={p.id} delay={i * 0.06} className="family-card">
+              <div className="family-top">
+                <Logo src={p.logo} alt={p.title} size={40} />
+                <span className="family-status">{p.status}</span>
+              </div>
+              <h3>{p.title}</h3>
+              <span className="kicker">{p.kicker}</span>
+              <p>{p.description}</p>
+              <ul className="chips chips--sm">{p.tech.slice(0, 4).map((t) => <li key={t}>{t}</li>)}</ul>
+              <a className="family-link" href={p.links[0].url} target="_blank" rel="noreferrer">
+                {p.domain} <Icon name="external" size={14} />
+              </a>
+            </Reveal>
+          ))}
+        </div>
+
+        <h3 className="subhead">More work</h3>
         <div className="project-grid">
           {rest.map((p, i) => (
-            <Reveal key={p.id} delay={(i % 2) * 0.1} className="project-reveal">
-              <Tilt max={4} className="project-tilt">
-                <article className="project glass" style={{ '--h1': p.hue[0], '--h2': p.hue[1] }} onClick={() => onOpen(p)} role="button" tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && onOpen(p)}>
-                  <div className="project-art">
-                    <ProjectImage project={p} />
+            <Reveal key={p.id} delay={(i % 2) * 0.06} className="project-reveal">
+              <article className="project glass" onClick={() => onOpen(p)} role="button" tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && onOpen(p)}>
+                <div className="project-art">
+                  <ProjectImage project={p} />
+                </div>
+                <div className="project-body">
+                  <span className="kicker">{p.kicker}</span>
+                  <div className="title-row">
+                    {p.logo && <Logo src={p.logo} alt={p.title} size={34} />}
+                    <h3>{p.title} <Icon name="arrow" size={18} className="project-arrow" /></h3>
                   </div>
-                  <div className="project-body">
-                    <span className="kicker">{p.kicker}</span>
-                    <div className="title-row">
-                      {p.logo && <Logo src={p.logo} alt={p.title} size={34} />}
-                      <h3>{p.title} <Icon name="arrow" size={18} className="project-arrow" /></h3>
-                    </div>
-                    <p>{p.description}</p>
-                    <ul className="chips chips--sm">{p.tech.slice(0, 4).map((t) => <li key={t}>{t}</li>)}</ul>
-                  </div>
-                </article>
-              </Tilt>
+                  <p>{p.description}</p>
+                  <ul className="chips chips--sm">{p.tech.slice(0, 4).map((t) => <li key={t}>{t}</li>)}</ul>
+                </div>
+              </article>
             </Reveal>
           ))}
         </div>
