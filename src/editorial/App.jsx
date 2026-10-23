@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Icon from '../components/Icons.jsx'
 import { useLiveStats, useReveal } from '../site/live.js'
 import { caseStudies, certifications, education, experience, profile, projects, skills, socials } from '../data.js'
@@ -26,9 +26,19 @@ function Mark({ size = 36 }) {
 
 function Masthead() {
   const [solid, setSolid] = useState(false)
+  const bar = useRef(null)
   useEffect(() => {
     let tick = false
-    const on = () => { if (tick) return; tick = true; requestAnimationFrame(() => { setSolid(window.scrollY > 40); tick = false }) }
+    const on = () => {
+      if (tick) return
+      tick = true
+      requestAnimationFrame(() => {
+        const max = document.documentElement.scrollHeight - window.innerHeight
+        if (bar.current) bar.current.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`
+        setSolid(window.scrollY > 40)
+        tick = false
+      })
+    }
     on()
     window.addEventListener('scroll', on, { passive: true })
     return () => window.removeEventListener('scroll', on)
@@ -37,9 +47,13 @@ function Masthead() {
     <header className={`mast ${solid ? 'mast--solid' : ''}`}>
       <div className="wrap mast-row">
         <a href="#top" onClick={go('top')} className="brand"><Mark size={34} /><span>Rahul Sangral</span></a>
-        <nav className="mast-nav">{NAV.map(([id, l]) => <a key={id} href={`#${id}`} onClick={go(id)}>{l}</a>)}</nav>
-        <a className="mast-mail" href={`mailto:${profile.email}`}>{profile.email}</a>
+        <nav className="mast-nav">{NAV.map(([id, l]) => <a key={id} href={`#${id}`} onClick={go(id)} className="u-link">{l}</a>)}</nav>
+        <div className="mast-end">
+          <a className="u-link hide-sm" href={profile.resume} target="_blank" rel="noreferrer">Résumé</a>
+          <a className="btn btn--ink btn--sm" href={`mailto:${profile.email}`}>Hire me</a>
+        </div>
       </div>
+      <span className="progress" ref={bar} aria-hidden="true" />
     </header>
   )
 }
@@ -47,22 +61,26 @@ function Masthead() {
 function Hero() {
   return (
     <section className="hero wrap" id="top">
-      <div className="dateline" data-reveal>
-        <span>Portfolio</span><span>{EDITION}</span><span>{profile.location}</span>
-        <span className="avail"><span className="dot" />Available for SDE roles &amp; freelance</span>
+      <div className="id-row" data-reveal>
+        <Mark size={64} />
+        <div className="id-txt">
+          <p className="id-name">Rahul Sangral</p>
+          <p className="id-role">Full-stack developer · Founder, AETHEX</p>
+        </div>
+        <span className="avail"><span className="dot" />Open to SDE roles &amp; freelance</span>
       </div>
-      <h1 data-reveal>
-        Full-stack developer building <em>AI products</em> for healthcare.
-      </h1>
+
       <div className="hero-grid">
-        <div className="hero-copy" data-reveal>
-          <p className="lede">
-            <span className="drop">I</span>'m Rahul Sangral — founder of <b>AETHEX</b>, a medical workspace for India's doctors, hospitals and medical colleges,
-            and of <b>Cadus</b>, the clinical AI built into it. I design, build and ship web and desktop products end to end with React, FastAPI, PostgreSQL and AI.
+        <div className="hero-copy">
+          <h1 data-reveal>I build <em>AI products</em> for healthcare — and ship them, end to end.</h1>
+          <p className="lede" data-reveal>
+            Founder of <b>AETHEX</b>, a medical workspace for India's doctors, hospitals and medical colleges, and of <b>Cadus</b>, the clinical AI built into it.
+            I design the APIs and data, build the web and desktop apps, and run the releases — React, TypeScript, FastAPI, PostgreSQL and AI.
           </p>
-          <div className="actions">
-            <a className="btn btn--ink" href="#work" onClick={go('work')}>Read the case studies <Icon name="arrow" size={15} /></a>
-            <a className="btn btn--line" href={profile.resume} target="_blank" rel="noreferrer"><Icon name="download" size={15} /> Résumé</a>
+          <div className="actions" data-reveal>
+            <a className="btn btn--ink" href={`mailto:${profile.email}`}><Icon name="mail" size={15} /> Hire me</a>
+            <a className="btn btn--line" href={profile.resume} target="_blank" rel="noreferrer"><Icon name="download" size={15} /> Download CV</a>
+            <a className="u-link see" href="#work" onClick={go('work')}>See case studies <Icon name="arrow" size={14} /></a>
           </div>
         </div>
         <aside className="current" data-reveal>
@@ -72,14 +90,37 @@ function Hero() {
               <li key={p.id}>
                 <a href={p.links[0].url} target="_blank" rel="noreferrer">
                   <span className="num">{String(i + 1).padStart(2, '0')}</span>
+                  <img src={p.logo} alt="" width="30" height="30" className="cur-logo" />
                   <span className="cur-t"><strong>{p.title}</strong><small>{p.domain}</small></span>
-                  <span className="cur-s">{p.status}</span>
+                  <span className="cur-s"><span className="dot" />{p.status}</span>
                 </a>
               </li>
             ))}
           </ol>
         </aside>
       </div>
+    </section>
+  )
+}
+
+const GLANCE = [
+  { k: 'Experience', v: '3+ years', d: 'building since 2023' },
+  { k: 'Shipped', v: '4 products', d: 'live on web and desktop' },
+  { k: 'Focus', v: 'Full-stack + AI', d: 'healthcare products' },
+  { k: 'Core stack', v: 'React · FastAPI', d: 'TypeScript, PostgreSQL, Python' },
+  { k: 'Education', v: 'BCA', d: 'Uttaranchal University' },
+  { k: 'Based in', v: 'Jammu, India', d: 'remote or on-site' },
+]
+
+function Glance() {
+  return (
+    <section className="glance wrap" aria-label="At a glance">
+      <h2 className="small-caps" data-reveal>At a glance</h2>
+      <dl className="glance-grid" data-reveal>
+        {GLANCE.map((g) => (
+          <div key={g.k}><dt>{g.k}</dt><dd><strong>{g.v}</strong><span>{g.d}</span></dd></div>
+        ))}
+      </dl>
     </section>
   )
 }
@@ -104,7 +145,10 @@ function Feature({ id, fig, flip }) {
   return (
     <article className={`feature ${flip ? 'feature--flip' : ''}`}>
       <figure className="plate" data-reveal>
-        <div className="plate-img"><img src={c.shots[i].src} alt={c.shots[i].label} loading="lazy" /></div>
+        <div className="device">
+          <div className="device-bar"><span /><span /><span /><em>{p.domain}</em></div>
+          <div className="device-img"><img src={c.shots[i].src} alt={c.shots[i].label} loading="lazy" decoding="async" /></div>
+        </div>
         <figcaption>
           <span>Fig. {fig}{c.shots.length > 1 ? String.fromCharCode(97 + i) : ''} — {c.shots[i].label}</span>
           {c.shots.length > 1 && (
@@ -129,6 +173,11 @@ function Feature({ id, fig, flip }) {
           <div><dt>Year</dt><dd>{p.year}</dd></div>
           <div><dt>Status</dt><dd><span className="dot" />{p.status}</dd></div>
         </dl>
+        {(c.stats || p.stats) && (
+          <dl className="kpis">
+            {(c.stats || p.stats).map((k) => <div key={k.label}><dt>{k.value}</dt><dd>{k.label}</dd></div>)}
+          </dl>
+        )}
         <h4 className="small-caps">The problem</h4>
         <p>{c.problem}</p>
         <h4 className="small-caps">What I built</h4>
@@ -150,7 +199,10 @@ function Work() {
       <Feature id="cadus-desktop" fig={3} />
       <article className="feature feature--small">
         <figure className="plate" data-reveal>
-          <div className="plate-img plate-img--light"><img src="/shots/aethex-web.webp" alt="aethex.in" loading="lazy" width="428" height="326" /></div>
+          <div className="device">
+            <div className="device-bar"><span /><span /><span /><em>aethex.in</em></div>
+            <div className="device-img"><img src="/shots/aethex-web.webp" alt="aethex.in" loading="lazy" width="428" height="326" /></div>
+          </div>
           <figcaption><span>Fig. 4 — aethex.in</span></figcaption>
         </figure>
         <div className="story" data-reveal>
@@ -288,6 +340,7 @@ export default function App() {
       <Masthead />
       <main>
         <Hero />
+        <Glance />
         <Work />
         <Experience />
         <Skills live={live} />

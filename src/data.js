@@ -188,6 +188,11 @@ export const caseStudies = {
   cadus: {
     role: 'Founder · sole developer',
     shots: [{ src: '/shots/cadus-chat.webp', label: 'Cadus · cited answer with safety review' }],
+    stats: [
+      { value: '2', label: 'AI models — Medius 3.1 & Magnus 3.6' },
+      { value: 'Cited', label: 'sources on every answer' },
+      { value: 'Web + desktop', label: 'one aethex.in account' },
+    ],
     problem: 'Clinicians need answers they can trust in seconds — with sources they can check, and no dosing mistakes.',
     built: 'A clinical assistant on the Medius 3.1 and Magnus 3.6 models. Every answer is cited and passes a safety review for doses and red flags before it is shown, alongside drug-interaction checks, lab interpretation, dose cards, clinical calculators and an offline library.',
     outcome: 'Live at cadus.aethex.in and built into every AETHEX app, with one account across the web and the desktop.',
@@ -195,6 +200,11 @@ export const caseStudies = {
   'cadus-desktop': {
     role: 'Founder · sole developer',
     shots: [{ src: '/shots/cadus-desktop.webp', label: 'downloads.aethex.in' }],
+    stats: [
+      { value: 'v1.0.2', label: 'latest release' },
+      { value: 'x64 + ARM64', label: 'Windows builds, plus Linux' },
+      { value: '106 MB', label: 'Windows installer' },
+    ],
     problem: 'Doctors spend the day inside hospital software — a browser tab gets lost between patients.',
     built: 'A native window for Windows (x64 and ARM64) and Linux. Ctrl + Shift + Space opens a new chat from any app, a tray menu keeps tools one click away, reminders surface due flashcards and ward jobs, and the app checks daily for updates.',
     outcome: 'Version 1.0.2 shipped at downloads.aethex.in, signed in with the same aethex.in account. macOS is next.',

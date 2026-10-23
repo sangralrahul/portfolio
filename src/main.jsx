@@ -3,7 +3,8 @@ import { createRoot } from 'react-dom/client'
 
 /*
  * Which design is live.
- *   'editorial' — warm cream magazine design, serif R. logo (current)
+ *   'editorial' — refined cream editorial: compact hero, at-a-glance strip (current)
+ *   'editorial-v1' — first cream magazine version (on hold)
  *   'bento'   — Apple-style bento grid (on hold)
  *   'studio'  — bold hero, R monogram, case studies (on hold)
  *   'pro'     — sidebar layout (on hold)
@@ -16,6 +17,7 @@ const App =
   VERSION === 'classic' ? lazy(() => import('./site/App.jsx'))
   : VERSION === 'pro' ? lazy(() => import('./pro/App.jsx'))
   : VERSION === 'studio' ? lazy(() => import('./studio/App.jsx'))
+  : VERSION === 'editorial-v1' ? lazy(() => import('./editorial-v1/App.jsx'))
   : VERSION === 'bento' ? lazy(() => import('./bento/App.jsx'))
   : lazy(() => import('./editorial/App.jsx'))
 
