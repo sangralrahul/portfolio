@@ -77,7 +77,7 @@ function Hero() {
         </h1>
         <div className="hero-foot">
           <p>
-            I'm <strong>Rahul Sangral</strong>, a full-stack engineer and the founder of <strong>AETHEX</strong> — a medical workspace for
+            I'm <strong>Rahul Sangral</strong>, a full-stack developer and the founder of <strong>AETHEX</strong> — a medical workspace for
             India's doctors, hospitals and medical colleges, with the <strong>Cadus</strong> clinical AI built in. React, FastAPI, PostgreSQL and AI, end to end.
           </p>
           <div className="hero-cta">

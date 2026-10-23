@@ -91,7 +91,7 @@ function Hero() {
             <span className="dot" /> Open to SDE roles and freelance work <Icon name="arrow" size={14} />
           </a>
           <p className="hero-name">Rahul Sangral</p>
-          <h1>Full-stack engineer shipping AI products to real users.</h1>
+          <h1>Full-stack developer shipping AI products to real users.</h1>
           <p className="hero-lede">
             I build and run software end to end — React and TypeScript on the front, FastAPI and PostgreSQL behind it, AI on top.
             Right now that's <strong>AETHEX</strong>: a medical workspace for India's doctors, hospitals and medical colleges, with the <strong>Cadus</strong> clinical AI built in.

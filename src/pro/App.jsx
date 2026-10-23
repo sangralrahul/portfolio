@@ -51,7 +51,7 @@ function Sidebar() {
           <img src={profile.logo} alt="" width="40" height="40" />
         </a>
         <h1>Rahul Sangral</h1>
-        <p className="side-role">Full-stack engineer &amp; founder of <em>AETHEX</em></p>
+        <p className="side-role">Full-stack developer &amp; founder of <em>AETHEX</em></p>
         <p className="side-line">I build AI products for healthcare and ship them to real users — on the web and on the desktop.</p>
 
         <a className="status" href="#contact" onClick={go('contact')}>
@@ -101,12 +101,12 @@ function About() {
     <section id="about" className="block">
       <Label n="01">About</Label>
       <p className="lead" data-reveal>
-        I'm a full-stack engineer who takes products from <em>idea to production</em> on my own — React and TypeScript on the front,
+        I'm a full-stack developer who takes products from <em>idea to production</em> on my own — React and TypeScript on the front,
         FastAPI and PostgreSQL behind it, and AI where it earns its place.
       </p>
       <p className="body" data-reveal>
         Today that work is <strong>AETHEX</strong>, a medical workspace for India's doctors, hospitals and medical colleges, and <strong>Cadus</strong>,
-        the clinical AI built into it. I'm the sole engineer: I design the APIs and schema, build the apps, handle auth and payments, and run the releases.
+        the clinical AI built into it. I'm the sole developer: I design the APIs and schema, build the apps, handle auth and payments, and run the releases.
         Before that I freelanced on web apps and data tooling, and I keep my fundamentals sharp on LeetCode and Codeforces.
       </p>
       <dl className="facts" data-reveal>

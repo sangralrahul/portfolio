@@ -4,11 +4,11 @@
 
 export const profile = {
   name: 'Rahul Sangral',
-  role: 'Full-Stack Engineer & AI Developer',
+  role: 'Full-Stack Developer & AI Developer',
   tagline:
-    'Founding engineer shipping production SaaS end to end — React, FastAPI, PostgreSQL and AI tooling. Graduating 2026 and available now for SDE-1 / New Grad roles and freelance work.',
+    'Founding developer shipping production SaaS end to end — React, FastAPI, PostgreSQL and AI tooling. Graduating 2026 and available now for SDE-1 / New Grad roles and freelance work.',
   location: 'Jammu, India',
-  email: 'rishumvis007@gmail.com',
+  email: 'hello@rahulsangral.me',
   phone: '+91 96823 94363',
   // Drop your photo at /public/profile.jpg — it is used automatically.
   photo: '/profile.jpg',
@@ -105,7 +105,7 @@ export const projects = [
     genres: ['SaaS', 'Full-Stack', 'Payments'],
     hue: [350, 15],
     description:
-      'The web platform behind it all — a medical store, study hub and Cadus for doctors and students across India. Built end to end as the sole engineer: React frontend, FastAPI API, PostgreSQL/Firestore, role-based auth, Razorpay payments and CI/CD.',
+      'The web platform behind it all — a medical store, study hub and Cadus for doctors and students across India. Built end to end as the sole developer: React frontend, FastAPI API, PostgreSQL/Firestore, role-based auth, Razorpay payments and CI/CD.',
     tech: ['React', 'TypeScript', 'FastAPI', 'PostgreSQL', 'Razorpay'],
     links: [{ label: 'Visit aethex.in', url: 'https://aethex.in/' }],
   },
@@ -175,7 +175,7 @@ export const projects = [
 // Case studies for the "studio" design — real screenshots live in /public/shots.
 export const caseStudies = {
   'aethex-suite': {
-    role: 'Founder · sole engineer',
+    role: 'Founder · sole developer',
     shots: [
       { src: '/shots/hc-wards.webp', label: 'AETHEX HC · Wards & beds' },
       { src: '/shots/pc-cadus.webp', label: 'AETHEX PC · Cadus' },
@@ -186,21 +186,21 @@ export const caseStudies = {
     outcome: 'Live at v0.1.70 for Windows (x64 and ARM) and Linux, with 30+ hospital modules, 25+ college modules and a 15,515-article library that works offline.',
   },
   cadus: {
-    role: 'Founder · sole engineer',
+    role: 'Founder · sole developer',
     shots: [{ src: '/shots/cadus-chat.webp', label: 'Cadus · cited answer with safety review' }],
     problem: 'Clinicians need answers they can trust in seconds — with sources they can check, and no dosing mistakes.',
     built: 'A clinical assistant on the Medius 3.1 and Magnus 3.6 models. Every answer is cited and passes a safety review for doses and red flags before it is shown, alongside drug-interaction checks, lab interpretation, dose cards, clinical calculators and an offline library.',
     outcome: 'Live at cadus.aethex.in and built into every AETHEX app, with one account across the web and the desktop.',
   },
   'cadus-desktop': {
-    role: 'Founder · sole engineer',
+    role: 'Founder · sole developer',
     shots: [{ src: '/shots/cadus-desktop.webp', label: 'downloads.aethex.in' }],
     problem: 'Doctors spend the day inside hospital software — a browser tab gets lost between patients.',
     built: 'A native window for Windows (x64 and ARM64) and Linux. Ctrl + Shift + Space opens a new chat from any app, a tray menu keeps tools one click away, reminders surface due flashcards and ward jobs, and the app checks daily for updates.',
     outcome: 'Version 1.0.2 shipped at downloads.aethex.in, signed in with the same aethex.in account. macOS is next.',
   },
   aethex: {
-    role: 'Sole engineer',
+    role: 'Sole developer',
     shots: [{ src: '/shots/aethex-web.webp', label: 'aethex.in' }],
   },
 }
@@ -216,7 +216,7 @@ export const experience = [
     progress: 72,
     hue: [355, 20],
     description:
-      'Sole engineer behind aethex.in and its products — the Cadus clinical AI (web and desktop) and the AETHEX PC, HC and MC desktop apps. API design, authentication, database schema, Razorpay payments, analytics and CI/CD.',
+      'Sole developer behind aethex.in and its products — the Cadus clinical AI (web and desktop) and the AETHEX PC, HC and MC desktop apps. API design, authentication, database schema, Razorpay payments, analytics and CI/CD.',
     tech: ['React', 'FastAPI', 'PostgreSQL', 'Firebase', 'Razorpay', 'GA4'],
   },
   {
@@ -314,7 +314,7 @@ export const viewers = [
     rows: ['experience', 'top10', 'skills', 'certifications', 'education', 'profiles'] },
   { id: 'developer', name: 'Developer', hue: [205, 235], icon: 'code', tagline: 'Full-stack and AI engineer. Typed React frontends, FastAPI services, SQL schemas, RAG pipelines and CI/CD — built solo, shipped to real users.',
     rows: ['top10', 'skills', 'profiles', 'experience', 'certifications', 'education'] },
-  { id: 'founder', name: 'Founder', hue: [265, 295], icon: 'rocket', tagline: 'Zero-to-one builder. Sole engineer behind a live SaaS with auth, subscriptions and analytics — and founder of Zyphix. I turn an idea into a deployed product.',
+  { id: 'founder', name: 'Founder', hue: [265, 295], icon: 'rocket', tagline: 'Zero-to-one builder. Sole developer behind a live SaaS with auth, subscriptions and analytics — and founder of Zyphix. I turn an idea into a deployed product.',
     rows: ['top10', 'experience', 'skills', 'certifications', 'profiles', 'education'] },
   { id: 'investor', name: 'Investor', hue: [42, 28], icon: 'chart', tagline: 'Technical founder with shipped products and measurable outcomes: 60% faster analysis, 40% fewer manual reports, two live platforms. Capital-efficient by necessity — one engineer, production scale.',
     rows: ['top10', 'experience', 'certifications', 'skills', 'profiles', 'education'] },
