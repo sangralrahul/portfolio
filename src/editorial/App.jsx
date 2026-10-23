@@ -229,10 +229,14 @@ function Work() {
       <Feature id="cadus" fig={2} flip />
       <Feature id="cadus-desktop" fig={3} />
       <article className="feature feature--small">
-        <figure className="plate" data-reveal>
-          <Shot shot={caseStudies.aethex.shots[0]} domain="aethex.in" />
-          <figcaption><span>Fig. 4 — aethex.in</span></figcaption>
-        </figure>
+        <div className="inside" data-reveal>
+          <span className="small-caps">Inside aethex.in</span>
+          <ul>
+            {[['Medical store', 'BP monitors, stethoscopes, diagnostics — delivered across India'], ['Study', 'Case of the day and study tools for medical students'], ['Cadus', 'Clinical answers with sources, one tap from every page'], ['For institutions', 'Hospitals, clinics and colleges, with AETHEX HC and MC']].map(([t, d], i) => (
+              <li key={t}><span className="num">{String(i + 1).padStart(2, '0')}</span><div><strong>{t}</strong><small>{d}</small></div></li>
+            ))}
+          </ul>
+        </div>
         <div className="story" data-reveal>
           <div className="story-head">
             <img src={web.logo} alt="" width="40" height="40" className="logo" />
@@ -338,13 +342,32 @@ function Credentials() {
   )
 }
 
+const UPDATED = new Date(__BUILD_DATE__).toLocaleDateString('en-IN', { month: 'long', year: 'numeric' })
+
+function CopyEmail() {
+  const [done, setDone] = useState(false)
+  const copy = async () => {
+    try { await navigator.clipboard.writeText(profile.email) } catch { /* clipboard blocked: the mailto link still works */ }
+    setDone(true)
+    setTimeout(() => setDone(false), 1800)
+  }
+  return (
+    <button type="button" className={`copy ${done ? 'copy--done' : ''}`} onClick={copy} aria-live="polite">
+      {done ? 'Copied ✓' : 'Copy email'}
+    </button>
+  )
+}
+
 function Contact() {
   return (
     <section className="contact" id="contact">
       <div className="wrap">
         <span className="ch-n" data-reveal>№ 05</span>
         <h2 data-reveal>Let's build something <em>that ships.</em></h2>
-        <a className="big-mail" href={`mailto:${profile.email}`} data-reveal>{profile.email} <Icon name="arrow" size={28} /></a>
+        <div className="mail-row" data-reveal>
+          <a className="big-mail" href={`mailto:${profile.email}`}>{profile.email} <Icon name="arrow" size={28} /></a>
+          <CopyEmail />
+        </div>
         <div className="contact-row" data-reveal>
           <a href={social.linkedin.url} target="_blank" rel="noreferrer">LinkedIn</a>
           <a href={social.github.url} target="_blank" rel="noreferrer">GitHub</a>
@@ -354,7 +377,8 @@ function Contact() {
       </div>
       <footer className="wrap colophon">
         <span className="col-brand"><Mark size={28} /> © {new Date().getFullYear()} Rahul Sangral</span>
-        <span>Set in Instrument Serif &amp; Inter · Built with React</span>
+        <span>Designed &amp; built by Rahul · Updated {UPDATED}</span>
+        <a href="#top" onClick={go('top')} className="to-top">Back to top ↑</a>
       </footer>
     </section>
   )
@@ -365,6 +389,7 @@ export default function App() {
   const live = useLiveStats()
   return (
     <>
+      <a className="skip" href="#work">Skip to work</a>
       <Masthead />
       <main>
         <Hero />

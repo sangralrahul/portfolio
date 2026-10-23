@@ -338,3 +338,46 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 @keyframes lb { from { opacity: 0; } to { opacity: 1; } }
 .plate figcaption::after { content: 'Click to enlarge'; font-family: var(--sans); font-style: normal; font-size: 12px; color: var(--dim); }
 .plate figcaption:has(.plate-tabs)::after { content: none; }
+
+/* ═════════ Finishing touches ═════════ */
+.skip { position: fixed; left: 16px; top: -60px; z-index: 200; padding: 10px 16px; border-radius: 8px; background: var(--ink); color: var(--paper); font-size: 14px; transition: top .2s; }
+.skip:focus { top: 12px; }
+
+.inside { padding: 28px 30px; background: var(--paper-2); border: 1px solid var(--rule); border-radius: 14px; }
+.inside ul { margin-top: 14px; }
+.inside li { display: flex; gap: 16px; align-items: baseline; padding: 14px 0; border-top: 1px solid var(--rule); }
+.inside li:first-child { border-top: 0; }
+.inside strong { display: block; font-family: var(--serif); font-weight: 400; font-size: 24px; line-height: 1.15; }
+.inside small { font-size: 14px; color: var(--muted); }
+
+.mail-row { display: flex; align-items: center; flex-wrap: wrap; gap: 20px 28px; margin-top: 48px; }
+.mail-row .big-mail { margin-top: 0; }
+.copy { height: 40px; padding: 0 18px; border-radius: 999px; border: 1px solid rgba(244, 239, 230, .3); color: var(--paper); font-size: 14px; transition: background .2s, border-color .2s, color .2s; }
+.copy:hover { border-color: var(--paper); }
+.copy--done { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+.to-top { color: rgba(244, 239, 230, .75); }
+.to-top:hover { color: var(--paper); }
+
+/* calmer page entrance */
+@media (prefers-reduced-motion: no-preference) {
+  .mast, .id-row { animation: enter .7s cubic-bezier(.2, .8, .2, 1) both; }
+  @keyframes enter { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+}
+
+/* print: a clean one-column résumé view for recruiters */
+@media print {
+  @page { margin: 16mm; }
+  body { background: #fff; color: #000; font-size: 11pt; }
+  .mast, .progress, .actions, .plate-tabs, .copy, .to-top, .skip, .plate, .glance { display: none !important; }
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
+  .hero, .chapter { padding: 0 !important; }
+  .chapter { margin-top: 18pt; break-inside: avoid-page; }
+  .feature, .feature--flip, .feature--small, .hero-grid { display: block !important; }
+  .feature + .feature { margin-top: 14pt; padding-top: 14pt; }
+  .contact { background: #fff; color: #000; margin-top: 18pt; padding-top: 0; }
+  .contact h2 { font-size: 28pt; }
+  .contact h2 em, .contact .ch-n { color: #000; }
+  .big-mail { font-size: 16pt; border: 0; }
+  .colophon { color: #555; border-color: #ccc; margin-top: 12pt; }
+  a { color: #000 !important; }
+}
