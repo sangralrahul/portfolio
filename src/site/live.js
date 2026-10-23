@@ -21,6 +21,7 @@ export function useLiveStats() {
         set('codeforces', [{ v: u.rating ?? '—', l: 'Rating' }, { v: u.maxRating ?? '—', l: 'Max rating' }])
       })
       .catch(() => set('codeforces', null))
+    set('hackerrank', null) // HackerRank has no public browser API (CORS), so the card links to the profile
     get('https://leetcode-stats-api.herokuapp.com/rahulsangral')
       .then((l) => {
         if (l.status !== 'success') throw new Error('lc')

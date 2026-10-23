@@ -381,3 +381,5 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
   .colophon { color: #555; border-color: #ccc; margin-top: 12pt; }
   a { color: #000 !important; }
 }
+.prof-alt { justify-content: flex-end; min-height: 46px; }
+.prof-alt small { font-size: 14px; color: var(--ink-2); }

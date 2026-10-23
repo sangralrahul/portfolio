@@ -291,23 +291,23 @@ function Skills({ live }) {
           <div key={g.id}><dt>{g.title}</dt><dd>{g.items.join(', ')}</dd></div>
         ))}
       </dl>
-      <h3 className="sub small-caps" data-reveal>Coding profiles · live</h3>
+      <h3 className="sub small-caps" data-reveal>Coding profiles</h3>
       <div className="profiles" data-reveal>
-        {['github', 'leetcode', 'codeforces'].map((k) => {
+        {['github', 'leetcode', 'hackerrank'].map((k) => {
           const s = social[k]
           const st = live[k]
           return (
             <a key={k} href={s.url} target="_blank" rel="noreferrer" className="prof">
               <span className="prof-name"><img src={s.logo} alt="" width="20" height="20" /> {s.name} <small>@{s.handle}</small></span>
               <span className="prof-nums">
-                {st ? st.map((x) => <span key={x.l}><b>{x.v}</b><small>{x.l}</small></span>) : <span><b>—</b><small>{st === null ? 'open the profile' : 'loading'}</small></span>}
+                {st ? st.map((x) => <span key={x.l}><b>{x.v}</b><small>{x.l}</small></span>) : <span className="prof-alt"><small>{st === undefined ? 'Loading…' : k === 'hackerrank' ? 'Badges and skill certificates — view profile →' : 'View profile →'}</small></span>}
               </span>
             </a>
           )
         })}
       </div>
       <p className="also" data-reveal>
-        Also on {['gfg', 'hackerrank', 'huggingface', 'codedex'].map((k, i, a) => (
+        Also on {['gfg', 'huggingface', 'codedex'].map((k, i, a) => (
           <span key={k}><a href={social[k].url} target="_blank" rel="noreferrer">{social[k].name}</a>{i < a.length - 2 ? ', ' : i === a.length - 2 ? ' and ' : '.'}</span>
         ))}
       </p>
