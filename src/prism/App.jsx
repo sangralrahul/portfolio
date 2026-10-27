@@ -536,10 +536,11 @@ function Certs() {
                     <span className="cert-logo"><img src={CERT_LOGO[org] || c.logo} alt="" loading="lazy" /></span>
                     <span className="cert-txt"><b>{c.title}</b><small><img src="/gh/verified.svg" alt="" width="13" height="13" />{c.org}{c.year && ` · ${c.year}`}</small></span>
                     <span className="shine" aria-hidden="true" />
+                    <span className="hit" aria-hidden="true" />
                   </a>
                 )
               })}
-              {pair.length === 2 && <span className="clash" aria-hidden="true"><i /><i /><i /><i /><b>⚡</b></span>}
+              {pair.length === 2 && <span className="clash" aria-hidden="true"><i className="arc" /><i className="ripple" /><i className="core" /></span>}
             </div>
           ))}
         </div>
