@@ -513,3 +513,7 @@ body::before { background: radial-gradient(1000px 600px at 90% -10%, rgba(99, 10
   .gly { left: calc(4% + var(--i) * 13%); }
   .pulse { width: 320px; height: 320px; right: -120px; }
 }
+
+/* navbar logo */
+.logo-img { width: 40px; height: 40px; border-radius: 50%; box-shadow: 0 4px 14px -4px rgba(15, 23, 42, .35); transition: transform .5s var(--spring); }
+.logo:hover .logo-img { transform: rotate(-10deg) scale(1.08); }

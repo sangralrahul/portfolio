@@ -266,7 +266,7 @@ function Nav() {
       <div className="progress" aria-hidden="true" />
       <header className={`nav ${solid ? 'solid' : ''}`}>
         <a href="#top" onClick={pick('top')} className="logo" aria-label="Rahul Sangral, home">
-          <span className="logo-mark"><b>R</b><i /></span><span className="logo-txt">Rahul Sangral</span>
+          <img className="logo-img" src="/brand/r-mark.svg" alt="" width="40" height="40" /><span className="logo-txt">Rahul Sangral</span>
         </a>
         <nav className="links" aria-label="Sections">
           {NAV.map(([id, l]) => <a key={id} href={`#${id}`} onClick={pick(id)} className={active === id ? 'act' : ''}>{l}</a>)}
