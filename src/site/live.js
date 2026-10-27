@@ -12,15 +12,18 @@ export function useLiveStats() {
   useEffect(() => {
     let alive = true
     const set = (k, v) => alive && setD((x) => ({ ...x, [k]: v }))
+    // Start after the page has finished loading and the browser is idle, so these
+    // third-party requests never compete with the first paint.
+    const idle = window.requestIdleCallback || ((f) => setTimeout(f, 1200))
+    const start = () => idle(fetchAll, { timeout: 2500 })
+    if (document.readyState === 'complete') start(); else window.addEventListener('load', start, { once: true })
+    return () => { alive = false; window.removeEventListener('load', start) }
+
+    function fetchAll() {
+      if (!alive) return
     get('https://api.github.com/users/sangralrahul')
       .then((g) => set('github', [{ v: g.public_repos, l: 'Public repos' }, { v: g.followers, l: 'Followers' }]))
       .catch(() => set('github', null))
-    get('https://codeforces.com/api/user.info?handles=rahulsangral')
-      .then((c) => {
-        const u = c.result[0]
-        set('codeforces', [{ v: u.rating ?? '—', l: 'Rating' }, { v: u.maxRating ?? '—', l: 'Max rating' }])
-      })
-      .catch(() => set('codeforces', null))
     set('hackerrank', null) // HackerRank has no public browser API (CORS), so the card links to the profile
     get('https://leetcode-stats-api.herokuapp.com/rahulsangral')
       .then((l) => {
@@ -32,7 +35,7 @@ export function useLiveStats() {
           .then((l) => set('leetcode', [{ v: l.solvedProblem, l: 'Solved' }, { v: `${l.easySolved}/${l.mediumSolved}/${l.hardSolved}`, l: 'Easy / Med / Hard' }]))
           .catch(() => set('leetcode', null)),
       )
-    return () => { alive = false }
+    }
   }, [])
   return d
 }

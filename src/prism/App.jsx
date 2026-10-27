@@ -175,8 +175,8 @@ function spot(tilt = false) {
 
 function useClock() {
   const f = () => new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'Asia/Kolkata' })
-  const [t, setT] = useState(f)
-  useEffect(() => { const id = setInterval(() => setT(f()), 30000); return () => clearInterval(id) }, [])
+  const [t, setT] = useState('')  // filled after mount, so the pre-rendered HTML never shows a stale time
+  useEffect(() => { setT(f()); const id = setInterval(() => setT(f()), 30000); return () => clearInterval(id) }, [])
   return t
 }
 
@@ -292,26 +292,26 @@ function Hero() {
       <Bg kind="stripes" />
       <div className="wrap hero-grid">
         <div className="hero-copy">
-          <span className="status" data-r="up"><i className="ping loop" />Open to SDE roles &amp; freelance</span>
-          <h1 className="name"><Split text="Rahul" base={150} /><br /><Split text="Sangral" base={350} /></h1>
-          <p className="roles" data-r="up" style={{ '--d': '700ms' }}>
+          <span className="status rise"><i className="ping loop" />Open to SDE roles &amp; freelance</span>
+          <h1 className="name"><Split text="Rahul" base={0} step={30} /><br /><Split text="Sangral" base={120} step={30} /></h1>
+          <p className="roles rise" style={{ '--d': '380ms' }}>
             Full-stack &amp; AI developer. I build
             <span className="rot" aria-live="off"><span className="rot-track loop">{[...ROLES, ROLES[0]].map((r, i) => <b key={i}>{r}</b>)}</span></span>
           </p>
-          <p className="lede" data-r="up" style={{ '--d': '820ms' }}>
+          <p className="lede rise" style={{ '--d': '440ms' }}>
             Founding software engineer at Clavix Technologies, building AETHEX — software and the Cadus clinical AI for India&apos;s doctors, hospitals and medical colleges.
           </p>
-          <div className="cta" data-r="up" style={{ '--d': '940ms' }}>
+          <div className="cta rise" style={{ '--d': '500ms' }}>
             <a className="btn btn-pri magnet" href="#work" onClick={go('work')}><span>See my work</span><b aria-hidden="true">→</b></a>
             <a className="btn btn-ghost magnet" href={profile.resume} target="_blank" rel="noreferrer"><span>Résumé</span><b aria-hidden="true">↓</b></a>
           </div>
-          <ul className="meta" data-r="up" style={{ '--d': '1060ms' }}>
+          <ul className="meta rise" style={{ '--d': '560ms' }}>
             <li><i className="dot" />{profile.location} · {time} IST</li>
             <li><a href={MAILTO}>{profile.email}</a></li>
           </ul>
         </div>
 
-        <div className="orbit" data-r="scale" style={{ '--d': '300ms' }} aria-hidden="true">
+        <div className="orbit rise-scale" style={{ '--d': '120ms' }} aria-hidden="true">
           <div className="ring ring-1 loop">{ORBIT_IN.map((t, i) => <span key={t} style={{ '--a': `${(360 / ORBIT_IN.length) * i}deg` }}><em className="loop">{t}</em></span>)}</div>
           <div className="ring ring-2 loop">{ORBIT_OUT.map((t, i) => <span key={t} style={{ '--a': `${(360 / ORBIT_OUT.length) * i}deg` }}><em className="loop">{t}</em></span>)}</div>
           <div className="core">

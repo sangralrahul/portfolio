@@ -157,9 +157,9 @@ body::before { content: ''; position: fixed; inset: 0; z-index: -1; pointer-even
 
 .name { margin: 26px 0 18px; font-family: var(--display); font-weight: 700; font-size: clamp(56px, 9vw, 128px); line-height: .92; letter-spacing: -.045em; }
 .split { display: inline-block; white-space: nowrap; }
-.split span { display: inline-block; opacity: 0; transform: translateY(70%) rotate(8deg); filter: blur(6px); animation: letter .9s var(--ease) forwards; animation-delay: var(--d); }
+.split span { display: inline-block; animation: letter .8s var(--ease) backwards; animation-delay: var(--d); }
 .name .split:last-of-type span, .grad-anim .split span { background: var(--grad); background-size: calc(var(--n) * 100%) 100%; background-position: calc(var(--i) / max(var(--n) - 1, 1) * 100%) 0; -webkit-background-clip: text; background-clip: text; color: transparent; }
-@keyframes letter { to { opacity: 1; transform: none; filter: none; } }
+@keyframes letter { from { opacity: .01; transform: translateY(60%) rotate(6deg); } }
 .name .split span { transition: transform .4s var(--spring), color .3s; }
 
 .roles { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 10px; font-size: clamp(18px, 2vw, 22px); color: var(--soft); font-family: var(--display); }
@@ -576,3 +576,10 @@ body::before { background: radial-gradient(1000px 600px at 90% -10%, rgba(99, 10
 .sk-chips img { width: 20px; height: 20px; object-fit: contain; animation: logoBob 3.4s ease-in-out infinite; animation-delay: calc(var(--k) * -.5s); }
 .sk-chips i:hover img { animation: logoSpin .7s var(--ease); }
 #skills:not(.on) .sk-chips img { animation-play-state: paused; }
+
+/* hero: plays immediately on load (no observer wait); starts at opacity .01 so
+   the browser counts it as painted on the first frame (fast LCP) */
+.rise { animation: rise .8s var(--ease) var(--d, 0ms) backwards; }
+.rise-scale { animation: riseScale 1s var(--ease) var(--d, 0ms) backwards; }
+@keyframes rise { from { opacity: .01; transform: translateY(22px); } }
+@keyframes riseScale { from { opacity: .01; transform: scale(.9); } }
