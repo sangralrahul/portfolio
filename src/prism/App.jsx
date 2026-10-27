@@ -69,8 +69,8 @@ const SKILLS = [
   ['Cloud & DevOps', ['AWS', 'Google Cloud', 'Azure', 'Vercel', 'Cloudflare', 'Docker', 'GitHub Actions']],
 ]
 const DEPTH = [['Python / FastAPI', 94], ['TypeScript / React', 90], ['LLM apps / RAG', 88], ['PostgreSQL / SQL', 86], ['Data / BI', 84], ['Cloud / CI/CD', 80]]
-const MARQUEE_A = ['Python', 'TypeScript', 'React', 'Next.js', 'FastAPI', 'PostgreSQL', 'Node.js', 'Tailwind', 'Claude API', 'Docker']
-const MARQUEE_B = ['Amazon Bedrock', 'Vertex AI', 'Hugging Face', 'RAG', 'Pandas', 'AWS', 'Google Cloud', 'Vercel', 'Cloudflare', 'GitHub Actions']
+const MARQUEE_A = [['Python', 'python'], ['TypeScript', 'typescript'], ['JavaScript', 'javascript'], ['React', 'react'], ['Next.js', 'nextjs'], ['FastAPI', 'fastapi'], ['PostgreSQL', 'postgresql'], ['Node.js', 'nodejs'], ['Tailwind', 'tailwindcss'], ['Vite', 'vitejs'], ['Claude API', 'claude'], ['Docker', 'docker'], ['MongoDB', 'mongodb']]
+const MARQUEE_B = [['Anthropic', 'anthropic'], ['Amazon Bedrock', 'aws'], ['Vertex AI', 'googlecloud'], ['Hugging Face', 'huggingface'], ['RAG', 'rag'], ['Pandas', 'pandas'], ['scikit-learn', 'scikitlearn'], ['MySQL', 'mysql'], ['Firebase', 'firebase'], ['Google Cloud', 'googlecloud'], ['Azure', 'azure'], ['Vercel', 'vercel'], ['Cloudflare', 'cloudflare'], ['GitHub Actions', 'githubactions']]
 
 const CERT_LOGO = { Oracle: '/gh/oracle-original.svg', 'McKinsey & Company': '/logos/mckinsey.webp', Anthropic: '/gh/anthropic.svg', Google: '/gh/google-original.svg', Microsoft: '/logos/microsoft.webp', Cisco: '/gh/cisco.svg', 'JPMorgan Chase': '/logos/jpmorgan.webp' }
 
@@ -331,8 +331,8 @@ function Marquee() {
   return (
     <div className="marquee" data-live aria-hidden="true">
       <Bg kind="stripes" />
-      <div className="mq-row"><div className="mq-track loop">{[...MARQUEE_A, ...MARQUEE_A].map((t, i) => <span key={i}>{t}</span>)}</div></div>
-      <div className="mq-row rev"><div className="mq-track loop">{[...MARQUEE_B, ...MARQUEE_B].map((t, i) => <span key={i}>{t}</span>)}</div></div>
+      <div className="mq-row"><div className="mq-track loop">{[...MARQUEE_A, ...MARQUEE_A].map(([t, ic], i) => <span key={i} className="tech" style={{ '--k': i % 7 }}><img src={`/tech/${ic}.svg`} alt="" width="26" height="26" decoding="async" />{t}</span>)}</div></div>
+      <div className="mq-row rev"><div className="mq-track loop">{[...MARQUEE_B, ...MARQUEE_B].map(([t, ic], i) => <span key={i} className="tech" style={{ '--k': i % 7 }}><img src={`/tech/${ic}.svg`} alt="" width="26" height="26" decoding="async" />{t}</span>)}</div></div>
     </div>
   )
 }

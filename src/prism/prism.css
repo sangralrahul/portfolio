@@ -517,3 +517,15 @@ body::before { background: radial-gradient(1000px 600px at 90% -10%, rgba(99, 10
 /* navbar logo */
 .logo-img { width: 40px; height: 40px; border-radius: 50%; box-shadow: 0 4px 14px -4px rgba(15, 23, 42, .35); transition: transform .5s var(--spring); }
 .logo:hover .logo-img { transform: rotate(-10deg) scale(1.08); }
+
+/* tech logos in the strip: each logo bobs on its own beat, chip lifts and logo spins on hover */
+.mq-track .tech { display: inline-flex; align-items: center; gap: 11px; padding: 10px 20px 10px 12px; background: #fff; border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 6px 18px -12px rgba(15, 23, 42, .25); color: var(--text); font-size: 16.5px;
+  transition: transform .45s var(--spring), border-color .3s, box-shadow .3s, color .3s; }
+.tech img { width: 26px; height: 26px; object-fit: contain; animation: logoBob 3.2s ease-in-out infinite; animation-delay: calc(var(--k) * -.45s); }
+@keyframes logoBob { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-4px) rotate(-6deg); } }
+.mq-track .tech:hover { transform: translateY(-6px) scale(1.05); border-color: var(--line-2); color: var(--sky); box-shadow: 0 16px 30px -14px rgba(99, 102, 241, .45); }
+.mq-track .tech:hover img { animation: logoSpin .7s var(--ease); }
+@keyframes logoSpin { from { transform: rotate(0) scale(1); } 50% { transform: rotate(180deg) scale(1.25); } to { transform: rotate(360deg) scale(1); } }
+.marquee:not(.on) .tech img { animation-play-state: paused; }
+.marquee { padding: 30px 0; gap: 16px; }
+@media (max-width: 640px) { .mq-track .tech { font-size: 14.5px; padding: 8px 14px 8px 10px; } .tech img { width: 22px; height: 22px; } }
