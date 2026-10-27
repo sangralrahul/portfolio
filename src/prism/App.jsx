@@ -520,12 +520,114 @@ function Skills() {
   )
 }
 
+/* ── Certification arena ─────────────────────────────────────
+   One champion holds the centre. The other certificates charge in one at a
+   time — alternating left and right — at full speed, hit, and get knocked
+   out. After every challenger has fought, the next certificate becomes
+   champion. Driven by the Web Animations API (transform/opacity only) and
+   paused whenever the arena is off screen. */
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+const certLogo = (c) => CERT_LOGO[c.org.split(' ·')[0]] || c.logo
+
+function FightCard({ c, tag, refEl }) {
+  return (
+    <a ref={refEl} href={c.url} target="_blank" rel="noreferrer" className="fc">
+      <em className="fc-tag">{tag}</em>
+      <span className="cert-logo"><img src={certLogo(c)} alt="" /></span>
+      <span className="cert-txt"><b>{c.title}</b><small><img src="/gh/verified.svg" alt="" width="13" height="13" />{c.org}{c.year && ` · ${c.year}`}</small></span>
+    </a>
+  )
+}
+
+function Arena() {
+  const list = certifications
+  const [champ, setChamp] = useState(0)
+  const [chal, setChal] = useState(1)
+  const [round, setRound] = useState(0)
+  const [ko, setKo] = useState(0)
+  const arena = useRef(null), champEl = useRef(null), chalEl = useRef(null), wave = useRef(null), flash = useRef(null)
+  const visible = useRef(false)
+
+  useEffect(() => {
+    const el = arena.current
+    const io = new IntersectionObserver(([e]) => { visible.current = e.isIntersecting })
+    io.observe(el)
+    if (reduced()) return () => io.disconnect()
+    let alive = true
+    const waitVisible = async () => { while (alive && (!visible.current || document.hidden)) await sleep(250) }
+    const play = (node, frames, opts) => node.animate(frames, { fill: 'forwards', ...opts }).finished.catch(() => {})
+
+    const run = async () => {
+      let ci = 0, side = -1, n = 0
+      await sleep(600)
+      while (alive) {
+        const others = list.map((_, i) => i).filter((i) => i !== ci)
+        for (let k = 0; k < others.length && alive; k++) {
+          await waitVisible()
+          if (!alive) return
+          setChal(others[k]); setRound(k + 1)
+          await sleep(60)
+          const A = el.clientWidth, W = champEl.current.offsetWidth
+          const start = side * (A / 2 + W / 2 + 40), hitX = side * (W + 4)
+          const C = chalEl.current, H = champEl.current
+          ;[C, H, el].forEach((node) => node.getAnimations().forEach((a) => a.cancel()))
+          // run-up: appear at the edge, crouch back, then sprint in
+          await play(C, [{ transform: `translateX(${start}px) scale(.96)`, opacity: 1 }, { transform: `translateX(${start + side * 26}px) scale(.94) skewX(${side * 6}deg)`, opacity: 1 }], { duration: 260, easing: 'ease-out' })
+          await play(C, [{ transform: `translateX(${start + side * 26}px) scale(.94) skewX(${side * 6}deg)`, opacity: 1 }, { transform: `translateX(${hitX}px) scale(1) skewX(${-side * 8}deg)`, opacity: 1 }], { duration: 340, easing: 'cubic-bezier(.55,0,1,.45)' })
+          // impact
+          wave.current.style.left = `calc(50% + ${side * (W / 2 + 2)}px)`
+          play(wave.current, [{ transform: 'translate(-50%,-50%) scale(.2)', opacity: 1 }, { transform: 'translate(-50%,-50%) scale(3.2)', opacity: 0 }], { duration: 650, easing: 'cubic-bezier(.2,.8,.2,1)' })
+          play(flash.current, [{ opacity: 0.9 }, { opacity: 0 }], { duration: 380, easing: 'ease-out' })
+          play(el, [{ transform: 'translate(0,0)' }, { transform: `translate(${-side * 9}px,3px)` }, { transform: `translate(${side * 7}px,-3px)` }, { transform: `translate(${-side * 4}px,2px)` }, { transform: 'translate(0,0)' }], { duration: 360, easing: 'ease-out' })
+          H.classList.add('struck'); C.classList.add('struck')
+          play(H, [{ transform: 'translateX(-50%)' }, { transform: `translateX(calc(-50% + ${-side * 34}px)) skewX(${side * 4}deg)`, offset: 0.25 }, { transform: `translateX(calc(-50% + ${side * 8}px))`, offset: 0.6 }, { transform: 'translateX(-50%)' }], { duration: 700, easing: 'cubic-bezier(.2,.9,.3,1)' })
+          // challenger is knocked out of the arena
+          await play(C, [{ transform: `translateX(${hitX}px) scale(1)`, opacity: 1 }, { transform: `translateX(${hitX + side * 70}px) scale(.98) rotate(${side * -4}deg)`, offset: 0.25 }, { transform: `translateX(${side * (A / 2 + W)}px) translateY(-60px) rotate(${side * -28}deg) scale(.8)`, opacity: 0 }], { duration: 820, easing: 'cubic-bezier(.3,.6,.4,1)' })
+          H.classList.remove('struck'); C.classList.remove('struck')
+          setKo((x) => x + 1)
+          side = -side; n++
+          await sleep(520)
+        }
+        // champion retires; the next certificate takes the centre
+        await waitVisible()
+        champEl.current.getAnimations().forEach((a) => a.cancel())
+        await play(champEl.current, [{ transform: 'translateX(-50%) scale(1)', opacity: 1 }, { transform: 'translateX(-50%) scale(.9)', opacity: 0 }], { duration: 320 })
+        ci = (ci + 1) % list.length
+        setChamp(ci)
+        await sleep(60)
+        await play(champEl.current, [{ transform: 'translateX(-50%) scale(1.12)', opacity: 0 }, { transform: 'translateX(-50%) scale(1)', opacity: 1 }], { duration: 520, easing: 'cubic-bezier(.34,1.56,.64,1)' })
+      }
+    }
+    run()
+    return () => { alive = false; io.disconnect() }
+  }, [list])
+
+  return (
+    <div className="arena-wrap" data-r="up">
+      <div className="arena-hud">
+        <span className="hud-champ"><i className="crown">♛</i> Champion</span>
+        <span className="hud-round">Round <b>{round || 1}</b> / {list.length - 1}</span>
+        <span className="hud-ko"><b>{ko}</b> knockouts</span>
+      </div>
+      <div className="arena" ref={arena}>
+        <div className="arena-floor" aria-hidden="true" />
+        <span className="flash" ref={flash} aria-hidden="true" />
+        <span className="shock" ref={wave} aria-hidden="true" />
+        <FightCard c={list[champ]} tag="Champion" refEl={champEl} />
+        <FightCard c={list[chal]} tag="Challenger" refEl={chalEl} />
+      </div>
+    </div>
+  )
+}
+
 function Certs() {
   return (
     <section className="sec" id="certs" data-live>
       <Bg kind="blobs" />
       <div className="wrap">
         <Title k="Certifications" title="Verified by the people who make the tools." sub="Anthropic, Oracle, Google, Microsoft, Cisco, McKinsey and JPMorgan Chase — each links to the credential." />
+        <Arena />
+        <p className="all-creds" data-r="up">All credentials</p>
         <div className="certs fight" data-r="fight">
           {Array.from({ length: Math.ceil(certifications.length / 2) }, (_, r) => certifications.slice(r * 2, r * 2 + 2)).map((pair, r) => (
             <div key={r} className={`cert-row ${pair.length === 1 ? 'solo' : ''}`} style={{ '--r': r }}>
@@ -536,11 +638,10 @@ function Certs() {
                     <span className="cert-logo"><img src={CERT_LOGO[org] || c.logo} alt="" loading="lazy" /></span>
                     <span className="cert-txt"><b>{c.title}</b><small><img src="/gh/verified.svg" alt="" width="13" height="13" />{c.org}{c.year && ` · ${c.year}`}</small></span>
                     <span className="shine" aria-hidden="true" />
-                    <span className="hit" aria-hidden="true" />
                   </a>
                 )
               })}
-              {pair.length === 2 && <span className="clash" aria-hidden="true"><i className="arc" /><i className="ripple" /><i className="core" /></span>}
+              
             </div>
           ))}
         </div>
