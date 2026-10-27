@@ -15,15 +15,21 @@ import { createRoot } from 'react-dom/client'
  */
 const VERSION = 'nova'
 
+/* If a deploy replaced the code chunks while this tab had the old page, reload once instead of showing a blank page. */
+const safeLazy = (load) => lazy(() => load().catch((e) => {
+  if (!sessionStorage.getItem('chunk-reload')) { sessionStorage.setItem('chunk-reload', '1'); location.reload() }
+  throw e
+}))
+
 const App =
-  VERSION === 'classic' ? lazy(() => import('./site/App.jsx'))
-  : VERSION === 'pro' ? lazy(() => import('./pro/App.jsx'))
-  : VERSION === 'studio' ? lazy(() => import('./studio/App.jsx'))
-  : VERSION === 'editorial-v1' ? lazy(() => import('./editorial-v1/App.jsx'))
-  : VERSION === 'nova' ? lazy(() => import('./nova/App.jsx'))
-  : VERSION === 'github' ? lazy(() => import('./github/App.jsx'))
-  : VERSION === 'bento' ? lazy(() => import('./bento/App.jsx'))
-  : lazy(() => import('./editorial/App.jsx'))
+  VERSION === 'classic' ? safeLazy(() => import('./site/App.jsx'))
+  : VERSION === 'pro' ? safeLazy(() => import('./pro/App.jsx'))
+  : VERSION === 'studio' ? safeLazy(() => import('./studio/App.jsx'))
+  : VERSION === 'editorial-v1' ? safeLazy(() => import('./editorial-v1/App.jsx'))
+  : VERSION === 'nova' ? safeLazy(() => import('./nova/App.jsx'))
+  : VERSION === 'github' ? safeLazy(() => import('./github/App.jsx'))
+  : VERSION === 'bento' ? safeLazy(() => import('./bento/App.jsx'))
+  : safeLazy(() => import('./editorial/App.jsx'))
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
