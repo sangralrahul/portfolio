@@ -68,11 +68,12 @@ const SKILLS = [
   ['Data', ['PostgreSQL', 'MySQL', 'MongoDB', 'Firestore', 'Pandas', 'scikit-learn']],
   ['Cloud & DevOps', ['AWS', 'Google Cloud', 'Azure', 'Vercel', 'Cloudflare', 'Docker', 'GitHub Actions']],
 ]
+const SKILL_ICON = { Python: 'python', TypeScript: 'typescript', JavaScript: 'javascript', SQL: 'sql', React: 'react', 'Next.js': 'nextjs', 'Tailwind CSS': 'tailwindcss', Vite: 'vitejs', FastAPI: 'fastapi', 'Node.js': 'nodejs', 'REST APIs': 'api', 'Firebase Auth': 'firebase', 'Claude API': 'claude', 'Amazon Bedrock': 'aws', 'Vertex AI': 'googlecloud', RAG: 'rag', 'Hugging Face': 'huggingface', PostgreSQL: 'postgresql', MySQL: 'mysql', MongoDB: 'mongodb', Firestore: 'firebase', Pandas: 'pandas', 'scikit-learn': 'scikitlearn', AWS: 'aws', 'Google Cloud': 'googlecloud', Azure: 'azure', Vercel: 'vercel', Cloudflare: 'cloudflare', Docker: 'docker', 'GitHub Actions': 'githubactions' }
 const DEPTH = [['Python / FastAPI', 94], ['TypeScript / React', 90], ['LLM apps / RAG', 88], ['PostgreSQL / SQL', 86], ['Data / BI', 84], ['Cloud / CI/CD', 80]]
 const MARQUEE_A = [['Python', 'python'], ['TypeScript', 'typescript'], ['JavaScript', 'javascript'], ['React', 'react'], ['Next.js', 'nextjs'], ['FastAPI', 'fastapi'], ['PostgreSQL', 'postgresql'], ['Node.js', 'nodejs'], ['Tailwind', 'tailwindcss'], ['Vite', 'vitejs'], ['Claude API', 'claude'], ['Docker', 'docker'], ['MongoDB', 'mongodb']]
 const MARQUEE_B = [['Anthropic', 'anthropic'], ['Amazon Bedrock', 'aws'], ['Vertex AI', 'googlecloud'], ['Hugging Face', 'huggingface'], ['RAG', 'rag'], ['Pandas', 'pandas'], ['scikit-learn', 'scikitlearn'], ['MySQL', 'mysql'], ['Firebase', 'firebase'], ['Google Cloud', 'googlecloud'], ['Azure', 'azure'], ['Vercel', 'vercel'], ['Cloudflare', 'cloudflare'], ['GitHub Actions', 'githubactions']]
 
-const CERT_LOGO = { Oracle: '/gh/oracle-original.svg', 'McKinsey & Company': '/logos/mckinsey.webp', Anthropic: '/gh/anthropic.svg', Google: '/gh/google-original.svg', Microsoft: '/logos/microsoft.webp', Cisco: '/gh/cisco.svg', 'JPMorgan Chase': '/logos/jpmorgan.webp' }
+const CERT_LOGO = { Oracle: '/gh/oracle-original.svg', 'McKinsey & Company': '/logos/mckinsey.webp', Anthropic: '/tech/anthropic.svg', Google: '/gh/google-original.svg', Microsoft: '/logos/microsoft.webp', Cisco: '/gh/cisco.svg', 'JPMorgan Chase': '/logos/jpmorgan.webp' }
 
 const PROFILES = [
   { name: 'GitHub', handle: 'sangralrahul', icon: '/gh/github.svg', url: 'https://github.com/sangralrahul', key: 'github' },
@@ -501,7 +502,7 @@ function Skills() {
             {SKILLS.map(([g, xs], gi) => (
               <div key={g} className="sk card" data-r="up" style={{ '--d': `${gi * 70}ms` }} {...spot()}>
                 <span className="sk-h">{g}</span>
-                <span className="sk-chips" data-r="pop">{xs.map((x, i) => <i key={x} style={{ '--d': `${200 + i * 50}ms` }}>{x}</i>)}</span>
+                <span className="sk-chips" data-r="pop">{xs.map((x, i) => <i key={x} style={{ '--d': `${200 + i * 50}ms`, '--k': i }}>{SKILL_ICON[x] && <img src={`/tech/${SKILL_ICON[x]}.svg`} alt="" width="20" height="20" loading="lazy" decoding="async" />}{x}</i>)}</span>
               </div>
             ))}
           </div>
@@ -525,17 +526,22 @@ function Certs() {
       <Bg kind="blobs" />
       <div className="wrap">
         <Title k="Certifications" title="Verified by the people who make the tools." sub="Anthropic, Oracle, Google, Microsoft, Cisco, McKinsey and JPMorgan Chase — each links to the credential." />
-        <div className="certs">
-          {certifications.map((c, i) => {
-            const org = c.org.split(' ·')[0]
-            return (
-              <a key={c.id} href={c.url} target="_blank" rel="noreferrer" className="cert card" data-r="up" style={{ '--d': `${(i % 4) * 70}ms` }} {...spot()}>
-                <span className="cert-logo"><img src={CERT_LOGO[org] || c.logo} alt="" loading="lazy" /></span>
-                <span className="cert-txt"><b>{c.title}</b><small><img src="/gh/verified.svg" alt="" width="13" height="13" />{c.org}{c.year && ` · ${c.year}`}</small></span>
-                <span className="shine" aria-hidden="true" />
-              </a>
-            )
-          })}
+        <div className="certs fight" data-r="fight">
+          {Array.from({ length: Math.ceil(certifications.length / 2) }, (_, r) => certifications.slice(r * 2, r * 2 + 2)).map((pair, r) => (
+            <div key={r} className={`cert-row ${pair.length === 1 ? 'solo' : ''}`} style={{ '--r': r }}>
+              {pair.map((c, k) => {
+                const org = c.org.split(' ·')[0]
+                return (
+                  <a key={c.id} href={c.url} target="_blank" rel="noreferrer" className={`cert card ${k ? 'side-r' : 'side-l'}`} {...spot()}>
+                    <span className="cert-logo"><img src={CERT_LOGO[org] || c.logo} alt="" loading="lazy" /></span>
+                    <span className="cert-txt"><b>{c.title}</b><small><img src="/gh/verified.svg" alt="" width="13" height="13" />{c.org}{c.year && ` · ${c.year}`}</small></span>
+                    <span className="shine" aria-hidden="true" />
+                  </a>
+                )
+              })}
+              {pair.length === 2 && <span className="clash" aria-hidden="true"><i /><i /><i /><i /><b>⚡</b></span>}
+            </div>
+          ))}
         </div>
       </div>
     </section>
