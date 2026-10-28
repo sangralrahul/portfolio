@@ -583,3 +583,29 @@ body::before { background: radial-gradient(1000px 600px at 90% -10%, rgba(99, 10
 .rise-scale { animation: riseScale 1s var(--ease) var(--d, 0ms) backwards; }
 @keyframes rise { from { opacity: .01; transform: translateY(22px); } }
 @keyframes riseScale { from { opacity: .01; transform: scale(.9); } }
+
+/* featured project (Codexa): full-width card, copy + live preview image */
+.work-feat { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 32px; align-items: center; padding: 30px; }
+.work-feat .feat-copy { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.work-feat b { font-size: 34px; letter-spacing: -.03em; }
+.chip-new { gap: 7px; color: #be185d; border-color: rgba(236, 72, 153, .35); background: rgba(236, 72, 153, .08); }
+.chip-new .ping { width: 7px; height: 7px; background: var(--amber); }
+.feat-points { display: grid; gap: 6px; margin: 4px 0 6px; }
+.feat-points li { position: relative; padding-left: 22px; font-size: 14.5px; color: var(--soft); }
+.feat-points li::before { content: ''; position: absolute; left: 0; top: .5em; width: 12px; height: 7px; border-left: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(-45deg); }
+.feat-url { display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 12.5px; color: var(--sky); white-space: nowrap; }
+.feat-shot { position: relative; border-radius: 16px; overflow: hidden; background: #0a0a0a; box-shadow: 0 30px 60px -28px rgba(15, 23, 42, .55); transform: perspective(1100px) rotateY(-7deg) rotateX(3deg); transition: transform .7s var(--ease); }
+.work-feat:hover .feat-shot { transform: perspective(1100px) rotateY(0) rotateX(0) scale(1.02); }
+.feat-shot img { width: 100%; height: auto; display: block; }
+.feat-scan { position: absolute; inset: 0; background: linear-gradient(100deg, transparent 35%, rgba(255, 255, 255, .14) 50%, transparent 65%); transform: translateX(-100%); animation: featScan 4.5s ease-in-out infinite 1s; }
+@keyframes featScan { 0%, 55% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+#work:not(.on) .feat-scan { animation-play-state: paused; }
+@media (max-width: 960px) {
+  .work-feat { grid-template-columns: minmax(0, 1fr); gap: 22px; }
+  .feat-shot { order: -1; transform: none; }
+}
+@media (max-width: 640px) {
+  .work-feat { padding: 20px; }
+  .work-feat b { font-size: 28px; }
+  .work-feat .work-foot { flex-direction: column; align-items: flex-start; }
+}

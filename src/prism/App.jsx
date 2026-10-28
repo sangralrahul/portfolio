@@ -49,6 +49,10 @@ const CADUS = [
 ]
 
 const WORK = [
+  { name: 'Codexa', kind: 'Products', tag: 'New · Live', featured: true, img: '/shots/codexa.webp', url: 'https://codexa.creditvault.tech/',
+    what: 'An AI app builder: describe your idea in one sentence and Codexa plans the files, writes real code, type-checks and builds it in an isolated sandbox, repairs its own errors, and runs a live preview you can deploy.',
+    points: ['Snapshot before every AI run — restore in one click', '111 starter templates · GitHub sync · deploy history', 'Bring your own keys: Claude, OpenAI, Stripe, Razorpay, Supabase'],
+    stack: ['TypeScript', 'AI agents', 'Cloudflare Workers', 'Containers'] },
   { name: 'Zyphix', kind: 'Products', tag: 'Live', what: 'Hyperlocal commerce for India: groceries, food and pharmacy from trusted neighbourhood businesses.', stack: ['React', 'TypeScript', 'Python', 'SQL'], url: 'https://zyphix.in/' },
   { name: 'Sentinel-Z', kind: 'Hackathons', tag: 'IBM Z Datathon 2026', what: 'Privacy-preserving fraud detection for banking security logs. Pseudonymised, explainable, runs on IBM Z.', stack: ['Node.js', 'zero deps', 's390x'], url: 'https://github.com/sangralrahul/sentinel-z' },
   { name: 'SQLFixEnv', kind: 'Hackathons', tag: 'Meta × PyTorch', what: 'OpenEnv environment where agents repair broken SQL against a real SQLite database, with graded rewards.', stack: ['Python', 'OpenEnv', 'Docker'], url: 'https://github.com/sangralrahul/SQLFixEnv' },
@@ -449,7 +453,21 @@ function Work() {
           {FILTERS.map((x) => <button key={x} role="tab" aria-selected={f === x} className={f === x ? 'act' : ''} onClick={() => setF(x)}>{x}<sup>{x === 'All' ? WORK.length : WORK.filter((w) => w.kind === x).length}</sup></button>)}
         </div>
         <div className="works" key={f}>
-          {list.map((w, i) => (
+          {list.map((w, i) => w.featured ? (
+            <a key={w.name} href={w.url} target="_blank" rel="noreferrer" className="work work-feat card pop" style={{ '--d': `${i * 60}ms` }} {...spot()}>
+              <div className="feat-copy">
+                <span className="work-top"><em className="num">{String(WORK.indexOf(w) + 1).padStart(2, '0')}</em><em className="chip chip-new"><i className="ping loop" />{w.tag}</em></span>
+                <b>{w.name}</b>
+                <p>{w.what}</p>
+                <ul className="feat-points">{w.points.map((x) => <li key={x}>{x}</li>)}</ul>
+                <span className="work-foot"><span className="tags">{w.stack.map((t) => <i key={t}>{t}</i>)}</span><span className="feat-url">codexa.creditvault.tech <span className="arrow" aria-hidden="true">↗</span></span></span>
+              </div>
+              <div className="feat-shot">
+                <img src={w.img} srcSet="/shots/codexa-600.webp 600w, /shots/codexa.webp 1200w" sizes="(max-width: 960px) 100vw, 560px" width="1200" height="630" alt="Codexa — turn ideas into working software" loading="lazy" decoding="async" />
+                <span className="feat-scan" aria-hidden="true" />
+              </div>
+            </a>
+          ) : (
             <a key={w.name} href={w.url} target="_blank" rel="noreferrer" className="work card pop" style={{ '--d': `${i * 60}ms` }} {...spot(true)}>
               <span className="work-top"><em className="num">{String(WORK.indexOf(w) + 1).padStart(2, '0')}</em><em className="chip">{w.tag}</em></span>
               <b>{w.name}</b>
