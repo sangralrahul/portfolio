@@ -216,6 +216,17 @@ export const caseStudies = {
 
 export const experience = [
   {
+    id: 'handshake',
+    title: 'AI Fellow',
+    org: 'Handshake',
+    period: 'Jul 2026 – Present',
+    place: 'United States · Remote',
+    progress: 40,
+    hue: [150, 190],
+    description: 'Remote AI fellowship with Handshake AI, helping train and evaluate large language models.',
+    tech: ['LLMs', 'AI training', 'Model evaluation'],
+  },
+  {
     id: 'clavix',
     logo: '/logos/aethex.webp',
     title: 'Founding Software Engineer',
